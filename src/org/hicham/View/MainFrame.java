@@ -14,15 +14,16 @@ public class MainFrame extends JFrame{
 	public Patient card1= new Patient();
 	public Ordonance card2= new Ordonance();
 
-	private MenuBar menu= new MenuBar();
+	private MenuBar menuBar= new MenuBar();
 
-	public MainFrame(Patient card1, Ordonance card2){
+	public MainFrame(Patient card1, Ordonance card2 , MenuBar menuBar){
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setBounds(0,0,screenSize.width, screenSize.height);
 
 		setResizable(true);
-		setExtendedState(JFrame.MAXIMIZED_BOTH); 
-		this.setJMenuBar(menu.menu);
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
+		this.menuBar= menuBar;
+		this.setJMenuBar(this.menuBar.menu);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		cards = new JPanel(new CardLayout());
 		this.card1= card1;

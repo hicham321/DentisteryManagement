@@ -25,8 +25,8 @@ public class Main {
 	public static void showInterface(){
 		Patient p = new Patient(); 
 		Ordonance o= new Ordonance();
-		MainFrame mf= new MainFrame(p,o);
 		MenuBar mb= new MenuBar();
+		MainFrame mf= new MainFrame(p,o,mb);
 		ControllerPatient cp= new ControllerPatient(mf, p,o);
 		ControllerOrdonance co= new ControllerOrdonance(mf, p, o);
 		ControllerMenuBar cmb= new ControllerMenuBar(mf,mb , p, o);
