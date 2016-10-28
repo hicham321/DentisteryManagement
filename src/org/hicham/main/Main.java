@@ -1,16 +1,37 @@
 package org.hicham.main;
 
-import org.hicham.Controller.Controller;
+import javax.swing.UIManager;
+
+import org.hicham.Controller.ControllerOrdonance;
+import org.hicham.Controller.ControllerPatient;
 import org.hicham.View.MainFrame;
+import org.hicham.View.Ordonance;
 import org.hicham.View.Patient;
 
 public class Main {
+	
+	public static void SystemLookFeel(){
+		try { 
+			//This line is for system look and feel
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	public static void showInterface(){
+		Patient p = new Patient(); 
+		Ordonance o= new Ordonance();
+        MainFrame mf= new MainFrame(p,o);
+        ControllerPatient cp= new ControllerPatient(mf, p,o);
+        ControllerOrdonance co= new ControllerOrdonance(mf, p, o);
+        mf.setVisible(true);
+	}
 
 	public static void main(String[] args) {
-        Patient p = new Patient();  
-        MainFrame mf= new MainFrame(p);
-        Controller c= new Controller(mf, p);
-        mf.setVisible(true);
+		SystemLookFeel();
+		showInterface();
 		
 	}
 
