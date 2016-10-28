@@ -9,7 +9,7 @@ import org.hicham.View.Ordonance;
 import org.hicham.View.Patient;
 
 public class ControllerOrdonance {
-	
+
 	Ordonance ordonance= new Ordonance();
 	Patient patient= new Patient();
 	MainFrame mainFrame= new MainFrame(patient,ordonance);
@@ -19,7 +19,7 @@ public class ControllerOrdonance {
 		this.mainFrame= mainFrame;
 		this.ordonance.addOrdonanceActionListener(new OrdonanceActionListener());
 	}
-	
+
 	class OrdonanceActionListener implements ActionListener{
 
 		@Override
@@ -28,8 +28,8 @@ public class ControllerOrdonance {
 				//showOrdonanceCard();
 			}
 		}
-		
+
 	}
-	
+
 
 }

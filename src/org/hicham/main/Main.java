@@ -1,4 +1,4 @@
-package org.hicham.main;
+package org.hicham.Main;
 
 import javax.swing.UIManager;
 
@@ -9,7 +9,7 @@ import org.hicham.View.Ordonance;
 import org.hicham.View.Patient;
 
 public class Main {
-	
+
 	public static void SystemLookFeel(){
 		try { 
 			//This line is for system look and feel
@@ -18,21 +18,21 @@ public class Main {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 	public static void showInterface(){
 		Patient p = new Patient(); 
 		Ordonance o= new Ordonance();
-        MainFrame mf= new MainFrame(p,o);
-        ControllerPatient cp= new ControllerPatient(mf, p,o);
-        ControllerOrdonance co= new ControllerOrdonance(mf, p, o);
-        mf.setVisible(true);
+		MainFrame mf= new MainFrame(p,o);
+		ControllerPatient cp= new ControllerPatient(mf, p,o);
+		ControllerOrdonance co= new ControllerOrdonance(mf, p, o);
+		mf.setVisible(true);
 	}
 
 	public static void main(String[] args) {
 		SystemLookFeel();
 		showInterface();
-		
+
 	}
 
 }

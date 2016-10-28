@@ -18,12 +18,12 @@ public class Patient extends JPanel{
 		this.setVisible(true);
 
 	}
-    public void addPatientActionListener(ActionListener listener){
-    	this.btn.addActionListener(listener);
-    }
+	public void addPatientActionListener(ActionListener listener){
+		this.btn.addActionListener(listener);
+	}
 	public JButton getBtn() {
 		return btn;
 	}
-    
+
 
 }

@@ -7,9 +7,9 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 public class Ordonance extends JPanel {
-	
+
 	JButton btn = new JButton("dhfhff");
-	
+
 	public Ordonance() {
 		this.setLayout(null);
 		this.setBackground(Color.blue);
@@ -17,9 +17,9 @@ public class Ordonance extends JPanel {
 		btn.setBounds(600,150 , 100,20 );
 		this.setVisible(false);
 	}
-	
+
 	public void addOrdonanceActionListener(ActionListener listener){
-		
+
 		this.btn.addActionListener(listener);
 	}
 	public JButton getBtn(){

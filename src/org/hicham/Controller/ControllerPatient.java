@@ -10,28 +10,28 @@ import org.hicham.View.Patient;
 
 
 public class ControllerPatient {
-	
+
 	Patient patient= new Patient();
 	Ordonance ordonance= new Ordonance();
 	MainFrame mainFrame= new MainFrame(patient,ordonance);
-	
+
 	public ControllerPatient(MainFrame mainFrame, Patient patient ,Ordonance ordonance){
-		
+
 		this.patient= patient;
 		this.ordonance= ordonance;
 		this.mainFrame= mainFrame;		
 		this.patient.addPatientActionListener(new PatientActionListener() );
-		
+
 	}
-	
+
 	class PatientActionListener implements ActionListener{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			
+
 			if (e.getSource()== patient.getBtn()) {
 				showOrdonanceCard();
-                System.out.println("this works for non connected view panels");
+				System.out.println("this works for non connected view panels");
 			}			
 		}
 

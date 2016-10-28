@@ -51,7 +51,7 @@ public class MenuBar {
 
 	}
 
-	public void menuBarActionListener(ActionListener listener){
+	public void addMenuBarActionListener(ActionListener listener){
 
 		this.ajoutbase.addActionListener(listener);
 		this.motpasse.addActionListener(listener);
