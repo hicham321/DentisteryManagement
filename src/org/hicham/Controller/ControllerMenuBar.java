@@ -3,7 +3,6 @@ package org.hicham.Controller;
 import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import org.hicham.View.MainFrame;
 import org.hicham.View.MenuBar;
 import org.hicham.View.Ordonance;
@@ -19,10 +18,11 @@ public class ControllerMenuBar {
 	
 	MainFrame mainFrame= new MainFrame(patient, ordonance);
 	
-	public ControllerMenuBar(MenuBar menuBar,Patient patient,Ordonance ordonance){
+	public ControllerMenuBar(MainFrame mainFrame,MenuBar menuBar,Patient patient,Ordonance ordonance){
 		this.patient= patient;
 		this.ordonance= ordonance;
 		this.menuBar= menuBar;
+		this.mainFrame= mainFrame;
 		this.menuBar.addMenuBarActionListener(new MenuBarActionListener() );
 		
 	}
@@ -33,7 +33,6 @@ public class ControllerMenuBar {
 			
 			if (e.getSource()== menuBar.getOrdonance()) {
 				//show ordonance card
-
 			}
 			if (e.getSource()== menuBar.getPatient()) {
 				//show patient card
@@ -53,6 +52,7 @@ public class ControllerMenuBar {
 			}
 			if (e.getSource()== menuBar.getMotpasse()) {
 				//show motpasse frame
+				showOrdonanceCard();
 
 			}
 			if (e.getSource()== menuBar.getMenuapropos()) {
