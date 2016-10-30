@@ -19,6 +19,7 @@ public class ControllerMenuBar {
 	MainFrame mainFrame= new MainFrame(patient, ordonance,menuBar);
 	
 	public ControllerMenuBar(MainFrame mainFrame,MenuBar menuBar,Patient patient,Ordonance ordonance){
+		
 		this.patient= patient;
 		this.ordonance= ordonance;
 		this.menuBar= menuBar;
