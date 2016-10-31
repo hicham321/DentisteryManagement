@@ -11,7 +11,11 @@ import javax.swing.JPanel;
 public class MainFrame extends JFrame{
 	public JPanel cards ;
 	//cards to show in the frame
-	public Patient card1= new Patient();
+	InfoPatient infoPatient= new InfoPatient();
+	ActPatient actPatient= new ActPatient();
+	OdfPatient odfPatient= new OdfPatient();
+	public Patient card1= new Patient(infoPatient,actPatient,odfPatient);
+
 	public Ordonance card2= new Ordonance();
 
 	private MenuBar menuBar= new MenuBar();

@@ -5,8 +5,11 @@ import javax.swing.UIManager;
 import org.hicham.Controller.ControllerMenuBar;
 import org.hicham.Controller.ControllerOrdonance;
 import org.hicham.Controller.ControllerPatient;
+import org.hicham.View.ActPatient;
+import org.hicham.View.InfoPatient;
 import org.hicham.View.MainFrame;
 import org.hicham.View.MenuBar;
+import org.hicham.View.OdfPatient;
 import org.hicham.View.Ordonance;
 import org.hicham.View.Patient;
 
@@ -23,7 +26,10 @@ public class Main {
 
 	}
 	public static void showInterface(){
-		Patient p = new Patient(); 
+		InfoPatient ip= new InfoPatient();
+		ActPatient ap= new ActPatient();
+		OdfPatient op= new OdfPatient();
+		Patient p = new Patient(ip,ap,op); 
 		Ordonance o= new Ordonance();
 		MenuBar mb= new MenuBar();
 		MainFrame mf= new MainFrame(p,o,mb);
