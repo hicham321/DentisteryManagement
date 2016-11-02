@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 
 
 public class MainFrame extends JFrame{
+	
 	public JPanel cards ;
 	//cards to show in the frame
 	InfoPatient infoPatient= new InfoPatient();

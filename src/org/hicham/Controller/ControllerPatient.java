@@ -14,6 +14,7 @@ import org.hicham.View.Patient;
 
 
 public class ControllerPatient {
+	
 	InfoPatient infoPatient= new InfoPatient();
 	ActPatient actPatient= new ActPatient();
 	OdfPatient odfPatient= new OdfPatient();
@@ -38,10 +39,9 @@ public class ControllerPatient {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
-			if (e.getSource()== patient.getBtn()) {
-				showOrdonanceCard();
-				System.out.println("this works for non connected view panels");
-			}			
+//				showOrdonanceCard();
+//				System.out.println("this works for non connected view panels");
+			
 		}
 
 	}

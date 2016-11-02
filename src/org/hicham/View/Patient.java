@@ -1,9 +1,13 @@
 package org.hicham.View;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
@@ -18,7 +22,6 @@ public class Patient extends JPanel{
 	
 	
 
-	JButton btn = new JButton("btn");
 	JTabbedPane tabbedPane= new JTabbedPane();
 	
 	InfoPatient infoPatient= new InfoPatient();
@@ -32,35 +35,29 @@ public class Patient extends JPanel{
 		this.actPatient= actPatient;
 		this.odfPatient= odfPatient;
 		
-		this.setLayout(null);
+		this.setLayout(new BorderLayout());
 		this.setBackground(Color.white);
 		
 		
 		
-				
 		this.add(tabbedPane);
 		
-		this.add(btn);
 		
-		
-		tabbedPane.addTab("Info Panel       ", this.infoPatient);
-		tabbedPane.addTab("act Panel      ", this.actPatient);
-		tabbedPane.addTab("odf Panel      ", this.odfPatient);
+		tabbedPane.addTab("Info       ", this.infoPatient);
+		tabbedPane.addTab("Act      ", this.actPatient);
+		tabbedPane.addTab("ODF       ", this.odfPatient);
 
 
 		
 		
-		btn.setBounds(600,800 , 100,20 );
-		tabbedPane.setBounds(0, 20, 700, 200);
+		/*btn.setBounds(600,300 , 100,20 );
+		b.setBounds(600, 600, 100, 100);
+		tabbedPane.setBounds(0, 20, 700, 200);*/
 		this.setVisible(true);
 
 	}
 	public void addPatientActionListener(ActionListener listener){
-		this.btn.addActionListener(listener);
 	}
-	public JButton getBtn() {
-		return btn;
-	}
-
+	
 
 }

@@ -13,6 +13,9 @@ import org.hicham.View.Ordonance;
 import org.hicham.View.Patient;
 
 public class ControllerOrdonance {
+	
+	
+	//If we don't need teh main frame or any of the other frames than we can just delete the corresponding fields
 	InfoPatient infoPatient= new InfoPatient();
 	ActPatient actPatient= new ActPatient();
 	OdfPatient odfPatient= new OdfPatient();
