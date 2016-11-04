@@ -27,13 +27,14 @@ public class Patient extends JPanel{
 	InfoPatient infoPatient= new InfoPatient();
 	ActPatient actPatient= new ActPatient();
 	OdfPatient odfPatient= new OdfPatient();
+    Ordonance ordonance= new Ordonance();
 
-
-	public Patient (InfoPatient infoPatient,ActPatient actPatient, OdfPatient odfPatient){
+	public Patient (InfoPatient infoPatient,ActPatient actPatient, OdfPatient odfPatient, Ordonance ordonance){
 		
 		this.infoPatient= infoPatient;
 		this.actPatient= actPatient;
 		this.odfPatient= odfPatient;
+		this.ordonance= ordonance;
 		
 		this.setLayout(new BorderLayout());
 		this.setBackground(Color.white);
@@ -46,6 +47,8 @@ public class Patient extends JPanel{
 		tabbedPane.addTab("Info       ", this.infoPatient);
 		tabbedPane.addTab("Act      ", this.actPatient);
 		tabbedPane.addTab("ODF       ", this.odfPatient);
+		tabbedPane.addTab("Ordonance       ", this.ordonance);
+
 
 
 		

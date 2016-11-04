@@ -29,10 +29,10 @@ public class Main {
 		InfoPatient ip= new InfoPatient();
 		ActPatient ap= new ActPatient();
 		OdfPatient op= new OdfPatient();
-		Patient p = new Patient(ip,ap,op); 
 		Ordonance o= new Ordonance();
+		Patient p = new Patient(ip,ap,op,o); 
 		MenuBar mb= new MenuBar();
-		MainFrame mf= new MainFrame(p,o,mb);
+		MainFrame mf= new MainFrame(p,mb);
 		ControllerPatient cp= new ControllerPatient(mf, p,o);
 		ControllerOrdonance co= new ControllerOrdonance(mf, p, o);
 		ControllerMenuBar cmb= new ControllerMenuBar(mf,mb , p, o);

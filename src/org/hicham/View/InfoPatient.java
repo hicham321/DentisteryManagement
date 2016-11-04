@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 public class InfoPatient extends JPanel{
+	
     JLabel nomLab= new JLabel("Nom: ");
 	JTextField nom= new JTextField(8);
     JLabel prenomLab= new JLabel("Prenom: ");
@@ -56,6 +57,9 @@ public class InfoPatient extends JPanel{
 		teinte.setSelectedIndex(0);
 
 		this.sexmodel.addElement("");
+		this.sexmodel.addElement("Male");
+		this.sexmodel.addElement("Femele");
+
 		AutoCompleteDecorator.decorate(sex);
 		sex.setSelectedIndex(0);
 		
@@ -114,4 +118,49 @@ public class InfoPatient extends JPanel{
 		this.annule.addActionListener(listener);	
 
 	}
+
+	public JTextField getNom() {
+		return nom;
+	}
+
+	public JTextField getPrenom() {
+		return prenom;
+	}
+
+	public JTextField getAge() {
+		return age;
+	}
+
+	public JTextField getAddress() {
+		return address;
+	}
+
+	public JTextField getTel() {
+		return tel;
+	}
+
+	public JComboBox getTeinte() {
+		return teinte;
+	}
+
+	public JComboBox getSex() {
+		return sex;
+	}
+
+	public JTextField getAnticident() {
+		return anticident;
+	}
+
+	public JTextField getFonction() {
+		return fonction;
+	}
+
+	public JButton getOk() {
+		return ok;
+	}
+
+	public JButton getAnnule() {
+		return annule;
+	}
+	
 }

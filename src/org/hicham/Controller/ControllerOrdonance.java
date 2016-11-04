@@ -21,9 +21,9 @@ public class ControllerOrdonance {
 	OdfPatient odfPatient= new OdfPatient();
 
 	Ordonance ordonance= new Ordonance();
-	Patient patient= new Patient(infoPatient,actPatient,odfPatient);
+	Patient patient= new Patient(infoPatient,actPatient,odfPatient,ordonance);
 	MenuBar menuBar= new MenuBar();
-	MainFrame mainFrame= new MainFrame(patient,ordonance,menuBar);
+	MainFrame mainFrame= new MainFrame(patient,menuBar);
 	public ControllerOrdonance(MainFrame mainFrame,Patient patient,Ordonance ordonance){
 		this.patient= patient;
 		this.ordonance= ordonance;

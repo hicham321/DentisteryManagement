@@ -18,10 +18,10 @@ public class ControllerPatient {
 	InfoPatient infoPatient= new InfoPatient();
 	ActPatient actPatient= new ActPatient();
 	OdfPatient odfPatient= new OdfPatient();
-	Patient patient= new Patient(infoPatient,actPatient,odfPatient);
 	Ordonance ordonance= new Ordonance();
+	Patient patient= new Patient(infoPatient,actPatient,odfPatient,ordonance);
 	MenuBar menuBar= new MenuBar();
-	MainFrame mainFrame= new MainFrame(patient,ordonance,menuBar);
+	MainFrame mainFrame= new MainFrame(patient,menuBar);
 
 	public ControllerPatient(MainFrame mainFrame, Patient patient ,Ordonance ordonance){
 		

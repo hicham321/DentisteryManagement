@@ -13,33 +13,33 @@ import org.hicham.View.Ordonance;
 import org.hicham.View.Patient;
 
 public class ControllerMenuBar {
-	
+
 	MenuBar menuBar= new MenuBar();
-	
+
 	Ordonance ordonance = new Ordonance();
 	InfoPatient infoPatient= new InfoPatient();
 	ActPatient actPatient= new ActPatient();
 	OdfPatient odfPatient= new OdfPatient();
-	
-	Patient patient= new Patient(infoPatient,actPatient,odfPatient);
-	
-	
-	MainFrame mainFrame= new MainFrame(patient, ordonance,menuBar);
-	
+
+	Patient patient= new Patient(infoPatient,actPatient,odfPatient,ordonance);
+
+
+	MainFrame mainFrame= new MainFrame(patient,menuBar);
+
 	public ControllerMenuBar(MainFrame mainFrame,MenuBar menuBar,Patient patient,Ordonance ordonance){
-		
+
 		this.patient= patient;
 		this.ordonance= ordonance;
 		this.menuBar= menuBar;
 		this.mainFrame= mainFrame;
 		this.menuBar.addMenuBarActionListener(new MenuBarActionListener() );
-		
+
 	}
 	class MenuBarActionListener implements ActionListener{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			
+
 			if (e.getSource()== menuBar.getOrdonance()) {
 				//show ordonance card
 			}
@@ -61,7 +61,7 @@ public class ControllerMenuBar {
 			}
 			if (e.getSource()== menuBar.getMotpasse()) {
 				//show motpasse frame
-				showOrdonanceCard();
+				System.out.println("it works");
 
 			}
 			if (e.getSource()== menuBar.getMenuapropos()) {
@@ -72,12 +72,9 @@ public class ControllerMenuBar {
 				//show Jfileschooser card
 
 			}
-			
 		}
-
-    }
-    public void showOrdonanceCard(){
-		CardLayout cardLayout = (CardLayout) this.mainFrame.cards.getLayout();
-		cardLayout.show(this.mainFrame.cards, "Card 2");	
 	}
+
+
 }
+

@@ -12,16 +12,17 @@ public class MainFrame extends JFrame{
 	
 	public JPanel cards ;
 	//cards to show in the frame
+	Ordonance ordonance= new Ordonance();
+
 	InfoPatient infoPatient= new InfoPatient();
 	ActPatient actPatient= new ActPatient();
 	OdfPatient odfPatient= new OdfPatient();
-	public Patient card1= new Patient(infoPatient,actPatient,odfPatient);
+	public Patient card1= new Patient(infoPatient,actPatient,odfPatient,ordonance);
 
-	public Ordonance card2= new Ordonance();
 
 	private MenuBar menuBar= new MenuBar();
 
-	public MainFrame(Patient card1, Ordonance card2 , MenuBar menuBar){
+	public MainFrame(Patient card1 , MenuBar menuBar){
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setBounds(0,0,screenSize.width, screenSize.height);
 
@@ -32,9 +33,7 @@ public class MainFrame extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		cards = new JPanel(new CardLayout());
 		this.card1= card1;
-		this.card2=card2;
 		cards.add(this.card1, "Card 1");
-		cards.add(this.card2, "Card 2");
 
 		getContentPane().add(cards); 
 		//setEnabled(false);
