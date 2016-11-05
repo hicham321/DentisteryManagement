@@ -13,11 +13,12 @@ public class MainFrame extends JFrame{
 	public JPanel cards ;
 	//cards to show in the frame
 	Ordonance ordonance= new Ordonance();
-
 	InfoPatient infoPatient= new InfoPatient();
 	ActPatient actPatient= new ActPatient();
 	OdfPatient odfPatient= new OdfPatient();
-	public Patient card1= new Patient(infoPatient,actPatient,odfPatient,ordonance);
+	RecherchePatientView recherchePatientView= new RecherchePatientView();
+	
+	public Patient card1= new Patient(infoPatient,actPatient,odfPatient,ordonance,recherchePatientView);
 
 
 	private MenuBar menuBar= new MenuBar();

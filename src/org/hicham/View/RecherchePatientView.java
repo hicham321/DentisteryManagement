@@ -2,6 +2,7 @@ package org.hicham.View;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
 
 import javax.swing.DefaultComboBoxModel;
@@ -30,11 +31,16 @@ public class RecherchePatientView extends JPanel {
 		
 		this.setLayout(new GridBagLayout());
 		this.setBackground(Color.decode("#d2fdf9"));
+		this.setLayout(new FlowLayout());
 		
 		rechTable =new JTable(dt);
 		rechTable.setPreferredScrollableViewportSize(new Dimension(500,50));
 		rechTable.setFillsViewportHeight(true);
-
+		scrolPane= new JScrollPane(rechTable);
+		
+		
+		
+		this.add(scrolPane);
 
 		
 		

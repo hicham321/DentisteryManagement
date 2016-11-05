@@ -11,6 +11,7 @@ import org.hicham.View.MenuBar;
 import org.hicham.View.OdfPatient;
 import org.hicham.View.Ordonance;
 import org.hicham.View.Patient;
+import org.hicham.View.RecherchePatientView;
 
 public class ControllerOrdonance {
 	
@@ -19,9 +20,10 @@ public class ControllerOrdonance {
 	InfoPatient infoPatient= new InfoPatient();
 	ActPatient actPatient= new ActPatient();
 	OdfPatient odfPatient= new OdfPatient();
-
 	Ordonance ordonance= new Ordonance();
-	Patient patient= new Patient(infoPatient,actPatient,odfPatient,ordonance);
+    RecherchePatientView recherchePatientView= new RecherchePatientView();
+	
+	Patient patient= new Patient(infoPatient,actPatient,odfPatient,ordonance,recherchePatientView);
 	MenuBar menuBar= new MenuBar();
 	MainFrame mainFrame= new MainFrame(patient,menuBar);
 	public ControllerOrdonance(MainFrame mainFrame,Patient patient,Ordonance ordonance){

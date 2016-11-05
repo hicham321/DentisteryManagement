@@ -6,7 +6,7 @@ import org.hibernate.cfg.Configuration;
 
 public class ConnectionDB {
 public void conn(){
-	SessionFactory factory = new Configuration().configure("/resources/hibernate.cfg.xml").addAnnotatedClass(Patient.class).buildSessionFactory();
+	SessionFactory factory = new Configuration().configure("/org.hicham.Resources/hibernate.cfg.xml").addAnnotatedClass(Patient.class).buildSessionFactory();
 
 }
 }

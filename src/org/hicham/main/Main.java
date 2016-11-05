@@ -12,6 +12,7 @@ import org.hicham.View.MenuBar;
 import org.hicham.View.OdfPatient;
 import org.hicham.View.Ordonance;
 import org.hicham.View.Patient;
+import org.hicham.View.RecherchePatientView;
 
 public class Main {
 
@@ -30,7 +31,8 @@ public class Main {
 		ActPatient ap= new ActPatient();
 		OdfPatient op= new OdfPatient();
 		Ordonance o= new Ordonance();
-		Patient p = new Patient(ip,ap,op,o); 
+		RecherchePatientView rp= new RecherchePatientView();
+		Patient p = new Patient(ip,ap,op,o,rp); 
 		MenuBar mb= new MenuBar();
 		MainFrame mf= new MainFrame(p,mb);
 		ControllerPatient cp= new ControllerPatient(mf, p,o);
