@@ -10,6 +10,7 @@ public class ControllerInfoPatient {
 	
 	InfoPatient infoPatient= new InfoPatient();
 	PatientQueries patientQueries= new PatientQueries();
+	
 	public ControllerInfoPatient(InfoPatient infoPatient, PatientQueries patientQueries){
 		this.infoPatient= infoPatient;
 		this.patientQueries=patientQueries;
