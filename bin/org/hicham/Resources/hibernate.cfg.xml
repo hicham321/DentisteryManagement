@@ -8,17 +8,19 @@
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
         <property name="hibernate.connection.username">postgres</property>
         <property name="hibernate.connection.password">awesomeme1</property>
-        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/Students</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/GestionDentaire</property>
 
 
 
         <property name="connection_pool_size">1</property>
-
-        <property name="hbm2ddl.auto">create</property>
+        <!-- setting this to create instead of update will cause data to be rewritten in each execution -->
+        <property name="hbm2ddl.auto">update</property>
 
         <property name="show_sql">true</property>
-        <property name="hibernate.current_session_context_class">org.hibernate.context.ManagedSessionContext</property>
-
+        
+        <property name="connection.autocommit">true</property>
+       
+        <property name="current_session_context_class">thread</property>
 
 
     </session-factory>

@@ -15,7 +15,7 @@ import javax.swing.JTextField;
 @Table(name="Patient")
 public class Patient {
 	@Id
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	@GeneratedValue(strategy= GenerationType.AUTO)
 	@Column (name="Id")
 	int id;
 	@Column (name="Nom")
