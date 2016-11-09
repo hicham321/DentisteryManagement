@@ -36,6 +36,17 @@ public class Patient {
 	String anticident;
 	@Column (name="Fonction")
 	String fonction; 
+	public Patient(String nom, String prenom, int age, String address, int tel, String teinte, String sex, String anticident,String fonction){
+		this.nom= nom;
+		this.prenom= prenom;
+		this.age= age;
+		this.address= address;
+		this.tel= tel;
+		this.teinte= teinte;
+		this.sex= sex;
+		this.anticident= anticident;
+		this.fonction= fonction;
+	}
 	public Patient(){
 
 	}
