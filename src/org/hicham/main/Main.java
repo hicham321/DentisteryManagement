@@ -46,7 +46,7 @@ public class Main {
 		ControllerPatient cp= new ControllerPatient(mf, p,o);
 		ControllerOrdonance co= new ControllerOrdonance(mf, p, o);
 		ControllerMenuBar cmb= new ControllerMenuBar(mf,mb , p, o);
-		ControllerInfoPatient cip= new ControllerInfoPatient(ip,  pq);
+		ControllerInfoPatient cip= new ControllerInfoPatient(ip, pq,rp);
 		mf.setVisible(true);
 	}
 

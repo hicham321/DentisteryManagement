@@ -56,10 +56,16 @@ public class RecherchePatientView extends JPanel {
 	    this.add(rech,c);
 	    c.gridy+=2;
 	    this.add(scrolPane,c);
-	    c.gridy+=2;
-
-		
+	    c.gridy+=2;		
+	}
+	
+	public void addRecherchePatientActionListener(){
 		
 	}
+
+	public JComboBox getRech() {
+		return rech;
+	}
+	
   
 }

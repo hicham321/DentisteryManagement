@@ -164,7 +164,7 @@ public class InfoPatient extends JPanel{
 		return ok;
 	}
 
-	public JButton getAnnule() {
+	public JButton getModifie() {
 		return modifie;
 	}
 	
