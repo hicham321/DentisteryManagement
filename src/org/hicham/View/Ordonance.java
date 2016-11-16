@@ -51,7 +51,9 @@ public class Ordonance extends JPanel {
         this.add(situation, c);
         c.gridy=+2;
         this.add(ok, c);
-		this.setVisible(false);
+        c.gridy=+2;
+       
+
 	}
 
 	public void addOrdonanceActionListener(ActionListener listener){

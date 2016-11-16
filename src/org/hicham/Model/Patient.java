@@ -16,13 +16,13 @@ import javax.swing.JTextField;
 public class Patient {
 	@Id
 	@GeneratedValue(strategy= GenerationType.AUTO)
-	@Column (name="Id")
+	@Column (name="Id",nullable = false)
 	int id;
-	@Column (name="Nom")
+	@Column (name="Nom",nullable = false)
 	String nom;
-	@Column (name="Prenom")
+	@Column (name="Prenom",nullable = false)
 	String prenom;
-	@Column (name="Age")
+	@Column (name="Age",nullable = false)
 	int age; 
 	@Column (name="Address")
 	String address; 
@@ -30,7 +30,7 @@ public class Patient {
 	int tel;
 	@Column (name="Teinte")
 	String teinte; 
-	@Column (name="Sex")
+	@Column (name="Sex",nullable = false)
 	String sex; 
 	@Column (name="Anticident")
 	String anticident;
