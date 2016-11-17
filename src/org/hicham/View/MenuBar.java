@@ -19,17 +19,21 @@ public class MenuBar {
 
 	JMenuItem motpasse = new JMenuItem("Changé Le Mot De passe");
 
-	JMenuItem patient = new JMenuItem("Patient");
+	JMenu patient = new JMenu("Patient");
 
-	JMenuItem ordonance = new JMenuItem("Ordonance");
+	JMenu ordonance = new JMenu("Ordonance");
 
-	JMenuItem gestionStock = new JMenuItem("Gestion De Stock");
+	JMenu gestionStock = new JMenu("Gestion De Stock");
+	JMenuItem gestionStockItem = new JMenuItem("Gestion De Stock ");
+	JMenuItem stat = new JMenuItem("Statistiques");
 
-	JMenuItem labo = new JMenuItem("Labo");
+	
 
-	JMenuItem retour = new JMenuItem("Retour");
+	JMenu labo = new JMenu("Labo");
 
-	JMenuItem menuapropos = new JMenuItem("?");
+	JMenu retour = new JMenu("Retour");
+
+	JMenu menuapropos = new JMenu("?");
 
 	public MenuBar(){
 

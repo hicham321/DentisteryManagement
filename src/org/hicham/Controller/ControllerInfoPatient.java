@@ -15,6 +15,7 @@ public class ControllerInfoPatient {
 	InfoPatient infoPatient= new InfoPatient();
 	PatientQueries patientQueries= new PatientQueries();
 	RecherchePatientView recherchePatientView= new RecherchePatientView();
+	boolean errorFlag= false;
 	
 	public ControllerInfoPatient(InfoPatient infoPatient, PatientQueries patientQueries ,RecherchePatientView recherchePatientView){
 		this.infoPatient= infoPatient;
@@ -32,6 +33,7 @@ public class ControllerInfoPatient {
 				DefaultComboBoxModel dftb=patientQueries.getComboModel();
 				recherchePatientView.getRech().setModel(dftb);
 				
+				if(errorFlag==false){
 				patientQueries.addPatient(infoPatient.getNom().getText()
 						,infoPatient.getPrenom().getText()
 						,Integer.parseInt(infoPatient.getAge().getText())
@@ -43,6 +45,7 @@ public class ControllerInfoPatient {
 						,infoPatient.getFonction().getText());
 				
 				setFieldsEmpty();
+				}
 			}
 			if (e.getSource()== infoPatient.getModifie()) {
 				
@@ -65,26 +68,42 @@ public class ControllerInfoPatient {
 		}
 		public void nomCondition(){
 			if (infoPatient.getNom().getText().matches("[ \t]+") || "".equals(infoPatient.getNom().getText())) {
+				infoPatient.getErrorLabNom().setVisible(true);
+				errorFlag= true;
 			}
 		}
 		public void prenomCondition(){
 			if (infoPatient.getPrenom().getText().matches("[ \t]+") || "".equals(infoPatient.getPrenom().getText())) {
+				infoPatient.getErrorLabPrenom().setVisible(true);
+				errorFlag= true;
+
 			}
 		}
 		public void ageCondition(){
 			if (infoPatient.getAge().getText().matches("[ \t]+") ) {
+				infoPatient.getErrorLabAge().setVisible(true);
+				errorFlag= true;
+
 			}
 		}
 		public void addressCondition(){
 			if (infoPatient.getAddress().getText().matches("[ \t]+") ) {
+				infoPatient.getErrorLabAddress().setVisible(true);
+				errorFlag= true;
+
 			}
 		}
 		public void anticidentCondition(){
 			if (infoPatient.getAnticident().getText().matches("[ \t]+") ) {
+				infoPatient.getErrorLabAnticident().setVisible(true);
+				errorFlag= true;
+
 			}
 		}
 		public void fonctionCondition(){
 			if (infoPatient.getFonction().getText().matches("[ \t]+") ) {
+				infoPatient.getErrorLabFonction().setVisible(true);
+				errorFlag= true;
 			}
 		}
 		
