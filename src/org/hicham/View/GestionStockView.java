@@ -3,6 +3,7 @@ package org.hicham.View;
 import java.awt.Color;
 import java.awt.Dimension;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -19,6 +20,7 @@ import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 public class GestionStockView extends JPanel{
 	// ajout qte
+	
 	JLabel nomProduitLab= new JLabel("Produit: ");
 	
 	final DefaultComboBoxModel produitModel = new DefaultComboBoxModel();
@@ -52,6 +54,11 @@ public class GestionStockView extends JPanel{
 		
 		this.setLayout(null);
 		this.setBackground(Color.decode("#d2fdf9"));
+	
+		JPanel panelAjoutqte= new JPanel();
+		panelAjoutqte.setBackground(Color.cyan);
+		panelAjoutqte.setBorder(BorderFactory.createTitledBorder("Ajouté une qte: "));
+
 		
 		this.produitModel.addElement("");
 		AutoCompleteDecorator.decorate(produitCombo);
@@ -62,9 +69,11 @@ public class GestionStockView extends JPanel{
 		produitsTab.setFillsViewportHeight(true);
 		scrolPane= new JScrollPane(produitsTab);
 		
+		panelAjoutqte.add(produitCombo);
+		panelAjoutqte.add(nomProduitLab);
+
+		this.add(panelAjoutqte);
 		
-		this.add(nomProduitLab);
-		this.add(produitCombo);
 		this.add(produitAjoutLab);
 		this.add(textProduitAjout);
 		this.add(prixProduitAjout);
@@ -73,6 +82,9 @@ public class GestionStockView extends JPanel{
 		this.add(choixBtn);
 		this.popmenu.add(modifieItem);
 		this.popmenu.add(supItem);
+		
+		//this.nomProduitLab.setBounds(, , , );
+		panelAjoutqte.setBounds(0, 0, 400, 300);
 	
 	}
 	

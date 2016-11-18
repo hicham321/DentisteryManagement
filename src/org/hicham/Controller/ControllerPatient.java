@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import org.hicham.View.ActPatient;
+import org.hicham.View.GestionStockView;
 import org.hicham.View.InfoPatient;
 import org.hicham.View.MainFrame;
 import org.hicham.View.MenuBar;
@@ -23,8 +24,9 @@ public class ControllerPatient {
     RecherchePatientView recherchePatientView= new RecherchePatientView();
 	
 	Patient patient= new Patient(infoPatient,actPatient,odfPatient,ordonance,recherchePatientView);
+    GestionStockView gestionStockView= new GestionStockView();
 	MenuBar menuBar= new MenuBar();
-	MainFrame mainFrame= new MainFrame(patient,menuBar);
+	MainFrame mainFrame= new MainFrame(patient,gestionStockView,menuBar);
 
 	public ControllerPatient(MainFrame mainFrame, Patient patient ,Ordonance ordonance){
 		

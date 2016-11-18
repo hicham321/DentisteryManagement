@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import org.hicham.View.ActPatient;
+import org.hicham.View.GestionStockView;
 import org.hicham.View.InfoPatient;
 import org.hicham.View.MainFrame;
 import org.hicham.View.MenuBar;
@@ -24,9 +25,10 @@ public class ControllerMenuBar {
     RecherchePatientView recherchePatientView= new RecherchePatientView();
 
 	Patient patient= new Patient(infoPatient,actPatient,odfPatient,ordonance,recherchePatientView);
+    GestionStockView gestionStockView= new GestionStockView();
+	
 
-
-	MainFrame mainFrame= new MainFrame(patient,menuBar);
+	MainFrame mainFrame= new MainFrame(patient,gestionStockView,menuBar);
 
 	public ControllerMenuBar(MainFrame mainFrame,MenuBar menuBar,Patient patient,Ordonance ordonance){
 
@@ -53,10 +55,15 @@ public class ControllerMenuBar {
 				//show labo card
 
 			}
-			if (e.getSource()== menuBar.getGestionStock()) {
+			if (e.getSource()== menuBar.getGestionStockItem()){
+				//show gestionStock card
+				showGestionStockCard();
+			}
+			if (e.getSource()== menuBar.getStat()){
 				//show gestionStock card
 
 			}
+			
 			if (e.getSource()== menuBar.getRetour()) {
 				//show first card
 
@@ -76,7 +83,11 @@ public class ControllerMenuBar {
 			}
 		}
 	}
+	public void showGestionStockCard(){
+		CardLayout cardLayout = (CardLayout) mainFrame.cards.getLayout();
+		cardLayout.show(mainFrame.cards, "Card 2");	
 
+	}
 
 }
 

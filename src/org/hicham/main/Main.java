@@ -8,6 +8,7 @@ import org.hicham.Controller.ControllerOrdonance;
 import org.hicham.Controller.ControllerPatient;
 import org.hicham.Model.PatientQueries;
 import org.hicham.View.ActPatient;
+import org.hicham.View.GestionStockView;
 import org.hicham.View.InfoPatient;
 import org.hicham.View.MainFrame;
 import org.hicham.View.MenuBar;
@@ -38,9 +39,10 @@ public class Main {
 		OdfPatient op= new OdfPatient();
 		Ordonance o= new Ordonance();
 		RecherchePatientView rp= new RecherchePatientView();
-		Patient p = new Patient(ip,ap,op,o,rp); 
+		Patient p = new Patient(ip,ap,op,o,rp);
+		GestionStockView gs= new GestionStockView();
 		MenuBar mb= new MenuBar();
-		MainFrame mf= new MainFrame(p,mb);
+		MainFrame mf= new MainFrame(p,gs,mb);
 		
 		//controllers
 		ControllerPatient cp= new ControllerPatient(mf, p,o);

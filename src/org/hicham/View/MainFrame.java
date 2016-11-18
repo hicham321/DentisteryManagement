@@ -19,11 +19,13 @@ public class MainFrame extends JFrame{
 	RecherchePatientView recherchePatientView= new RecherchePatientView();
 	
 	public Patient card1= new Patient(infoPatient,actPatient,odfPatient,ordonance,recherchePatientView);
+	
+	public GestionStockView card2= new GestionStockView();
 
 
 	private MenuBar menuBar= new MenuBar();
 
-	public MainFrame(Patient card1 , MenuBar menuBar){
+	public MainFrame(Patient card1,GestionStockView card2 , MenuBar menuBar){
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setBounds(0,0,screenSize.width, screenSize.height);
 
@@ -34,7 +36,9 @@ public class MainFrame extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		cards = new JPanel(new CardLayout());
 		this.card1= card1;
+		this.card2= card2;
 		cards.add(this.card1, "Card 1");
+		cards.add(this.card2, "Card 2");
 
 		getContentPane().add(cards); 
 		//setEnabled(false);
