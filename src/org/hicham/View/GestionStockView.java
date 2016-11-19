@@ -55,6 +55,10 @@ public class GestionStockView extends JPanel{
 	JLabel produitPrixInfo=new JLabel("");
 	JLabel qteInfoLab=new JLabel("Quantité Du Produit selectioné: ");
 	JLabel qteInfo=new JLabel("");
+	JLabel prixTotalLab=new JLabel("Prix Total: ");
+	JLabel prixTotal=new JLabel("");
+
+	
 	
 	//Label Info General
 
@@ -133,13 +137,19 @@ public class GestionStockView extends JPanel{
         panelProduitInfo.add(produitPrixInfo);
         panelProduitInfo.add(qteInfoLab);
         panelProduitInfo.add(qteInfo);
+        panelProduitInfo.add(prixTotalLab);
+        panelProduitInfo.add(prixTotal);
+
         
         produitNomInfoLab.setBounds(5, 20, 200, 20);
-        produitNomInfo.setBounds(130, 20, 100, 20);
+        produitNomInfo.setBounds(230, 20, 100, 20);
         produitPrixInfoLab.setBounds(5, 50, 200, 20);
-        produitPrixInfo.setBounds(130, 50, 100, 20);
+        produitPrixInfo.setBounds(230, 50, 100, 20);
         qteInfoLab.setBounds(5, 80, 200, 20);
-        qteInfo.setBounds(130, 80, 100, 20);
+        qteInfo.setBounds(230, 80, 100, 20);
+        prixTotalLab.setBounds(5, 110, 200, 20);
+        prixTotal.setBounds(230, 110, 200, 20);
+
 
 
  
