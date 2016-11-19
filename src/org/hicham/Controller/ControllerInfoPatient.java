@@ -18,6 +18,7 @@ public class ControllerInfoPatient {
 	boolean errorFlag= false;
 	
 	public ControllerInfoPatient(InfoPatient infoPatient, PatientQueries patientQueries ,RecherchePatientView recherchePatientView){
+		
 		this.infoPatient= infoPatient;
 		this.patientQueries=patientQueries;
 		this.recherchePatientView=recherchePatientView;

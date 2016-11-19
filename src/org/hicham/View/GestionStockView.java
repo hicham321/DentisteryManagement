@@ -2,6 +2,7 @@ package org.hicham.View;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
@@ -153,6 +154,17 @@ public class GestionStockView extends JPanel{
 		panelAjoutProduit.setBounds(600,50,400, 200);
 		panelProduitInfo.setBounds(50,300, 400, 200);
 	
+	}
+	
+	public void addGestionStockActionListener(ActionListener Listener){
+		
+		this.sousQte.addActionListener(Listener);
+		this.produitCombo.addActionListener(Listener);
+		this.ajoutProduit.addActionListener(Listener);
+		this.ajoutQte.addActionListener(Listener);
+		this.choixBtn.addActionListener(Listener);
+		this.modifieItem.addActionListener(Listener);
+		this.supItem.addActionListener(Listener);		
 	}
 
 
