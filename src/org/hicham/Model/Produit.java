@@ -22,12 +22,15 @@ public class Produit {
 	int qte;
 	
 	public Produit(String produitNom, double prix, int qte){
+		
 		this.produitNom=produitNom;
 		this.prix=prix;
 		this.qte= qte;
 	}
 	public Produit(){
 	}
+	
+	
 	public int getId() {
 		return id;
 	}

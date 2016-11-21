@@ -3,15 +3,18 @@ package org.hicham.Controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import org.hicham.Model.ProduitQueries;
 import org.hicham.View.GestionStockView;
 
 public class ControllerGestionStock {
 	
 	GestionStockView gestionStockView= new GestionStockView();
+	ProduitQueries produitQueries =new ProduitQueries();
 	
-	public ControllerGestionStock(GestionStockView gestionStockView){
+	public ControllerGestionStock(GestionStockView gestionStockView,ProduitQueries produitQueries){
 		
 		this.gestionStockView= gestionStockView;
+		this.produitQueries=produitQueries;
 		this.gestionStockView.addGestionStockActionListener(new GestionStockActionListener());
 	}
 	
@@ -21,7 +24,10 @@ public class ControllerGestionStock {
 		public void actionPerformed(ActionEvent e) {
 			
 			if (e.getSource()== gestionStockView.getAjoutProduit()) {
-				
+				produitQueries.addProduit(gestionStockView.getTextProduitAjout().getText()
+						, Double.parseDouble(gestionStockView.getTextPrixAjout().getText())
+						,0);
+				setEmptyAjoutProduitComponents();
 			}
 			if (e.getSource()== gestionStockView.getModifieItem()) {
 				
@@ -30,7 +36,7 @@ public class ControllerGestionStock {
 				
 			}
             if (e.getSource()== gestionStockView.getAjoutQte()) {
-				
+				//update query for product row
 			}
             if (e.getSource()== gestionStockView.getSousQte()) {
 				
@@ -45,6 +51,11 @@ public class ControllerGestionStock {
 	
 			}
 			
+		}
+		public void setEmptyAjoutProduitComponents(){
+			gestionStockView.getTextPrixAjout().setText("");
+			gestionStockView.getTextProduitAjout().setText("");
+
 		}
 		
 	}

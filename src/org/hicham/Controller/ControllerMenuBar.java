@@ -4,6 +4,9 @@ import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.DefaultComboBoxModel;
+
+import org.hicham.Model.ProduitQueries;
 import org.hicham.View.ActPatient;
 import org.hicham.View.GestionStockView;
 import org.hicham.View.InfoPatient;
@@ -23,19 +26,22 @@ public class ControllerMenuBar {
 	ActPatient actPatient= new ActPatient();
 	OdfPatient odfPatient= new OdfPatient();
     RecherchePatientView recherchePatientView= new RecherchePatientView();
-
-	Patient patient= new Patient(infoPatient,actPatient,odfPatient,ordonance,recherchePatientView);
     GestionStockView gestionStockView= new GestionStockView();
-	
+
+    
+	Patient patient= new Patient(infoPatient,actPatient,odfPatient,ordonance,recherchePatientView);
+	ProduitQueries produitQueries= new ProduitQueries();
 
 	MainFrame mainFrame= new MainFrame(patient,gestionStockView,menuBar);
 
-	public ControllerMenuBar(MainFrame mainFrame,MenuBar menuBar,Patient patient,Ordonance ordonance){
+	public ControllerMenuBar(MainFrame mainFrame,MenuBar menuBar,Patient patient,Ordonance ordonance,GestionStockView gestionStockView,ProduitQueries produitQueries){
 
 		this.patient= patient;
 		this.ordonance= ordonance;
+		this.gestionStockView=gestionStockView;
 		this.menuBar= menuBar;
 		this.mainFrame= mainFrame;
+		this.produitQueries=produitQueries;
 		this.menuBar.addMenuBarActionListener(new MenuBarActionListener() );
 
 	}
@@ -56,6 +62,9 @@ public class ControllerMenuBar {
 
 			}
 			if (e.getSource()== menuBar.getGestionStockItem()){
+				//prepare gestionStockViiew Combobox with data
+				DefaultComboBoxModel dftb=produitQueries.getComboModel();
+				gestionStockView.getProduitCombo().setModel(dftb);				
 				//show gestionStock card
 				showGestionStockCard();
 			}

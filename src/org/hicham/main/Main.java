@@ -2,11 +2,13 @@ package org.hicham.Main;
 
 import javax.swing.UIManager;
 
+import org.hicham.Controller.ControllerGestionStock;
 import org.hicham.Controller.ControllerInfoPatient;
 import org.hicham.Controller.ControllerMenuBar;
 import org.hicham.Controller.ControllerOrdonance;
 import org.hicham.Controller.ControllerPatient;
 import org.hicham.Model.PatientQueries;
+import org.hicham.Model.ProduitQueries;
 import org.hicham.View.ActPatient;
 import org.hicham.View.GestionStockView;
 import org.hicham.View.InfoPatient;
@@ -32,6 +34,7 @@ public class Main {
 	public static void showInterface(){
 		//models
 		PatientQueries pq= new PatientQueries();
+		ProduitQueries prq= new ProduitQueries();
 		
 		//views
 		InfoPatient ip= new InfoPatient();
@@ -47,8 +50,9 @@ public class Main {
 		//controllers
 		ControllerPatient cp= new ControllerPatient(mf, p,o);
 		ControllerOrdonance co= new ControllerOrdonance(mf, p, o);
-		ControllerMenuBar cmb= new ControllerMenuBar(mf,mb , p, o);
+		ControllerMenuBar cmb= new ControllerMenuBar(mf,mb , p, o,gs,prq);
 		ControllerInfoPatient cip= new ControllerInfoPatient(ip, pq,rp);
+		ControllerGestionStock cgs= new ControllerGestionStock(gs, prq);
 		mf.setVisible(true);
 	}
 
