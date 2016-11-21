@@ -10,7 +10,7 @@ import org.hicham.Model.PatientQueries.MyClass;
 
 public class ProduitQueries {
 	
-	public void addProduit(String nomProduit,double prix, int qte){
+	public void addProduct(String nomProduit,double prix, int qte){
 		Session session = SessionsDB.getFactory().openSession();
 		try {
 
@@ -51,6 +51,7 @@ public class ProduitQueries {
 		}
 		return listProductIds ;
 	}
+	//this the combobox model that contains products names
 	public DefaultComboBoxModel comboBoxModel(List<String> listProductNames){
 		
 		DefaultComboBoxModel comboModel= new DefaultComboBoxModel<>();
@@ -58,7 +59,17 @@ public class ProduitQueries {
 			comboModel.addElement(new MyClass(listProductNames.get(i)));	
 		}
 		return comboModel;
-
+	}
+	public Produit getProduct(int id){
+        List<Produit> listOfallProducts= findAllProducts(); 
+        return listOfallProducts.get(id);
+	}
+	
+	public void addQteToProduct(int idProduct,int qteAdded){
+	    
+	}
+	public void sousQteToProduct(int idProduct,int qtesubtracted){
+		
 	}
 	public class MyClass{
 

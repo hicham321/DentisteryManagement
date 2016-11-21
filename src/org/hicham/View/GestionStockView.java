@@ -251,6 +251,10 @@ public class GestionStockView extends JPanel{
 	public JTable getProduitsTab() {
 		return produitsTab;
 	}
+
+	public JLabel getPrixTotal() {
+		return prixTotal;
+	}
 	
 	
 	
