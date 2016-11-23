@@ -30,7 +30,7 @@ public class Produit {
 	public Produit(){
 	}
 	
-	
+	//getters
 	public int getId() {
 		return id;
 	}
@@ -42,6 +42,20 @@ public class Produit {
 	}
 	public int getQte() {
 		return qte;
+	}
+	//setters
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+	public void setProduitNom(String produitNom) {
+		this.produitNom = produitNom;
+	}
+	public void setPrix(double prix) {
+		this.prix = prix;
+	}
+	public void setQte(int qte) {
+		this.qte = qte;
 	}
 	
 }

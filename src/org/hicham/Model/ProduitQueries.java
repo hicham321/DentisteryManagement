@@ -8,7 +8,7 @@ import javax.swing.DefaultComboBoxModel;
 import org.hibernate.Session;
 import org.hicham.Model.PatientQueries.MyClass;
 
-public class ProduitQueries {
+public class ProduitQueries extends UsefulMethods{
 	
 	public void addProduct(String nomProduit,double prix, int qte){
 		Session session = SessionsDB.getFactory().openSession();
@@ -40,7 +40,6 @@ public class ProduitQueries {
         for (int i = 0; i < listOfallProducts.size(); i++) {
         	listProductNames.add(listOfallProducts.get(i).getProduitNom());
 		}
-        System.out.println(listProductNames);
 		return listProductNames ;
 	}
 	public List<Integer>findProductIds(){
@@ -65,10 +64,29 @@ public class ProduitQueries {
         return listOfallProducts.get(id);
 	}
 	
-	public void addQteToProduct(int idProduct,int qteAdded){
-	    
+	public void addQteToProduct(int idProduct,int addedQte){
+		Produit produit= getProduct(idProduct);
+        int oldQte= produit.getQte();
+        int newQte= oldQte+addedQte;
+        produit.setQte(newQte);
+        //
+        Session session = SessionsDB.getFactory().openSession();
+		try {
+
+			//save patient object
+			session.beginTransaction();
+			session.saveOrUpdate(produit );
+			session.getTransaction().commit();
+
+		} finally {
+			session.close();
+		}
+		
 	}
 	public void sousQteToProduct(int idProduct,int qtesubtracted){
+		
+	}
+	public void modifyProduct(int idProduct){
 		
 	}
 	public class MyClass{

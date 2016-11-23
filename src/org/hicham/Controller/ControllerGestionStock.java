@@ -3,6 +3,8 @@ package org.hicham.Controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 
 import org.hicham.Model.Produit;
@@ -33,6 +35,8 @@ public class ControllerGestionStock {
 						, Double.parseDouble(gestionStockView.getTextPrixAjout().getText())
 						,0);
 				setEmptyAjoutProduitComponents();
+					refreshComboBox();
+				
 			}
 			if (e.getSource()== gestionStockView.getModifieItem()) {
 				
@@ -42,13 +46,20 @@ public class ControllerGestionStock {
 			}
             if (e.getSource()== gestionStockView.getAjoutQte()) {
 				//update query for product row
+            	int qteOfSelectedProduct= Integer.parseInt(gestionStockView.getQteAjout().getText());
+                changeQte(qteOfSelectedProduct);
+                refreshComboBox();
+                
 			}
             if (e.getSource()== gestionStockView.getSousQte()) {
-				
+            	//check if global qte is bigger than quatity subtracted
+            	int qteOfSelectedProduct= Integer.parseInt(gestionStockView.getQteAjout().getText());
+                changeQte(-qteOfSelectedProduct);
+                refreshComboBox();
 			}
             if (e.getSource()== gestionStockView.getProduitCombo()) {
-            	
-            	ShowInfoProduct(e);
+            	int selectedItem= selectedComboItem(e);
+            	showInfoProduct(selectedItem);
 			}
             if (e.getSource()== gestionStockView.getChoixBtn()) {
             	        gestionStockView.getPopmenu().show(gestionStockView.getChoixBtn(), 
@@ -63,15 +74,28 @@ public class ControllerGestionStock {
 			gestionStockView.getTextProduitAjout().setText("");
 
 		}
-		public void refreshLotComboBox()throws SQLException{
-			
+		public void setEmptyAjoutQteComponenets(){
+			gestionStockView.getQteAjout().setText("");
+			gestionStockView.getProduitCombo().setSelectedIndex(0);
 		}
-		public void ShowInfoProduct(ActionEvent e){
+		public void refreshComboBox(){
+			try{
+			DefaultComboBoxModel dftb=produitQueries.getComboModel();
+			gestionStockView.getProduitCombo().setModel(dftb);
+			}catch(Exception ex){
+				ex.printStackTrace();
+			}
+		}
+		public int selectedComboItem(ActionEvent e){
 			//get action from product combobox
 			JComboBox comboBox = (JComboBox) e.getSource();
 			int selected = comboBox.getSelectedIndex();
+			productId=selected;
+			return selected;
+		}
+		public void showInfoProduct(int selectedItem){
 			//get product
-			Produit produit=produitQueries.getProduct(selected);
+			Produit produit=produitQueries.getProduct(selectedItem);
 			String ProductName= produit.getProduitNom();
 			Double prixProduct=produit.getPrix();
 			Integer qte= produit.getQte();
@@ -82,9 +106,13 @@ public class ControllerGestionStock {
 		    //calculate prix total:
 			Double prixTotal= prixProduct*qte;
 			gestionStockView.getPrixTotal().setText(prixTotal.toString());
-
-
 		}
+		public void changeQte(int qte){
+			int selectedItem= productId;
+        	produitQueries.addQteToProduct(selectedItem, qte);
+        	setEmptyAjoutQteComponenets();
+		}
+		
 		
 	}
 	

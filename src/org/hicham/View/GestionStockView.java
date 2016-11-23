@@ -2,10 +2,14 @@ package org.hicham.View;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -107,14 +111,24 @@ public class GestionStockView extends JPanel{
 		panelAjoutqte.add(qteAjoutLab);
 		panelAjoutqte.add(qteAjout);
 		panelAjoutqte.add(ajoutQte);
+		panelAjoutqte.add(sousQte);
 		panelAjoutqte.add(choixBtn);
-		
+		//put image icon
+		try {
+			Image img = ImageIO.read(getClass().getResource("/resources/61456.png"));
+			Image newimg = img.getScaledInstance( 16, 16,  java.awt.Image.SCALE_SMOOTH ) ;  
+			choixBtn.setIcon(new ImageIcon(newimg));
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+
 		nomProduitLab.setBounds(5, 20, 100, 20);
 		produitCombo.setBounds(130, 20, 100, 20);
 		qteAjoutLab.setBounds(5, 50, 100, 20);
 		qteAjout.setBounds(130, 50, 100, 20);
 		ajoutQte.setBounds(130, 80, 100, 20);
-		choixBtn.setBounds(240, 20, 100, 20);
+		sousQte.setBounds(250, 80, 100, 20);
+		choixBtn.setBounds(240, 20, 30, 20);
 
 		
 		//Ajout Produit
