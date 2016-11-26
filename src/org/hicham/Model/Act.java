@@ -1,7 +1,10 @@
 package org.hicham.Model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,12 +21,22 @@ public class Act {
 	String act;
 	@Column (name="payement" ,nullable=false)
     double payement;
-	public Act(String act, double payement){
+	@Column (name="date")
+    Date dateRendezVous;
+	@ForeignKey(ndnd="") 
+	@Column (name="date")
+    int gh;
+
+	
+	public Act(String act, double payement, Date dateRendezVous){
 		this.payement=payement;
 		this.act= act;
+		this.dateRendezVous= dateRendezVous;
 	}
+	
 	public Act(){
 	}
+	
 	public int getId() {
 		return id;
 	}
@@ -41,6 +54,14 @@ public class Act {
 	}
 	public void setPayement(double payement) {
 		this.payement = payement;
+	}
+
+	public Date getDateRendezVous() {
+		return dateRendezVous;
+	}
+
+	public void setDateRendezVous(Date dateRendezVous) {
+		this.dateRendezVous = dateRendezVous;
 	}
 	
 

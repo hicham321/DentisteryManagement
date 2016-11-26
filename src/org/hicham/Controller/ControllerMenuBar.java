@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.DefaultComboBoxModel;
 
 import org.hicham.Model.ProduitQueries;
-import org.hicham.View.ActPatient;
+import org.hicham.View.ActPatientView;
 import org.hicham.View.GestionStockView;
 import org.hicham.View.InfoPatient;
 import org.hicham.View.MainFrame;
@@ -23,7 +23,7 @@ public class ControllerMenuBar {
 
 	Ordonance ordonance = new Ordonance();
 	InfoPatient infoPatient= new InfoPatient();
-	ActPatient actPatient= new ActPatient();
+	ActPatientView actPatient= new ActPatientView();
 	OdfPatient odfPatient= new OdfPatient();
     RecherchePatientView recherchePatientView= new RecherchePatientView();
     GestionStockView gestionStockView= new GestionStockView();

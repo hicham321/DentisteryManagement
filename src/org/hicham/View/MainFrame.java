@@ -14,7 +14,7 @@ public class MainFrame extends JFrame{
 	//cards to show in the frame
 	Ordonance ordonance= new Ordonance();
 	InfoPatient infoPatient= new InfoPatient();
-	ActPatient actPatient= new ActPatient();
+	ActPatientView actPatient= new ActPatientView();
 	OdfPatient odfPatient= new OdfPatient();
 	RecherchePatientView recherchePatientView= new RecherchePatientView();
 	

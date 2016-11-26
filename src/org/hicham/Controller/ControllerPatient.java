@@ -4,7 +4,7 @@ import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import org.hicham.View.ActPatient;
+import org.hicham.View.ActPatientView;
 import org.hicham.View.GestionStockView;
 import org.hicham.View.InfoPatient;
 import org.hicham.View.MainFrame;
@@ -18,7 +18,7 @@ import org.hicham.View.RecherchePatientView;
 public class ControllerPatient {
 	
 	InfoPatient infoPatient= new InfoPatient();
-	ActPatient actPatient= new ActPatient();
+	ActPatientView actPatient= new ActPatientView();
 	OdfPatient odfPatient= new OdfPatient();
 	Ordonance ordonance= new Ordonance();
     RecherchePatientView recherchePatientView= new RecherchePatientView();

@@ -2,14 +2,16 @@ package org.hicham.Main;
 
 import javax.swing.UIManager;
 
+import org.hicham.Controller.ControllerAct;
 import org.hicham.Controller.ControllerGestionStock;
 import org.hicham.Controller.ControllerInfoPatient;
 import org.hicham.Controller.ControllerMenuBar;
 import org.hicham.Controller.ControllerOrdonance;
 import org.hicham.Controller.ControllerPatient;
+import org.hicham.Model.ActQueries;
 import org.hicham.Model.PatientQueries;
 import org.hicham.Model.ProduitQueries;
-import org.hicham.View.ActPatient;
+import org.hicham.View.ActPatientView;
 import org.hicham.View.GestionStockView;
 import org.hicham.View.InfoPatient;
 import org.hicham.View.MainFrame;
@@ -35,10 +37,11 @@ public class Main {
 		//models
 		PatientQueries pq= new PatientQueries();
 		ProduitQueries prq= new ProduitQueries();
+		ActQueries aq= new ActQueries();
 		
 		//views
 		InfoPatient ip= new InfoPatient();
-		ActPatient ap= new ActPatient();
+		ActPatientView ap= new ActPatientView();
 		OdfPatient op= new OdfPatient();
 		Ordonance o= new Ordonance();
 		RecherchePatientView rp= new RecherchePatientView();
@@ -48,6 +51,7 @@ public class Main {
 		MainFrame mf= new MainFrame(p,gs,mb);
 		
 		//controllers
+		ControllerAct ca= new ControllerAct(ap, aq);
 		ControllerPatient cp= new ControllerPatient(mf, p,o);
 		ControllerOrdonance co= new ControllerOrdonance(mf, p, o);
 		ControllerMenuBar cmb= new ControllerMenuBar(mf,mb , p, o,gs,prq);

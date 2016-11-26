@@ -25,12 +25,12 @@ public class Patient extends JPanel{
 	JTabbedPane tabbedPane= new JTabbedPane();
 	
 	InfoPatient infoPatient= new InfoPatient();
-	ActPatient actPatient= new ActPatient();
+	ActPatientView actPatient= new ActPatientView();
 	OdfPatient odfPatient= new OdfPatient();
     Ordonance ordonance= new Ordonance();
     RecherchePatientView recherchePatientView= new RecherchePatientView();
 
-	public Patient (InfoPatient infoPatient,ActPatient actPatient, OdfPatient odfPatient, Ordonance ordonance, RecherchePatientView recherchePatientView){
+	public Patient (InfoPatient infoPatient,ActPatientView actPatient, OdfPatient odfPatient, Ordonance ordonance, RecherchePatientView recherchePatientView){
 		
 		this.infoPatient= infoPatient;
 		this.actPatient= actPatient;

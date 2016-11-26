@@ -4,7 +4,7 @@ import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import org.hicham.View.ActPatient;
+import org.hicham.View.ActPatientView;
 import org.hicham.View.GestionStockView;
 import org.hicham.View.InfoPatient;
 import org.hicham.View.MainFrame;
@@ -19,7 +19,7 @@ public class ControllerOrdonance {
 	
 	//If we don't need teh main frame or any of the other frames than we can just delete the corresponding fields
 	InfoPatient infoPatient= new InfoPatient();
-	ActPatient actPatient= new ActPatient();
+	ActPatientView actPatient= new ActPatientView();
 	OdfPatient odfPatient= new OdfPatient();
 	Ordonance ordonance= new Ordonance();
     RecherchePatientView recherchePatientView= new RecherchePatientView();
