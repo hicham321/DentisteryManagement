@@ -40,6 +40,8 @@ public class GestionStockView extends JPanel{
 	JLabel qteAjoutLab= new JLabel("Qte a Ajouté: ");
 	JTextField qteAjout= new JTextField();
 	
+	JLabel qteErrorLab= new JLabel("*");
+
 	JButton ajoutQte= new JButton("Ajouté qte");
 	JButton sousQte= new JButton("soustraction qte");
 	
@@ -113,6 +115,7 @@ public class GestionStockView extends JPanel{
 		panelAjoutqte.add(ajoutQte);
 		panelAjoutqte.add(sousQte);
 		panelAjoutqte.add(choixBtn);
+		panelAjoutqte.add(qteErrorLab);
 		//put image icon
 		try {
 			Image img = ImageIO.read(getClass().getResource("/resources/61456.png"));
@@ -126,10 +129,13 @@ public class GestionStockView extends JPanel{
 		produitCombo.setBounds(130, 20, 100, 20);
 		qteAjoutLab.setBounds(5, 50, 100, 20);
 		qteAjout.setBounds(130, 50, 100, 20);
+		qteErrorLab.setBounds(250, 50, 50, 20);
 		ajoutQte.setBounds(130, 80, 100, 20);
 		sousQte.setBounds(250, 80, 100, 20);
 		choixBtn.setBounds(240, 20, 30, 20);
-
+		
+		qteErrorLab.setForeground(Color.red);
+		qteErrorLab.setVisible(false);
 		
 		//Ajout Produit
 		panelAjoutProduit.add(produitAjoutLab);
@@ -268,6 +274,10 @@ public class GestionStockView extends JPanel{
 
 	public JLabel getPrixTotal() {
 		return prixTotal;
+	}
+
+	public JLabel getQteErrorLab() {
+		return qteErrorLab;
 	}
 	
 	

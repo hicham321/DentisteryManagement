@@ -54,9 +54,20 @@ public class ControllerGestionStock {
             if (e.getSource()== gestionStockView.getSousQte()) {
             	//check if global qte is bigger than quatity subtracted
             	int qteOfSelectedProduct= Integer.parseInt(gestionStockView.getQteAjout().getText());
-                changeQte(-qteOfSelectedProduct);
-                refreshComboBox();
-			}
+            	//
+            	Produit produit=produitQueries.getProduct(productId);
+            	int qteGlobale= produit.getQte();
+            	if (qteOfSelectedProduct>qteGlobale) {
+            		//error message
+            		gestionStockView.getQteErrorLab().setVisible(true);
+            	}
+            	else{
+            		changeQte(-qteOfSelectedProduct);
+            		refreshComboBox();
+            		gestionStockView.getQteErrorLab().setVisible(false);
+
+            	}
+            }
             if (e.getSource()== gestionStockView.getProduitCombo()) {
             	int selectedItem= selectedComboItem(e);
             	showInfoProduct(selectedItem);

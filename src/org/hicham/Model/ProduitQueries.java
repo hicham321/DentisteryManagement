@@ -106,7 +106,6 @@ public class ProduitQueries extends UsefulMethods{
 	public DefaultComboBoxModel getComboModel(){
 		return comboBoxModel(productNames());
 	}
-
 	
 	
 
