@@ -1,5 +1,6 @@
 package org.hicham.Controller;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -60,11 +61,14 @@ public class ControllerGestionStock {
             	if (qteOfSelectedProduct>qteGlobale) {
             		//error message
             		gestionStockView.getQteErrorLab().setVisible(true);
+            		gestionStockView.getQteAjout().setForeground(Color.red);
             	}
             	else{
             		changeQte(-qteOfSelectedProduct);
             		refreshComboBox();
             		gestionStockView.getQteErrorLab().setVisible(false);
+            		gestionStockView.getQteAjout().setForeground(Color.black);
+
 
             	}
             }
