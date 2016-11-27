@@ -8,6 +8,8 @@ import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -23,7 +25,8 @@ public class Act {
     double payement;
 	@Column (name="date")
     Date dateRendezVous;
-	@ForeignKey(ndnd="") 
+	@OneToMany
+	@JoinColumn(name="CUST_ID") 
 	@Column (name="date")
     int gh;
 
