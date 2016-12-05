@@ -30,14 +30,28 @@ public class Ordonance extends JPanel {
 	
 
 	public Ordonance() {
-		this.setLayout(new GridBagLayout());
-		this.setBackground(Color.WHITE);
+		this.setLayout( null);
+		this.setBackground(Color.decode("#d2fdf9"));
 		
 		this.nomMedModel.addElement("");
 		AutoCompleteDecorator.decorate(nomMed);
 		nomMed.setSelectedIndex(0);
 		
-		GridBagConstraints c= new GridBagConstraints();
+		this.add(nomMedlab);
+		this.add(nomMed);
+		this.add(situationLab);
+		this.add(situation);
+		this.add(ok);
+		
+		nomMedlab.setBounds(30, 50, 120, 20);
+		nomMed.setBounds(150, 50, 200, 20);
+		situationLab.setBounds(30, 90, 100, 20);
+		situation.setBounds(150, 90, 200, 20);
+        ok.setBounds(70,140, 200, 20);
+
+		
+		
+		/*GridBagConstraints c= new GridBagConstraints();
 		c.anchor= GridBagConstraints.LINE_END;
         c.gridx=0;
         c.gridy=0;
@@ -52,7 +66,7 @@ public class Ordonance extends JPanel {
         c.gridy=+2;
         this.add(ok, c);
         c.gridy=+2;
-       
+       */
 
 	}
 
@@ -60,7 +74,17 @@ public class Ordonance extends JPanel {
 
 		this.ok.addActionListener(listener);
 	}
-	public JButton getBtn(){
-		return this.ok;
+
+	public JComboBox getNomMed() {
+		return nomMed;
 	}
+
+	public JTextField getSituation() {
+		return situation;
+	}
+
+	public JButton getOk() {
+		return ok;
+	}
+	
 }

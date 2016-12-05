@@ -32,7 +32,10 @@ public class ActPatientView extends JPanel {
 	final JComboBox payementCombo = new JComboBox(payementModel);    
 	private JScrollPane payementListScrol = new JScrollPane(payementCombo);
 	
-	JButton ok= new JButton("ok");
+	JButton ok= new JButton("Ok");
+	JButton annule= new JButton("Annulé");
+
+	
 	JXDatePicker datePicker = new JXDatePicker();
     JSpinner timePicker= new JSpinner(new SpinnerDateModel());
     
@@ -48,7 +51,7 @@ public class ActPatientView extends JPanel {
         datePicker.setDate(Calendar.getInstance().getTime());
         datePicker.setFormats(new SimpleDateFormat("dd.MM.yyyy"));
         
-        JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(timePicker, "HH:mm:ss");
+        JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(timePicker, "HH:mm");
         timePicker.setEditor(timeEditor);
         timePicker.setValue(new Date()); // will only show the current time
         
@@ -60,6 +63,7 @@ public class ActPatientView extends JPanel {
         panelAct.add(dateRendezVousLab);
         panelAct.add(payementLab);
         panelAct.add(payementCombo);
+        panelAct.add(annule);
 
 
         actLab.setBounds(30, 50, 100, 20);
@@ -67,6 +71,12 @@ public class ActPatientView extends JPanel {
         dateRendezVousLab.setBounds(30, 90, 100, 20);
         datePicker.setBounds(150, 90, 100, 20);
         timePicker.setBounds(270, 90, 100, 20);
+        payementLab.setBounds(30, 140, 100, 20);
+        payementCombo.setBounds(150, 140, 100, 20);
+        ok.setBounds(30, 190, 100, 20);
+        annule.setBounds(150, 190, 100, 20);
+
+
 
         panelAct.setBounds(0, 0, 500, 500);
 
