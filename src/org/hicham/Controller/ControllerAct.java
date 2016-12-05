@@ -23,6 +23,7 @@ public class ControllerAct {
 	public void actionPerformed(ActionEvent arg0) {
 		
 		if(arg0.getSource()== actPatientView.getOk()){
+			String actText=actPatientView.getActText().toString();
 			
 		}
 		
