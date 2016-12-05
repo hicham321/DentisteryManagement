@@ -73,6 +73,7 @@ public class Ordonance extends JPanel {
 	public void addOrdonanceActionListener(ActionListener listener){
 
 		this.ok.addActionListener(listener);
+		this.nomMed.addActionListener(listener);
 	}
 
 	public JComboBox getNomMed() {

@@ -40,8 +40,9 @@ public class ControllerOrdonance {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if(e.getSource()== ordonance.getBtn()){
-				//showOrdonanceCard();
+			if(e.getSource()== ordonance.getOk()){
+				//code for showing ordonance
+				//temporarily for adding records to the database
 			}
 		}
 
