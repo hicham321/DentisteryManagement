@@ -10,6 +10,8 @@ public class SessionsDB {
 	static Configuration configuration = new Configuration().configure("/resources/hibernate.cfg.xml")
 			.addAnnotatedClass(Patient.class)
 			.addAnnotatedClass(Produit.class)
+			.addAnnotatedClass(Medicament.class)
+			
 			;
 	static StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
 	static SessionFactory factory = configuration.buildSessionFactory(builder.build());

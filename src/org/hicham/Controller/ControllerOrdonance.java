@@ -3,7 +3,11 @@ package org.hicham.Controller;
 import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
+import javax.swing.DefaultComboBoxModel;
+
+import org.hicham.Model.MedicamentQueries;
 import org.hicham.View.ActPatientView;
 import org.hicham.View.GestionStockView;
 import org.hicham.View.InfoPatient;
@@ -27,12 +31,14 @@ public class ControllerOrdonance {
 	Patient patient= new Patient(infoPatient,actPatient,odfPatient,ordonance,recherchePatientView);
 	MenuBar menuBar= new MenuBar();
     GestionStockView gestionStockView= new GestionStockView();
+    MedicamentQueries medicamentQueries= new MedicamentQueries();
 
 	MainFrame mainFrame= new MainFrame(patient,gestionStockView,menuBar);
-	public ControllerOrdonance(MainFrame mainFrame,Patient patient,Ordonance ordonance){
+	public ControllerOrdonance(MainFrame mainFrame,Patient patient,Ordonance ordonance ,MedicamentQueries medicamentQueries){
 		this.patient= patient;
 		this.ordonance= ordonance;
 		this.mainFrame= mainFrame;
+		this.medicamentQueries= medicamentQueries;
 		this.ordonance.addOrdonanceActionListener(new OrdonanceActionListener());
 	}
 
@@ -43,6 +49,16 @@ public class ControllerOrdonance {
 			if(e.getSource()== ordonance.getOk()){
 				//code for showing ordonance
 				//temporarily for adding records to the database
+				try{
+					
+				List<String>med =medicamentQueries.listOfMeds();
+				medicamentQueries.addBatchMedicament(med);
+				DefaultComboBoxModel dcm=medicamentQueries.comboBoxModel(med);
+				ordonance.getNomMed().setModel(dcm);
+				
+				}catch(Exception ex){
+					ex.printStackTrace();
+				}
 			}
 		}
 

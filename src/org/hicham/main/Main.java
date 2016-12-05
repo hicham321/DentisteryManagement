@@ -9,6 +9,7 @@ import org.hicham.Controller.ControllerMenuBar;
 import org.hicham.Controller.ControllerOrdonance;
 import org.hicham.Controller.ControllerPatient;
 import org.hicham.Model.ActQueries;
+import org.hicham.Model.MedicamentQueries;
 import org.hicham.Model.PatientQueries;
 import org.hicham.Model.ProduitQueries;
 import org.hicham.View.ActPatientView;
@@ -38,6 +39,7 @@ public class Main {
 		PatientQueries pq= new PatientQueries();
 		ProduitQueries prq= new ProduitQueries();
 		ActQueries aq= new ActQueries();
+		MedicamentQueries mq= new MedicamentQueries();
 		
 		//views
 		InfoPatient ip= new InfoPatient();
@@ -53,7 +55,7 @@ public class Main {
 		//controllers
 		ControllerAct ca= new ControllerAct(ap, aq);
 		ControllerPatient cp= new ControllerPatient(mf, p,o);
-		ControllerOrdonance co= new ControllerOrdonance(mf, p, o);
+		ControllerOrdonance co= new ControllerOrdonance(mf, p, o,mq);
 		ControllerMenuBar cmb= new ControllerMenuBar(mf,mb , p, o,gs,prq);
 		ControllerInfoPatient cip= new ControllerInfoPatient(ip, pq,rp);
 		ControllerGestionStock cgs= new ControllerGestionStock(gs, prq);
