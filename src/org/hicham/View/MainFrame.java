@@ -18,14 +18,18 @@ public class MainFrame extends JFrame{
 	OdfPatient odfPatient= new OdfPatient();
 	RecherchePatientView recherchePatientView= new RecherchePatientView();
 	
-	public Patient card1= new Patient(infoPatient,actPatient,odfPatient,ordonance,recherchePatientView);
+	public HomePanel card1= new HomePanel();
 	
-	public GestionStockView card2= new GestionStockView();
+	public Patient card2= new Patient(infoPatient,actPatient,odfPatient,ordonance,recherchePatientView);
+	
+	public GestionStockView card3= new GestionStockView();
+
 
 
 	private MenuBar menuBar= new MenuBar();
 
-	public MainFrame(Patient card1,GestionStockView card2 , MenuBar menuBar){
+	public MainFrame(HomePanel card1,Patient card2,GestionStockView card3 , MenuBar menuBar){
+		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setBounds(0,0,screenSize.width, screenSize.height);
 
@@ -35,10 +39,13 @@ public class MainFrame extends JFrame{
 		this.setJMenuBar(this.menuBar.menu);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		cards = new JPanel(new CardLayout());
-		this.card1= card1;
+		this.card1=card1;
 		this.card2= card2;
+		this.card3= card3;
 		cards.add(this.card1, "Card 1");
+
 		cards.add(this.card2, "Card 2");
+		cards.add(this.card3, "Card 3");
 
 		getContentPane().add(cards); 
 		//setEnabled(false);

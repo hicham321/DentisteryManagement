@@ -10,6 +10,7 @@ import javax.swing.DefaultComboBoxModel;
 import org.hicham.Model.MedicamentQueries;
 import org.hicham.View.ActPatientView;
 import org.hicham.View.GestionStockView;
+import org.hicham.View.HomePanel;
 import org.hicham.View.InfoPatient;
 import org.hicham.View.MainFrame;
 import org.hicham.View.MenuBar;
@@ -32,11 +33,13 @@ public class ControllerOrdonance {
 	MenuBar menuBar= new MenuBar();
     GestionStockView gestionStockView= new GestionStockView();
     MedicamentQueries medicamentQueries= new MedicamentQueries();
+    HomePanel homePanel= new HomePanel();
 
-	MainFrame mainFrame= new MainFrame(patient,gestionStockView,menuBar);
-	public ControllerOrdonance(MainFrame mainFrame,Patient patient,Ordonance ordonance ,MedicamentQueries medicamentQueries){
+	MainFrame mainFrame= new MainFrame( homePanel,patient,gestionStockView,menuBar);
+	public ControllerOrdonance(MainFrame mainFrame,HomePanel homePanel,Patient patient,Ordonance ordonance ,MedicamentQueries medicamentQueries){
 		this.patient= patient;
 		this.ordonance= ordonance;
+		this.homePanel=homePanel;
 		this.mainFrame= mainFrame;
 		this.medicamentQueries= medicamentQueries;
 		this.ordonance.addOrdonanceActionListener(new OrdonanceActionListener());

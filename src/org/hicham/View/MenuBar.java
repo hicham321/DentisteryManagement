@@ -19,7 +19,9 @@ public class MenuBar {
 
 	JMenuItem motpasse = new JMenuItem("Changé Le Mot De passe");
 
-	JMenu patient = new JMenu("Patient");
+	JMenu menuPatient = new JMenu("Patient");
+	JMenuItem infoPatientItem = new JMenuItem("Info Patient ");
+	JMenuItem rendezVousPatient = new JMenuItem("Rendez Vous ");
 
 	JMenu ordonance = new JMenu("Ordonance");
 
@@ -47,12 +49,13 @@ public class MenuBar {
 		
 		menuGestionStock.add(gestionStockItem);
 		menuGestionStock.add(stat);
-
-		
+        
+		menuPatient.add(infoPatientItem);
+		menuPatient.add(rendezVousPatient);
 		
 
 		menu.add(menuouvrir);
-		menu.add(patient);
+		menu.add(menuPatient);
 		menu.add(ordonance);
 		menu.add(menuGestionStock);
 		menu.add(labo);
@@ -67,7 +70,11 @@ public class MenuBar {
 		this.motpasse.addActionListener(listener);
 		this.quiter.addActionListener(listener);
 
-		this.patient.addActionListener(listener);
+		this.menuPatient.addActionListener(listener);
+		
+		this.rendezVousPatient.addActionListener(listener);
+		this.infoPatientItem.addActionListener(listener);
+
 
 		this.ordonance.addActionListener(listener);
 
@@ -106,7 +113,7 @@ public class MenuBar {
 	}
 
 	public JMenuItem getPatient() {
-		return patient;
+		return menuPatient;
 	}
 
 	public JMenuItem getOrdonance() {
@@ -135,6 +142,14 @@ public class MenuBar {
 
 	public JMenuItem getStat() {
 		return stat;
+	}
+
+	public JMenuItem getInfoPatientItem() {
+		return infoPatientItem;
+	}
+
+	public JMenuItem getRendezVousPatient() {
+		return rendezVousPatient;
 	}
 	
 

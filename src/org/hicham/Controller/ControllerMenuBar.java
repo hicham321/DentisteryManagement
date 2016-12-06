@@ -9,6 +9,7 @@ import javax.swing.DefaultComboBoxModel;
 import org.hicham.Model.ProduitQueries;
 import org.hicham.View.ActPatientView;
 import org.hicham.View.GestionStockView;
+import org.hicham.View.HomePanel;
 import org.hicham.View.InfoPatient;
 import org.hicham.View.MainFrame;
 import org.hicham.View.MenuBar;
@@ -27,19 +28,22 @@ public class ControllerMenuBar {
 	OdfPatient odfPatient= new OdfPatient();
     RecherchePatientView recherchePatientView= new RecherchePatientView();
     GestionStockView gestionStockView= new GestionStockView();
-
+   
     
 	Patient patient= new Patient(infoPatient,actPatient,odfPatient,ordonance,recherchePatientView);
+	public HomePanel homePanel= new HomePanel();
+
 	ProduitQueries produitQueries= new ProduitQueries();
 
-	MainFrame mainFrame= new MainFrame(patient,gestionStockView,menuBar);
+	MainFrame mainFrame= new MainFrame(homePanel,patient,gestionStockView,menuBar);
 
-	public ControllerMenuBar(MainFrame mainFrame,MenuBar menuBar,Patient patient,Ordonance ordonance,GestionStockView gestionStockView,ProduitQueries produitQueries){
+	public ControllerMenuBar(MainFrame mainFrame,HomePanel homePanel,MenuBar menuBar,Patient patient,Ordonance ordonance,GestionStockView gestionStockView,ProduitQueries produitQueries){
 
 		this.patient= patient;
 		this.ordonance= ordonance;
 		this.gestionStockView=gestionStockView;
 		this.menuBar= menuBar;
+		this.homePanel= homePanel;
 		this.mainFrame= mainFrame;
 		this.produitQueries=produitQueries;
 		this.menuBar.addMenuBarActionListener(new MenuBarActionListener() );
@@ -55,6 +59,14 @@ public class ControllerMenuBar {
 			}
 			if (e.getSource()== menuBar.getPatient()) {
 				//show patient card
+
+			}
+			if (e.getSource()== menuBar.getInfoPatientItem()) {
+				//show info patient card
+				showInfoPatientCard();
+			}
+			if (e.getSource()== menuBar.getRendezVousPatient()) {
+				//show rendez vous card
 
 			}
 			if (e.getSource()== menuBar.getLabo()) {
@@ -93,6 +105,11 @@ public class ControllerMenuBar {
 		}
 	}
 	public void showGestionStockCard(){
+		CardLayout cardLayout = (CardLayout) mainFrame.cards.getLayout();
+		cardLayout.show(mainFrame.cards, "Card 3");	
+
+	}
+	public void showInfoPatientCard(){
 		CardLayout cardLayout = (CardLayout) mainFrame.cards.getLayout();
 		cardLayout.show(mainFrame.cards, "Card 2");	
 

@@ -14,6 +14,7 @@ import org.hicham.Model.PatientQueries;
 import org.hicham.Model.ProduitQueries;
 import org.hicham.View.ActPatientView;
 import org.hicham.View.GestionStockView;
+import org.hicham.View.HomePanel;
 import org.hicham.View.InfoPatient;
 import org.hicham.View.MainFrame;
 import org.hicham.View.MenuBar;
@@ -50,13 +51,14 @@ public class Main {
 		Patient p = new Patient(ip,ap,op,o,rp);
 		GestionStockView gs= new GestionStockView();
 		MenuBar mb= new MenuBar();
-		MainFrame mf= new MainFrame(p,gs,mb);
+		HomePanel hp= new HomePanel();
+		MainFrame mf= new MainFrame(hp,p,gs,mb);
 		
 		//controllers
 		ControllerAct ca= new ControllerAct(ap, aq);
 		ControllerPatient cp= new ControllerPatient(mf, p,o);
-		ControllerOrdonance co= new ControllerOrdonance(mf, p, o,mq);
-		ControllerMenuBar cmb= new ControllerMenuBar(mf,mb , p, o,gs,prq);
+		ControllerOrdonance co= new ControllerOrdonance(mf,hp, p, o,mq);
+		ControllerMenuBar cmb= new ControllerMenuBar(mf,hp,mb , p, o,gs,prq);
 		ControllerInfoPatient cip= new ControllerInfoPatient(ip, pq,rp);
 		ControllerGestionStock cgs= new ControllerGestionStock(gs, prq);
 		mf.setVisible(true);
