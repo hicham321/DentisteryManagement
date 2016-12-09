@@ -18,6 +18,8 @@ import org.hicham.View.Ordonance;
 import org.hicham.View.Patient;
 import org.hicham.View.RecherchePatientView;
 
+import jdk.internal.org.objectweb.asm.tree.TryCatchBlockNode;
+
 public class ControllerMenuBar {
 
 	MenuBar menuBar= new MenuBar();
@@ -32,6 +34,8 @@ public class ControllerMenuBar {
     
 	Patient patient= new Patient(infoPatient,actPatient,odfPatient,ordonance,recherchePatientView);
 	public HomePanel homePanel= new HomePanel();
+		
+	
 
 	ProduitQueries produitQueries= new ProduitQueries();
 

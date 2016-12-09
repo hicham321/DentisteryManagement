@@ -1,6 +1,7 @@
 package org.hicham.Model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,8 +10,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.ManyToAny;
 
 @Entity
 @Table(name="Act")
@@ -24,12 +30,13 @@ public class Act {
 	@Column (name="payement" ,nullable=false)
     double payement;
 	@Column (name="date")
+	@Temporal(value=TemporalType.DATE)
     Date dateRendezVous;
-	@OneToMany
-	@JoinColumn(name="CUST_ID") 
-	@Column (name="date")
-    int gh;
-
+	@Column (name="temp")
+    String tempRendezVous;
+	@ManyToOne
+    @JoinColumn(name="id_Patient")
+    private Patient patient;
 	
 	public Act(String act, double payement, Date dateRendezVous){
 		this.payement=payement;
@@ -39,22 +46,27 @@ public class Act {
 	
 	public Act(){
 	}
-	
+
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	public String getAct() {
 		return act;
 	}
+
 	public void setAct(String act) {
 		this.act = act;
 	}
+
 	public double getPayement() {
 		return payement;
 	}
+
 	public void setPayement(double payement) {
 		this.payement = payement;
 	}
@@ -66,8 +78,24 @@ public class Act {
 	public void setDateRendezVous(Date dateRendezVous) {
 		this.dateRendezVous = dateRendezVous;
 	}
-	
+
+	public String getTempRendezVous() {
+		return tempRendezVous;
+	}
+
+	public void setTempRendezVous(String tempRendezVous) {
+		this.tempRendezVous = tempRendezVous;
+	}
 
 	
+	
+	public Patient getPatient() {
+		return patient;
+	}
+
+	public void setPatient(Patient patient) {
+		this.patient = patient;
+	}
+
 	
 }

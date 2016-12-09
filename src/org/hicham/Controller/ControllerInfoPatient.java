@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.DefaultComboBoxModel;
 
+import org.hicham.Model.Patient;
 import org.hicham.Model.PatientQueries;
 import org.hicham.View.InfoPatient;
 import org.hicham.View.RecherchePatientView;
@@ -16,6 +17,9 @@ public class ControllerInfoPatient {
 	PatientQueries patientQueries= new PatientQueries();
 	RecherchePatientView recherchePatientView= new RecherchePatientView();
 	boolean errorFlag= false;
+	
+	Patient patient;
+	
 	
 	public ControllerInfoPatient(InfoPatient infoPatient, PatientQueries patientQueries ,RecherchePatientView recherchePatientView){
 		
@@ -34,7 +38,16 @@ public class ControllerInfoPatient {
 				DefaultComboBoxModel dftb=patientQueries.getComboModel();
 				recherchePatientView.getRech().setModel(dftb);
 				
-				if(errorFlag==false){
+				
+				patient= new Patient (infoPatient.getNom().getText()
+						,infoPatient.getPrenom().getText()
+						,Integer.parseInt(infoPatient.getAge().getText())
+						,infoPatient.getAddress().getText()
+						,Integer.parseInt(infoPatient.getTel().getText())
+						,infoPatient.getTeinte().getSelectedItem().toString()
+						,infoPatient.getSex().getSelectedItem().toString()
+						,infoPatient.getAnticident().getText()
+						,infoPatient.getFonction().getText());
 				patientQueries.addPatient(infoPatient.getNom().getText()
 						,infoPatient.getPrenom().getText()
 						,Integer.parseInt(infoPatient.getAge().getText())
@@ -44,18 +57,18 @@ public class ControllerInfoPatient {
 						,infoPatient.getSex().getSelectedItem().toString()
 						,infoPatient.getAnticident().getText()
 						,infoPatient.getFonction().getText());
-				
+
 				setFieldsEmpty();
-				}
+
 			}
 			if (e.getSource()== infoPatient.getModifie()) {
-				
+
 			}
 		}
+
+		//condition methods for patient:
 		
-		//condition medthods for patient:
-		
-		//setting the textfields to empty after clicking ok
+		//setting the text fields to empty after clicking ok
 		public void setFieldsEmpty(){
 			infoPatient.getNom().setText("");
 			infoPatient.getPrenom().setText("");
@@ -67,6 +80,8 @@ public class ControllerInfoPatient {
 			infoPatient.getAnticident().setText("");
 			infoPatient.getFonction().setText("");
 		}
+		
+		
 		public void nomCondition(){
 			if (infoPatient.getNom().getText().matches("[ \t]+") || "".equals(infoPatient.getNom().getText())) {
 				infoPatient.getErrorLabNom().setVisible(true);
@@ -108,6 +123,9 @@ public class ControllerInfoPatient {
 			}
 		}
 		
+	}
+	public Patient getPatientAct(){
+		return patient;
 	}
 
 }

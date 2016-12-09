@@ -49,6 +49,7 @@ public class MainFrame extends JFrame{
 
 		getContentPane().add(cards); 
 		//setEnabled(false);
+		this.pack();
 	}
 
 }

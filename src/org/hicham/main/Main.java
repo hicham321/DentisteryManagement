@@ -55,11 +55,11 @@ public class Main {
 		MainFrame mf= new MainFrame(hp,p,gs,mb);
 		
 		//controllers
-		ControllerAct ca= new ControllerAct(ap, aq);
+		ControllerInfoPatient cip= new ControllerInfoPatient(ip, pq,rp);
+		ControllerAct ca= new ControllerAct(ap, aq );
 		ControllerPatient cp= new ControllerPatient(mf, p,o);
 		ControllerOrdonance co= new ControllerOrdonance(mf,hp, p, o,mq);
 		ControllerMenuBar cmb= new ControllerMenuBar(mf,hp,mb , p, o,gs,prq);
-		ControllerInfoPatient cip= new ControllerInfoPatient(ip, pq,rp);
 		ControllerGestionStock cgs= new ControllerGestionStock(gs, prq);
 		mf.setVisible(true);
 	}

@@ -4,14 +4,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import org.hicham.Model.ActQueries;
+import org.hicham.Model.PatientQueries;
 import org.hicham.View.ActPatientView;
+import org.hicham.View.InfoPatient;
+import org.hicham.View.RecherchePatientView;
 
 public class ControllerAct {
 	
 	ActPatientView actPatientView= new ActPatientView();
 	ActQueries actQueries= new ActQueries();
 	
-	public ControllerAct(ActPatientView actPatientView,ActQueries actQueries){
+	public ControllerAct(ActPatientView actPatientView,ActQueries actQueries  ){
 		this.actPatientView= actPatientView;
 		this.actQueries= actQueries;
 		this.actPatientView.addActPatientViewActionListener(new ActPatientViewActionListener() );

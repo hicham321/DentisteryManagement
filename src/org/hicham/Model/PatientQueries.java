@@ -13,7 +13,7 @@ import org.hibernate.cfg.Configuration;
 
 
 public class PatientQueries {
-	Configuration configuration = new Configuration().configure("/resources/hibernate.cfg.xml").addAnnotatedClass(Patient.class);
+	Configuration configuration = new Configuration().configure("/resources/hibernate.cfg.xml").addAnnotatedClass(Patient.class).addAnnotatedClass(Act.class);
 	StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
 	SessionFactory factory = configuration.buildSessionFactory(builder.build());
 	

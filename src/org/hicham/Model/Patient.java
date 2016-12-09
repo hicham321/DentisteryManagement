@@ -1,10 +1,16 @@
 package org.hicham.Model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
@@ -35,7 +41,13 @@ public class Patient {
 	@Column (name="Anticident")
 	String anticident;
 	@Column (name="Fonction")
-	String fonction; 
+	String fonction;
+	
+	@OneToMany(targetEntity=Act.class, mappedBy="patient",cascade=CascadeType.ALL,fetch= FetchType.EAGER)
+	private List<Act> actList;
+
+	
+	
 	public Patient(String nom, String prenom, int age, String address, int tel, String teinte, String sex, String anticident,String fonction){
 		this.nom= nom;
 		this.prenom= prenom;
@@ -80,5 +92,15 @@ public class Patient {
 	public String getFonction() {
 		return fonction;
 	}
-
+	
+	
+	public List<Act> getActList() {
+		return actList;
+	}
+	public void setActList(List<Act> actList) {
+		this.actList = actList;
+	}
+	
+    
+	
 }
