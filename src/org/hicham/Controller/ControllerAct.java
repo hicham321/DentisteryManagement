@@ -2,9 +2,14 @@ package org.hicham.Controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileFilter;
 import java.util.Date;
 
 import javax.accessibility.AccessibleTableModelChange;
+import javax.imageio.ImageIO;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.hicham.Model.Act;
 import org.hicham.Model.ActQueries;
@@ -13,6 +18,8 @@ import org.hicham.Model.PatientQueries;
 import org.hicham.View.ActPatientView;
 import org.hicham.View.InfoPatient;
 import org.hicham.View.RecherchePatientView;
+
+import javafx.stage.FileChooser;
 
 public class ControllerAct {
 
@@ -28,6 +35,9 @@ public class ControllerAct {
 	
 	Act currentAct= new Act();
     
+	int returnVal;
+	JFileChooser filechooser= new JFileChooser();
+	File file;
 	public ControllerAct(ActPatientView actPatientView,ActQueries actQueries,PatientQueries patientQueries ,ControllerInfoPatient controllerInfoPatient){
 		
 		this.actPatientView= actPatientView;
@@ -56,6 +66,16 @@ public class ControllerAct {
 				
 				
 			}
+			if (arg0.getSource()==actPatientView.getOuvrir()) {
+				FileNameExtensionFilter imageFilter = new FileNameExtensionFilter( "Image files", ImageIO.getReaderFileSuffixes());
+				filechooser.addChoosableFileFilter(imageFilter);
+				filechooser.setAcceptAllFileFilterUsed(false);
+				returnVal = filechooser.showOpenDialog(null);
+				if(returnVal == JFileChooser.APPROVE_OPTION){
+					file = filechooser.getSelectedFile();
+				}
+			}
+
 
 		}
 

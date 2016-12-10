@@ -27,13 +27,15 @@ public class Act {
 	int id;
 	@Column (name="act" ,nullable=false)
 	String act;
-	@Column (name="payement" ,nullable=false)
+	@Column (name="payement" ,nullable=false,length=1000)
     double payement;
 	@Column (name="date")
 	@Temporal(value=TemporalType.DATE)
     Date dateRendezVous;
 	@Column (name="temp")
     String tempRendezVous;
+	@Column (name="lienImageRadio",nullable= true)
+	String lienImageRadio;
 	@ManyToOne
     @JoinColumn(name="id_Patient")
     private Patient patient;
@@ -87,9 +89,15 @@ public class Act {
 	public void setTempRendezVous(String tempRendezVous) {
 		this.tempRendezVous = tempRendezVous;
 	}
+	
+	public String getLienImageRadio() {
+		return lienImageRadio;
+	}
 
-	
-	
+	public void setLienImageRadio(String lienImageRadio) {
+		this.lienImageRadio = lienImageRadio;
+	}
+
 	public Patient getPatient() {
 		return patient;
 	}

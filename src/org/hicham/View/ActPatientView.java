@@ -40,6 +40,8 @@ public class ActPatientView extends JPanel {
 	JXDatePicker datePicker = new JXDatePicker();
     JSpinner timePicker= new JSpinner(new SpinnerDateModel());
     
+    private JButton ouvrir= new JButton("Image");
+    
 	public ActPatientView(){
 		
 		this.setLayout(null);
@@ -47,7 +49,18 @@ public class ActPatientView extends JPanel {
 		JPanel panelAct= new JPanel();
 		panelAct.setBackground(Color.WHITE);
 		panelAct.setLayout(null);
-		panelAct.setBorder(BorderFactory.createTitledBorder("Act: "));
+		panelAct.setBorder(BorderFactory.createTitledBorder("Info Act: "));
+		
+		JPanel panelImageAct= new JPanel();
+		panelImageAct.setBackground(Color.decode("#d2fdf9"));
+		panelImageAct.setLayout(null);
+		panelImageAct.setBorder(BorderFactory.createTitledBorder("Radio: "));
+		
+		JPanel panelImagecontrol= new JPanel();
+		panelImagecontrol.setBackground(Color.decode("#d2fdf9"));
+		panelImagecontrol.setLayout(null);
+		
+		
 		
 		this.payementModel.addElement("");
 		this.payementModel.addElement("1000");
@@ -79,6 +92,8 @@ public class ActPatientView extends JPanel {
         panelAct.add(payementLab);
         panelAct.add(payementCombo);
         panelAct.add(annule);
+        
+        panelImagecontrol.add(ouvrir);
 
 
         actLab.setBounds(30, 50, 100, 20);
@@ -91,15 +106,20 @@ public class ActPatientView extends JPanel {
         ok.setBounds(30, 190, 100, 20);
         annule.setBounds(150, 190, 100, 20);
 
-
-
+        ouvrir.setBounds(0, 0, 100, 20);
+       
         panelAct.setBounds(0, 0, 500, 500);
-
+        panelImageAct.setBounds(600, 0, 300, 300);
+        panelImagecontrol.setBounds(600, 300, 300, 50);
 		this.add(panelAct);
+		this.add(panelImageAct);
+		this.add(panelImagecontrol);
 	}
 	
 	public void addActPatientViewActionListener(ActionListener listener){
 		this.ok.addActionListener(listener);
+		this.ouvrir.addActionListener(listener);
+
 	}
 
 	public JTextArea getActText() {
@@ -120,6 +140,10 @@ public class ActPatientView extends JPanel {
 
 	public JSpinner getTimePicker() {
 		return timePicker;
+	}
+
+	public JButton getOuvrir() {
+		return ouvrir;
 	}
 	
 	

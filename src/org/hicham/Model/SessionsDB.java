@@ -20,6 +20,7 @@ public class SessionsDB {
     }
 
 	public static SessionFactory getFactory() {
+		System.out.println("I'm creating a new factory ");
 		return factory;
 	}
     
