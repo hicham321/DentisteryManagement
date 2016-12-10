@@ -15,7 +15,7 @@ import org.hicham.View.MainFrame;
 import org.hicham.View.MenuBar;
 import org.hicham.View.OdfPatient;
 import org.hicham.View.Ordonance;
-import org.hicham.View.Patient;
+import org.hicham.View.PatientView;
 import org.hicham.View.RecherchePatientView;
 
 import jdk.internal.org.objectweb.asm.tree.TryCatchBlockNode;
@@ -32,7 +32,7 @@ public class ControllerMenuBar {
     GestionStockView gestionStockView= new GestionStockView();
    
     
-	Patient patient= new Patient(infoPatient,actPatient,odfPatient,ordonance,recherchePatientView);
+	PatientView patient= new PatientView(infoPatient,actPatient,odfPatient,ordonance,recherchePatientView);
 	public HomePanel homePanel= new HomePanel();
 		
 	
@@ -41,7 +41,7 @@ public class ControllerMenuBar {
 
 	MainFrame mainFrame= new MainFrame(homePanel,patient,gestionStockView,menuBar);
 
-	public ControllerMenuBar(MainFrame mainFrame,HomePanel homePanel,MenuBar menuBar,Patient patient,Ordonance ordonance,GestionStockView gestionStockView,ProduitQueries produitQueries){
+	public ControllerMenuBar(MainFrame mainFrame,HomePanel homePanel,MenuBar menuBar,PatientView patient,Ordonance ordonance,GestionStockView gestionStockView,ProduitQueries produitQueries){
 
 		this.patient= patient;
 		this.ordonance= ordonance;

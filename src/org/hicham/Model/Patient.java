@@ -94,6 +94,36 @@ public class Patient {
 	}
 	
 	
+	public void setId(int id) {
+		this.id = id;
+	}
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+	public void setPrenom(String prenom) {
+		this.prenom = prenom;
+	}
+	public void setAge(int age) {
+		this.age = age;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	public void setTel(int tel) {
+		this.tel = tel;
+	}
+	public void setTeinte(String teinte) {
+		this.teinte = teinte;
+	}
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+	public void setAnticident(String anticident) {
+		this.anticident = anticident;
+	}
+	public void setFonction(String fonction) {
+		this.fonction = fonction;
+	}
 	public List<Act> getActList() {
 		return actList;
 	}

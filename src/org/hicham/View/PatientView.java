@@ -18,7 +18,7 @@ import javax.swing.JTextField;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 
-public class Patient extends JPanel{
+public class PatientView extends JPanel{
 	
 	
 
@@ -29,8 +29,8 @@ public class Patient extends JPanel{
 	OdfPatient odfPatient= new OdfPatient();
     Ordonance ordonance= new Ordonance();
     RecherchePatientView recherchePatientView= new RecherchePatientView();
-
-	public Patient (InfoPatient infoPatient,ActPatientView actPatient, OdfPatient odfPatient, Ordonance ordonance, RecherchePatientView recherchePatientView){
+    
+	public PatientView (InfoPatient infoPatient,ActPatientView actPatient, OdfPatient odfPatient, Ordonance ordonance, RecherchePatientView recherchePatientView){
 		
 		this.infoPatient= infoPatient;
 		this.actPatient= actPatient;

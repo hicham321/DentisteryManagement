@@ -20,7 +20,7 @@ import org.hicham.View.MainFrame;
 import org.hicham.View.MenuBar;
 import org.hicham.View.OdfPatient;
 import org.hicham.View.Ordonance;
-import org.hicham.View.Patient;
+import org.hicham.View.PatientView;
 import org.hicham.View.RecherchePatientView;
 
 public class Main {
@@ -48,7 +48,7 @@ public class Main {
 		OdfPatient op= new OdfPatient();
 		Ordonance o= new Ordonance();
 		RecherchePatientView rp= new RecherchePatientView();
-		Patient p = new Patient(ip,ap,op,o,rp);
+		PatientView p = new PatientView(ip,ap,op,o,rp);
 		GestionStockView gs= new GestionStockView();
 		MenuBar mb= new MenuBar();
 		HomePanel hp= new HomePanel();
@@ -56,7 +56,7 @@ public class Main {
 		
 		//controllers
 		ControllerInfoPatient cip= new ControllerInfoPatient(ip, pq,rp);
-		ControllerAct ca= new ControllerAct(ap, aq );
+		ControllerAct ca= new ControllerAct(ap, aq, pq,cip);
 		ControllerPatient cp= new ControllerPatient(mf, p,o);
 		ControllerOrdonance co= new ControllerOrdonance(mf,hp, p, o,mq);
 		ControllerMenuBar cmb= new ControllerMenuBar(mf,hp,mb , p, o,gs,prq);

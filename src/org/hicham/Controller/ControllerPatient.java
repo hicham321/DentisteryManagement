@@ -12,7 +12,7 @@ import org.hicham.View.MainFrame;
 import org.hicham.View.MenuBar;
 import org.hicham.View.OdfPatient;
 import org.hicham.View.Ordonance;
-import org.hicham.View.Patient;
+import org.hicham.View.PatientView;
 import org.hicham.View.RecherchePatientView;
 
 
@@ -24,13 +24,13 @@ public class ControllerPatient {
 	Ordonance ordonance= new Ordonance();
     RecherchePatientView recherchePatientView= new RecherchePatientView();
 	
-	Patient patient= new Patient(infoPatient,actPatient,odfPatient,ordonance,recherchePatientView);
+	PatientView patient= new PatientView(infoPatient,actPatient,odfPatient,ordonance,recherchePatientView);
     GestionStockView gestionStockView= new GestionStockView();
     HomePanel homePanel= new HomePanel();
 	MenuBar menuBar= new MenuBar();
 	MainFrame mainFrame= new MainFrame(homePanel,patient,gestionStockView,menuBar);
 
-	public ControllerPatient(MainFrame mainFrame, Patient patient ,Ordonance ordonance){
+	public ControllerPatient(MainFrame mainFrame, PatientView patient ,Ordonance ordonance){
 		
 		
 		

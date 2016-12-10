@@ -13,19 +13,20 @@ import org.hibernate.cfg.Configuration;
 
 
 public class PatientQueries {
-	Configuration configuration = new Configuration().configure("/resources/hibernate.cfg.xml").addAnnotatedClass(Patient.class).addAnnotatedClass(Act.class);
+	/*Configuration configuration = new Configuration().configure("/resources/hibernate.cfg.xml").addAnnotatedClass(Patient.class).addAnnotatedClass(Act.class);
 	StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
-	SessionFactory factory = configuration.buildSessionFactory(builder.build());
+	SessionFactory factory = configuration.buildSessionFactory(builder.build());*/
 	
+	//Patient patient;
 	//queries to use factory field to instantiate sessions
 	
-	public void addPatient(String nom,String prenom,int age,String address,int tel,String teinte,String sex,String anticident,String fonction){
-		Session session = factory.openSession();
+	public void addPatient(Patient patientAdded){
+		Session session = SessionsDB.getFactory().openSession();
 		try {
 
 			//save patient object
 			session.beginTransaction();
-			session.save( new Patient( nom, prenom, age, address, tel, teinte, sex, anticident, fonction) );
+			session.save(patientAdded );
 			session.getTransaction().commit();
 
 		} finally {
@@ -33,7 +34,7 @@ public class PatientQueries {
 		}
 	}
 	public List<Patient> findAllPatients(){
-		Session session = factory.openSession();
+		Session session = SessionsDB.getFactory().openSession();
 		try {
 
 			List<Patient> listPatient= session.createQuery("from Patient").list();
@@ -85,5 +86,7 @@ public class PatientQueries {
 	public DefaultComboBoxModel getComboModel(){
 		return comboBoxModel(findPatientsNames());
 	}
+	
+	
 
 }

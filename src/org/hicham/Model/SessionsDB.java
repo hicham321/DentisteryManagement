@@ -11,8 +11,7 @@ public class SessionsDB {
 			.addAnnotatedClass(Patient.class)
 			.addAnnotatedClass(Produit.class)
 			.addAnnotatedClass(Medicament.class)
-			
-			;
+			.addAnnotatedClass(Act.class);
 	static StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
 	static SessionFactory factory = configuration.buildSessionFactory(builder.build());
 	

@@ -18,6 +18,7 @@ import javax.swing.JTextArea;
 import javax.swing.SpinnerDateModel;
 
 import org.jdesktop.swingx.JXDatePicker;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 public class ActPatientView extends JPanel {
 	
@@ -48,12 +49,26 @@ public class ActPatientView extends JPanel {
 		panelAct.setLayout(null);
 		panelAct.setBorder(BorderFactory.createTitledBorder("Act: "));
 		
+		this.payementModel.addElement("");
+		this.payementModel.addElement("1000");
+		this.payementModel.addElement("1500");
+		this.payementModel.addElement("2000");
+		this.payementModel.addElement("3000");
+		this.payementModel.addElement("3500");
+		this.payementModel.addElement("4000");
+
+
+		
+		AutoCompleteDecorator.decorate(payementCombo);
+		payementCombo.setSelectedIndex(0);
+		
         datePicker.setDate(Calendar.getInstance().getTime());
         datePicker.setFormats(new SimpleDateFormat("dd.MM.yyyy"));
         
         JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(timePicker, "HH:mm");
         timePicker.setEditor(timeEditor);
         timePicker.setValue(new Date()); // will only show the current time
+        
         
         panelAct.add(datePicker);
         panelAct.add(timePicker);
@@ -98,5 +113,14 @@ public class ActPatientView extends JPanel {
 	public JButton getOk() {
 		return ok;
 	}
+
+	public JXDatePicker getDatePicker() {
+		return datePicker;
+	}
+
+	public JSpinner getTimePicker() {
+		return timePicker;
+	}
+	
 	
 }

@@ -7,13 +7,13 @@ import org.hibernate.Session;
 
 public class ActQueries extends UsefulMethods{
 	
-	public void addAct(String act,double Payement,Date date){
+	public void addAct(Act act){
 		Session session = SessionsDB.getFactory().openSession();
 		try {
 
-			//save patient object
+			//save act object
 			session.beginTransaction();
-			session.save( new Act(act,Payement,date) );
+			session.save(act);
 			session.getTransaction().commit();
 
 		} finally {

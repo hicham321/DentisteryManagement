@@ -20,7 +20,7 @@ public class MainFrame extends JFrame{
 	
 	public HomePanel card1= new HomePanel();
 	
-	public Patient card2= new Patient(infoPatient,actPatient,odfPatient,ordonance,recherchePatientView);
+	public PatientView card2= new PatientView(infoPatient,actPatient,odfPatient,ordonance,recherchePatientView);
 	
 	public GestionStockView card3= new GestionStockView();
 
@@ -28,7 +28,7 @@ public class MainFrame extends JFrame{
 
 	private MenuBar menuBar= new MenuBar();
 
-	public MainFrame(HomePanel card1,Patient card2,GestionStockView card3 , MenuBar menuBar){
+	public MainFrame(HomePanel card1,PatientView card2,GestionStockView card3 , MenuBar menuBar){
 		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setBounds(0,0,screenSize.width, screenSize.height);

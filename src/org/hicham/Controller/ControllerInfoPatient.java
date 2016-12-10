@@ -1,6 +1,5 @@
 package org.hicham.Controller;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -18,7 +17,8 @@ public class ControllerInfoPatient {
 	RecherchePatientView recherchePatientView= new RecherchePatientView();
 	boolean errorFlag= false;
 	
-	Patient patient;
+	//this field needs to be updated when adding a new patient or when selecting a new patient
+	Patient currentPatient= new Patient();
 	
 	
 	public ControllerInfoPatient(InfoPatient infoPatient, PatientQueries patientQueries ,RecherchePatientView recherchePatientView){
@@ -38,25 +38,20 @@ public class ControllerInfoPatient {
 				DefaultComboBoxModel dftb=patientQueries.getComboModel();
 				recherchePatientView.getRech().setModel(dftb);
 				
+				//a bunch of if statements to control what's in the text fields and than an else to 
+				currentPatient= new Patient(infoPatient.getNom().getText()
+						,infoPatient.getPrenom().getText()
+						,Integer.parseInt(infoPatient.getAge().getText())
+						,infoPatient.getAddress().getText()
+						,Integer.parseInt(infoPatient.getTel().getText())
+						,infoPatient.getTeinte().getSelectedItem().toString()
+						,infoPatient.getSex().getSelectedItem().toString()
+						,infoPatient.getAnticident().getText()
+						,infoPatient.getFonction().getText()
+						);
+				patientQueries.addPatient(currentPatient);
 				
-				patient= new Patient (infoPatient.getNom().getText()
-						,infoPatient.getPrenom().getText()
-						,Integer.parseInt(infoPatient.getAge().getText())
-						,infoPatient.getAddress().getText()
-						,Integer.parseInt(infoPatient.getTel().getText())
-						,infoPatient.getTeinte().getSelectedItem().toString()
-						,infoPatient.getSex().getSelectedItem().toString()
-						,infoPatient.getAnticident().getText()
-						,infoPatient.getFonction().getText());
-				patientQueries.addPatient(infoPatient.getNom().getText()
-						,infoPatient.getPrenom().getText()
-						,Integer.parseInt(infoPatient.getAge().getText())
-						,infoPatient.getAddress().getText()
-						,Integer.parseInt(infoPatient.getTel().getText())
-						,infoPatient.getTeinte().getSelectedItem().toString()
-						,infoPatient.getSex().getSelectedItem().toString()
-						,infoPatient.getAnticident().getText()
-						,infoPatient.getFonction().getText());
+				
 
 				setFieldsEmpty();
 
@@ -124,8 +119,8 @@ public class ControllerInfoPatient {
 		}
 		
 	}
-	public Patient getPatientAct(){
-		return patient;
+	public Patient getCurrentPatient() {
+		return currentPatient;
 	}
-
+	
 }
