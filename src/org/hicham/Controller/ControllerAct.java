@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.Date;
 
 import javax.accessibility.AccessibleTableModelChange;
@@ -37,7 +39,8 @@ public class ControllerAct {
     
 	int returnVal;
 	JFileChooser filechooser= new JFileChooser();
-	File file;
+	File sourceFileImage;
+	String dbPathToFileImage="";
 	public ControllerAct(ActPatientView actPatientView,ActQueries actQueries,PatientQueries patientQueries ,ControllerInfoPatient controllerInfoPatient){
 		
 		this.actPatientView= actPatientView;
@@ -58,26 +61,62 @@ public class ControllerAct {
 				String actText=actPatientView.getActText().getText();
 				Date actDate=actPatientView.getDatePicker().getDate();
 				String actTemp= actPatientView.getTimePicker().getValue().toString();
-			    double actPayement= Double.parseDouble(actPatientView.getPayementCombo().getSelectedItem().toString());
-			    currentAct= new Act(actText,actPayement,actDate,actTemp);
-			    //setting patient for oneToMany relationship between Patient and Act
-			    currentAct.setPatient(controllerInfoPatient.getCurrentPatient());
-			    actQueries.addAct(currentAct);
-				
-				
+				double actPayement= Double.parseDouble(actPatientView.getPayementCombo().getSelectedItem().toString());
+                String dbImagePath=dbPathToFileImage;
+				currentAct= new Act(actText,actPayement,actDate,actTemp,dbImagePath);
+				//setting patient for oneToMany relationship between Patient and Act
+				currentAct.setPatient(controllerInfoPatient.getCurrentPatient());
+				actQueries.addAct(currentAct);
+
 			}
 			if (arg0.getSource()==actPatientView.getOuvrir()) {
-				FileNameExtensionFilter imageFilter = new FileNameExtensionFilter( "Image files", ImageIO.getReaderFileSuffixes());
+				
+				FileNameExtensionFilter imageFilter = new FileNameExtensionFilter( "Image files", 
+						ImageIO.getReaderFileSuffixes());
 				filechooser.addChoosableFileFilter(imageFilter);
-				filechooser.setAcceptAllFileFilterUsed(false);
+				filechooser.setAcceptAllFileFilterUsed(false);	
+				
 				returnVal = filechooser.showOpenDialog(null);
 				if(returnVal == JFileChooser.APPROVE_OPTION){
-					file = filechooser.getSelectedFile();
+					//destination file should changed after packaging the Jar
+					String imageDestinationDir="C:/Users/Hicham/ImageRadio";
+					
+					dbPathToFileImage=imageDestinationDir+"/"+CopyFileImage(imageDestinationDir);
+					
+					
 				}
+
 			}
 
 
 		}
+		
+		
+        //this copies selected image into the directory and gets the new path of the image
+		public String CopyFileImage(String pathTodestinationImageDir){
+			String imageName="";
+			try{
+				sourceFileImage = filechooser.getSelectedFile();
 
+				imageName=sourceFileImage.getName();
+				//the path to the destination file should be changed when packaging the Jar file
+				File destinationFile = new File(pathTodestinationImageDir);
+				FileInputStream fileInputStream = new FileInputStream(sourceFileImage);
+				FileOutputStream fileOutputStream = new FileOutputStream( destinationFile);
+
+				int bufferSize;
+				byte[] bufffer = new byte[512];
+				while ((bufferSize = fileInputStream.read(bufffer)) > 0) {
+					fileOutputStream.write(bufffer, 0, bufferSize);
+				}
+				fileInputStream.close();
+				fileOutputStream.close();
+
+			}catch(Exception ex){
+				ex.printStackTrace();
+
+			}
+			return imageName;
+		}
 	}
 }

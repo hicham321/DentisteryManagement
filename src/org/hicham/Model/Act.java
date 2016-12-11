@@ -40,11 +40,12 @@ public class Act {
     @JoinColumn(name="id_Patient")
     private Patient patient;
 	
-	public Act(String act, double payement, Date dateRendezVous,String tempRendezVous){
+	public Act(String act, double payement, Date dateRendezVous,String tempRendezVous,String lienImageRadio){
 		this.payement=payement;
 		this.act= act;
 		this.dateRendezVous= dateRendezVous;
 		this.tempRendezVous=tempRendezVous;
+		this.lienImageRadio=lienImageRadio;
 	}
 	
 	public Act(){
