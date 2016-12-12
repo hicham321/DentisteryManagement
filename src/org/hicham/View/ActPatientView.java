@@ -2,6 +2,7 @@ package org.hicham.View;
 
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -42,6 +43,8 @@ public class ActPatientView extends JPanel {
     
     private JButton ouvrir= new JButton("Image");
     
+    private JPanel panelImageAct= new JPanel();
+    
 	public ActPatientView(){
 		
 		this.setLayout(null);
@@ -51,7 +54,7 @@ public class ActPatientView extends JPanel {
 		panelAct.setLayout(null);
 		panelAct.setBorder(BorderFactory.createTitledBorder("Info Act: "));
 		
-		JPanel panelImageAct= new JPanel();
+		panelImageAct= new JPanel();
 		panelImageAct.setBackground(Color.decode("#d2fdf9"));
 		panelImageAct.setLayout(null);
 		panelImageAct.setBorder(BorderFactory.createTitledBorder("Radio: "));
@@ -107,6 +110,8 @@ public class ActPatientView extends JPanel {
         annule.setBounds(150, 190, 100, 20);
 
         ouvrir.setBounds(0, 0, 100, 20);
+        
+		
        
         panelAct.setBounds(0, 0, 500, 500);
         panelImageAct.setBounds(600, 0, 300, 300);
@@ -145,6 +150,10 @@ public class ActPatientView extends JPanel {
 	public JButton getOuvrir() {
 		return ouvrir;
 	}
-	
-	
+//
+	public JPanel getPanelImageAct() {
+		return panelImageAct;
+	}
+
+
 }

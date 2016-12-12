@@ -1,5 +1,8 @@
 package org.hicham.Main;
 
+import java.io.IOException;
+
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 import org.hicham.Controller.ControllerAct;
@@ -65,8 +68,12 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
-		SystemLookFeel();
-		showInterface();
+		SwingUtilities.invokeLater(new Runnable() {
+		    public void run() {
+				SystemLookFeel();
+				showInterface();
+		    }
+		});
 
 	}
 

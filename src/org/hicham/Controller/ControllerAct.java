@@ -1,16 +1,22 @@
 package org.hicham.Controller;
 
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Date;
 
 import javax.accessibility.AccessibleTableModelChange;
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.hicham.Model.Act;
@@ -41,6 +47,8 @@ public class ControllerAct {
 	JFileChooser filechooser= new JFileChooser();
 	File sourceFileImage;
 	String dbPathToFileImage="";
+	
+	BufferedImage bfImage;
 	public ControllerAct(ActPatientView actPatientView,ActQueries actQueries,PatientQueries patientQueries ,ControllerInfoPatient controllerInfoPatient){
 		
 		this.actPatientView= actPatientView;
@@ -78,10 +86,15 @@ public class ControllerAct {
 				
 				returnVal = filechooser.showOpenDialog(null);
 				if(returnVal == JFileChooser.APPROVE_OPTION){
-					//destination file should changed after packaging the Jar
-					String imageDestinationDir="C:/Users/Hicham/ImageRadio";
+					//destination file should changed after packaging the Jar  
+					String imageDestinationDir="C://Users/Hicham/ImageRadio";
 					
 					dbPathToFileImage=imageDestinationDir+"/"+CopyFileImage(imageDestinationDir);
+					try{
+					setImageInPanel(sourceFileImage);
+					}catch(Exception ex){
+						ex.printStackTrace();
+					}
 					
 					
 				}
@@ -117,6 +130,23 @@ public class ControllerAct {
 
 			}
 			return imageName;
+		}
+		public void setImageInPanel(File imageFile){
+			SwingUtilities.invokeLater(new Runnable() {
+			    public void run() {
+			    	try{
+			    	bfImage = ImageIO.read(imageFile);
+			    	}catch(Exception ex){
+			    		ex.printStackTrace();
+			    	}
+					Image newimg = bfImage.getScaledInstance( 300, 300,  java.awt.Image.SCALE_SMOOTH ) ;  
+		            JLabel picLabel= new JLabel(new ImageIcon(newimg));
+		            actPatientView.getPanelImageAct().add(picLabel);
+		    		picLabel.setBounds(0,0 , 300, 300);	
+			    }
+			});
+			
+            
 		}
 	}
 }
