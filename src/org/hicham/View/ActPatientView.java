@@ -41,7 +41,8 @@ public class ActPatientView extends JPanel {
 	JXDatePicker datePicker = new JXDatePicker();
     JSpinner timePicker= new JSpinner(new SpinnerDateModel());
     
-    private JButton ouvrir= new JButton("Image");
+    private JButton ouvrir= new JButton("Selectioné");
+    private JButton okImage= new JButton("Ok");
     
     private JPanel panelImageAct= new JPanel();
     
@@ -97,6 +98,8 @@ public class ActPatientView extends JPanel {
         panelAct.add(annule);
         
         panelImagecontrol.add(ouvrir);
+        panelImagecontrol.add(okImage);
+
 
 
         actLab.setBounds(30, 50, 100, 20);
@@ -110,6 +113,7 @@ public class ActPatientView extends JPanel {
         annule.setBounds(150, 190, 100, 20);
 
         ouvrir.setBounds(0, 0, 100, 20);
+        okImage.setBounds(130, 0, 100, 20);
         
 		
        
@@ -124,6 +128,7 @@ public class ActPatientView extends JPanel {
 	public void addActPatientViewActionListener(ActionListener listener){
 		this.ok.addActionListener(listener);
 		this.ouvrir.addActionListener(listener);
+		this.okImage.addActionListener(listener);
 
 	}
 
@@ -155,5 +160,9 @@ public class ActPatientView extends JPanel {
 		return panelImageAct;
 	}
 
-
+	public JButton getOkImage() {
+		return okImage;
+	}
+    
+	
 }

@@ -16,6 +16,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -49,6 +50,7 @@ public class ControllerAct {
 	String dbPathToFileImage="";
 	
 	BufferedImage bfImage;
+	JLabel picLabel= new JLabel();
 	public ControllerAct(ActPatientView actPatientView,ActQueries actQueries,PatientQueries patientQueries ,ControllerInfoPatient controllerInfoPatient){
 		
 		this.actPatientView= actPatientView;
@@ -78,29 +80,32 @@ public class ControllerAct {
 
 			}
 			if (arg0.getSource()==actPatientView.getOuvrir()) {
-				
+
 				FileNameExtensionFilter imageFilter = new FileNameExtensionFilter( "Image files", 
 						ImageIO.getReaderFileSuffixes());
 				filechooser.addChoosableFileFilter(imageFilter);
 				filechooser.setAcceptAllFileFilterUsed(false);	
-				
+
 				returnVal = filechooser.showOpenDialog(null);
 				if(returnVal == JFileChooser.APPROVE_OPTION){
-					//destination file should changed after packaging the Jar  
-					String imageDestinationDir="C://Users/Hicham/ImageRadio";
-					
-					dbPathToFileImage=imageDestinationDir+"/"+CopyFileImage(imageDestinationDir);
+					sourceFileImage = filechooser.getSelectedFile();
 					try{
-					setImageInPanel(sourceFileImage);
+						setImageInPanel(sourceFileImage);
 					}catch(Exception ex){
 						ex.printStackTrace();
 					}
-					
-					
+
+
 				}
 
 			}
+            if (arg0.getSource()==actPatientView.getOkImage()) {
+            	//destination file should changed after packaging the Jar  
+				String imageDestinationDir="C://Users/Hicham/ImageRadio";
 
+				dbPathToFileImage=imageDestinationDir+"/"+CopyFileImage(imageDestinationDir);
+				actPatientView.getOuvrir().setEnabled(false);
+			}
 
 		}
 		
@@ -109,13 +114,13 @@ public class ControllerAct {
 		public String CopyFileImage(String pathTodestinationImageDir){
 			String imageName="";
 			try{
-				sourceFileImage = filechooser.getSelectedFile();
-
+				//sourceFileImage = filechooser.getSelectedFile();
 				imageName=sourceFileImage.getName();
 				//the path to the destination file should be changed when packaging the Jar file
 				File destinationFile = new File(pathTodestinationImageDir);
 				FileInputStream fileInputStream = new FileInputStream(sourceFileImage);
-				FileOutputStream fileOutputStream = new FileOutputStream( destinationFile);
+				FileOutputStream fileOutputStream = new FileOutputStream( destinationFile
+						+"/"+sourceFileImage.getName());
 
 				int bufferSize;
 				byte[] bufffer = new byte[512];
@@ -132,21 +137,26 @@ public class ControllerAct {
 			return imageName;
 		}
 		public void setImageInPanel(File imageFile){
-			SwingUtilities.invokeLater(new Runnable() {
-			    public void run() {
-			    	try{
-			    	bfImage = ImageIO.read(imageFile);
-			    	}catch(Exception ex){
-			    		ex.printStackTrace();
-			    	}
-					Image newimg = bfImage.getScaledInstance( 300, 300,  java.awt.Image.SCALE_SMOOTH ) ;  
-		            JLabel picLabel= new JLabel(new ImageIcon(newimg));
-		            actPatientView.getPanelImageAct().add(picLabel);
-		    		picLabel.setBounds(0,0 , 300, 300);	
-			    }
-			});
-			
-            
+
+			try{
+				bfImage = ImageIO.read(imageFile);
+			}catch(Exception ex){
+				ex.printStackTrace();
+			}
+			Image newimg = bfImage.getScaledInstance( 300, 300,  java.awt.Image.SCALE_SMOOTH ) ;  
+			//picLabel= new JLabel(new ImageIcon(newimg));
+			picLabel.setIcon(new ImageIcon(newimg));
+			actPatientView.getPanelImageAct().add(picLabel);
+
+						actPatientView.getPanelImageAct().revalidate();
+						actPatientView.getPanelImageAct().repaint();
+
+			picLabel.setBounds(0,0 , 300, 300);	
+
 		}
+
+
+
 	}
 }
+
