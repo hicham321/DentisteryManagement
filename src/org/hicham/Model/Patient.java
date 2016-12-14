@@ -26,8 +26,6 @@ public class Patient {
 	int id;
 	@Column (name="Nom",nullable = false)
 	String nom;
-	@Column (name="Prenom",nullable = false)
-	String prenom;
 	@Column (name="Age",nullable = false)
 	int age; 
 	@Column (name="Address")
@@ -48,9 +46,8 @@ public class Patient {
 
 	
 	
-	public Patient(String nom, String prenom, int age, String address, int tel, String teinte, String sex, String anticident,String fonction){
+	public Patient(String nom, int age, String address, int tel, String teinte, String sex, String anticident,String fonction){
 		this.nom= nom;
-		this.prenom= prenom;
 		this.age= age;
 		this.address= address;
 		this.tel= tel;
@@ -68,9 +65,7 @@ public class Patient {
 	public String getNom() {
 		return nom;
 	}
-	public String getPrenom() {
-		return prenom;
-	}
+	
 	public int getAge() {
 		return age;
 	}
@@ -100,9 +95,7 @@ public class Patient {
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
-	public void setPrenom(String prenom) {
-		this.prenom = prenom;
-	}
+	
 	public void setAge(int age) {
 		this.age = age;
 	}

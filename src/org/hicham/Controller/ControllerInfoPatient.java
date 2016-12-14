@@ -40,7 +40,7 @@ public class ControllerInfoPatient {
 				
 				//a bunch of if statements to control what's in the text fields and than an else to 
 				currentPatient= new Patient(infoPatient.getNom().getText()
-						,infoPatient.getPrenom().getText()
+						+ " "+infoPatient.getPrenom().getText()
 						,Integer.parseInt(infoPatient.getAge().getText())
 						,infoPatient.getAddress().getText()
 						,Integer.parseInt(infoPatient.getTel().getText())

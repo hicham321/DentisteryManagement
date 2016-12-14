@@ -25,6 +25,7 @@ import org.hicham.View.OdfPatient;
 import org.hicham.View.Ordonance;
 import org.hicham.View.PatientView;
 import org.hicham.View.RecherchePatientView;
+import org.hicham.View.RendezVousView;
 
 public class Main {
 
@@ -55,14 +56,15 @@ public class Main {
 		GestionStockView gs= new GestionStockView();
 		MenuBar mb= new MenuBar();
 		HomePanel hp= new HomePanel();
-		MainFrame mf= new MainFrame(hp,p,gs,mb);
+		RendezVousView rvv= new RendezVousView();
+		MainFrame mf= new MainFrame(hp,p,gs,rvv,mb);
 		
 		//controllers
 		ControllerInfoPatient cip= new ControllerInfoPatient(ip, pq,rp);
 		ControllerAct ca= new ControllerAct(ap, aq, pq,cip);
 		ControllerPatient cp= new ControllerPatient(mf, p,o);
 		ControllerOrdonance co= new ControllerOrdonance(mf,hp, p, o,mq);
-		ControllerMenuBar cmb= new ControllerMenuBar(mf,hp,mb , p, o,gs,prq);
+		ControllerMenuBar cmb= new ControllerMenuBar(mf,hp,mb , p, o,gs,rvv,prq,pq);
 		ControllerGestionStock cgs= new ControllerGestionStock(gs, prq);
 		mf.setVisible(true);
 	}
