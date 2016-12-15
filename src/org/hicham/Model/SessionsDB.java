@@ -8,25 +8,36 @@ import org.hibernate.cfg.Configuration;
 //once according to Hibernate guidelines.
 public class SessionsDB {
 	
-	static Configuration configuration = new Configuration().configure("/resources/hibernate.cfg.xml")
+	/*static Configuration configuration = new Configuration().configure("/resources/hibernate.cfg.xml")
 			.addAnnotatedClass(Patient.class)
 			.addAnnotatedClass(Produit.class)
 			.addAnnotatedClass(Medicament.class)
 			.addAnnotatedClass(Act.class);
 	static StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
-	static SessionFactory factory = configuration.buildSessionFactory(builder.build());
+	static SessionFactory factory = configuration.buildSessionFactory(builder.build());*/
+	 static SessionFactory factory = null;
+
 	
-	int singletonCounter=0;
+	
+	static int singletonCounter=0;
 	
     public SessionsDB(){
+    	
     	if (singletonCounter==0) {
 			//create singleton factory object
-    		
+    		 Configuration configuration = new Configuration().configure("/resources/hibernate.cfg.xml")
+    				.addAnnotatedClass(Patient.class)
+    				.addAnnotatedClass(Produit.class)
+    				.addAnnotatedClass(Medicament.class)
+    				.addAnnotatedClass(Act.class);
+    		 StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
+    		 factory = configuration.buildSessionFactory(builder.build());
+     		 System.out.println("Creating a new Factory");
+    		singletonCounter++;
 		}
     }
 
-	public static SessionFactory getFactory() {
-		System.out.println("I'm creating a new factory ");
+	public  SessionFactory getFactory() {
 		return factory;
 	}
     

@@ -21,7 +21,9 @@ public class PatientQueries {
 	//queries to use factory field to instantiate sessions
 	
 	public void addPatient(Patient patientAdded){
-		Session session = SessionsDB.getFactory().openSession();
+		SessionsDB FactoryObject= new SessionsDB();
+		Session session= FactoryObject.getFactory().openSession();
+		//Session session = SessionsDB.getFactory().openSession();
 		try {
 
 			//save patient object
@@ -34,7 +36,9 @@ public class PatientQueries {
 		}
 	}
 	public List<Patient> findAllPatients(){
-		Session session = SessionsDB.getFactory().openSession();
+		SessionsDB FactoryObject= new SessionsDB();
+		Session session= FactoryObject.getFactory().openSession();
+	    //Session session = SessionsDB.getFactory().openSession();
 		try {
 
 			List<Patient> listPatient= session.createQuery("from Patient").list();

@@ -21,7 +21,9 @@ public class MedicamentQueries {
 	//for the real deal we need to get the data directly from the text file or perform 
 	//a data transfer to the database once 
 	public void addBatchMedicament(List<String> nomMedList){
-		Session session = SessionsDB.getFactory().openSession();
+		SessionsDB FactoryObject= new SessionsDB();
+		Session session= FactoryObject.getFactory().openSession();
+		//Session session = SessionsDB.getFactory().openSession();
 		try {
 
 			//save Medicament object

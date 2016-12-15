@@ -8,7 +8,9 @@ import org.hibernate.Session;
 public class ActQueries extends UsefulMethods{
 	
 	public void addAct(Act act){
-		Session session = SessionsDB.getFactory().openSession();
+		SessionsDB FactoryObject= new SessionsDB();
+		Session session= FactoryObject.getFactory().openSession();
+		//Session session = SessionsDB.getFactory().openSession();
 		try {
 
 			//save act object
@@ -22,7 +24,9 @@ public class ActQueries extends UsefulMethods{
 	}
 	
 	public List<Act> findAllActs(){
-		Session session = SessionsDB.getFactory().openSession();
+		SessionsDB FactoryObject= new SessionsDB();
+		Session session= FactoryObject.getFactory().openSession();
+		//Session session = SessionsDB.getFactory().openSession();
 		try {
 
 			List<Act> listAct= session.createQuery("from Act").list();

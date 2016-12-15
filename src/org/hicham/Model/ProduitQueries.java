@@ -11,7 +11,9 @@ import org.hicham.Model.PatientQueries.MyClass;
 public class ProduitQueries extends UsefulMethods{
 	
 	public void addProduct(String nomProduit,double prix, int qte){
-		Session session = SessionsDB.getFactory().openSession();
+		SessionsDB FactoryObject= new SessionsDB();
+		Session session= FactoryObject.getFactory().openSession();
+		//Session session = SessionsDB.getFactory().openSession();
 		try {
 
 			//save patient object
@@ -24,7 +26,9 @@ public class ProduitQueries extends UsefulMethods{
 		}
 	}
 	public List<Produit> findAllProducts(){
-		Session session = SessionsDB.getFactory().openSession();
+		SessionsDB FactoryObject= new SessionsDB();
+		Session session= FactoryObject.getFactory().openSession();
+		//Session session = SessionsDB.getFactory().openSession();
 		try {
 
 			List<Produit> listProduit= session.createQuery("from Produit").list();
@@ -70,7 +74,9 @@ public class ProduitQueries extends UsefulMethods{
         int newQte= oldQte+addedQte;
         produit.setQte(newQte);
         //
-        Session session = SessionsDB.getFactory().openSession();
+        SessionsDB FactoryObject= new SessionsDB();
+		Session session= FactoryObject.getFactory().openSession();
+        //Session session = SessionsDB.getFactory().openSession();
 		try {
 
 			//save patient object
