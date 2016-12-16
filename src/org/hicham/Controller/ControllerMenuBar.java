@@ -44,7 +44,10 @@ public class ControllerMenuBar {
 
 	MainFrame mainFrame= new MainFrame(homePanel,patient,gestionStockView,rendezVousView,menuBar);
 
-	public ControllerMenuBar(MainFrame mainFrame,HomePanel homePanel,MenuBar menuBar,PatientView patient,Ordonance ordonance,GestionStockView gestionStockView,RendezVousView rendezVousView,ProduitQueries produitQueries,PatientQueries patientQueries){
+	public ControllerMenuBar(MainFrame mainFrame,HomePanel homePanel,MenuBar menuBar
+			,PatientView patient,Ordonance ordonance,GestionStockView gestionStockView
+			,RendezVousView rendezVousView,RecherchePatientView recherchePatientView
+			,ProduitQueries produitQueries,PatientQueries patientQueries){
 
 		this.patient= patient;
 		this.ordonance= ordonance;
@@ -55,6 +58,7 @@ public class ControllerMenuBar {
 		this.produitQueries=produitQueries;
 		this.patientQueries= patientQueries;
 		this.rendezVousView= rendezVousView;
+		this.recherchePatientView= recherchePatientView;
 		this.menuBar.addMenuBarActionListener(new MenuBarActionListener() );
 
 	}
@@ -73,13 +77,14 @@ public class ControllerMenuBar {
 			if (e.getSource()== menuBar.getInfoPatientItem()) {
 				//show info patient card
 				showInfoPatientCard();
+				DefaultComboBoxModel dftb=patientQueries.getComboModel();
+				recherchePatientView.getRech().setModel(dftb);
 			}
 			if (e.getSource()== menuBar.getRendezVousPatient()) {
 				//show rendez vous card
+				showRendezVousCard();
 				DefaultComboBoxModel dftb=patientQueries.getComboModel();
 				rendezVousView.getPatientCombo().setModel(dftb);
-				showRendezVousCard();
-
 			}
 			if (e.getSource()== menuBar.getLabo()) {
 				//show labo card

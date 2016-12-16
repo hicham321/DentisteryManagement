@@ -35,8 +35,7 @@ public class ControllerInfoPatient {
 			if (e.getSource()==infoPatient.getOk()) {
 				
 				infoPatient.getModifie().setEnabled(true);
-				DefaultComboBoxModel dftb=patientQueries.getComboModel();
-				recherchePatientView.getRech().setModel(dftb);
+				
 				
 				//a bunch of if statements to control what's in the text fields and than an else to 
 				currentPatient= new Patient(infoPatient.getNom().getText()

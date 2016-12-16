@@ -37,7 +37,7 @@ public class SessionsDB {
 		}
     }
 
-	public  SessionFactory getFactory() {
+	public  static SessionFactory getFactory() {
 		return factory;
 	}
     

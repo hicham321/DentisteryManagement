@@ -64,7 +64,7 @@ public class Main {
 		ControllerAct ca= new ControllerAct(ap, aq, pq,cip);
 		ControllerPatient cp= new ControllerPatient(mf, p,o);
 		ControllerOrdonance co= new ControllerOrdonance(mf,hp, p, o,mq);
-		ControllerMenuBar cmb= new ControllerMenuBar(mf,hp,mb , p, o,gs,rvv,prq,pq);
+		ControllerMenuBar cmb= new ControllerMenuBar(mf,hp,mb , p, o,gs,rvv,rp,prq,pq);
 		ControllerGestionStock cgs= new ControllerGestionStock(gs, prq);
 		mf.setVisible(true);
 	}
