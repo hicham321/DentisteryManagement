@@ -13,76 +13,76 @@ import org.hicham.Model.ProduitQueries;
 import org.hicham.View.GestionStockView;
 
 public class ControllerGestionStock {
-	
+
 	GestionStockView gestionStockView= new GestionStockView();
 	ProduitQueries produitQueries =new ProduitQueries();
-	
+
 	int productId=0;
-	
+
 	public ControllerGestionStock(GestionStockView gestionStockView,ProduitQueries produitQueries){
-		
+
 		this.gestionStockView= gestionStockView;
 		this.produitQueries=produitQueries;
 		this.gestionStockView.addGestionStockActionListener(new GestionStockActionListener());
 	}
-	
+
 	class GestionStockActionListener implements ActionListener{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			
+
 			if (e.getSource()== gestionStockView.getAjoutProduit()) {
 				produitQueries.addProduct(gestionStockView.getTextProduitAjout().getText()
 						, Double.parseDouble(gestionStockView.getTextPrixAjout().getText())
 						,0);
 				setEmptyAjoutProduitComponents();
-					refreshComboBox();
-				
+				refreshComboBox();
+
 			}
 			if (e.getSource()== gestionStockView.getModifieItem()) {
-				
+
 			}
-            if (e.getSource()== gestionStockView.getSupItem()) {
-				
+			if (e.getSource()== gestionStockView.getSupItem()) {
+
 			}
-            if (e.getSource()== gestionStockView.getAjoutQte()) {
+			if (e.getSource()== gestionStockView.getAjoutQte()) {
 				//update query for product row
-            	int qteOfSelectedProduct= Integer.parseInt(gestionStockView.getQteAjout().getText());
-                changeQte(qteOfSelectedProduct);
-                refreshComboBox();
-                
+				int qteOfSelectedProduct= Integer.parseInt(gestionStockView.getQteAjout().getText());
+				changeQte(qteOfSelectedProduct);
+				refreshComboBox();
+
 			}
-            if (e.getSource()== gestionStockView.getSousQte()) {
-            	//check if global qte is bigger than quatity subtracted
-            	int qteOfSelectedProduct= Integer.parseInt(gestionStockView.getQteAjout().getText());
-            	//
-            	Produit produit=produitQueries.getProduct(productId);
-            	int qteGlobale= produit.getQte();
-            	if (qteOfSelectedProduct>qteGlobale) {
-            		//error message
-            		gestionStockView.getQteErrorLab().setVisible(true);
-            		gestionStockView.getQteAjout().setForeground(Color.red);
-            	}
-            	else{
-            		changeQte(-qteOfSelectedProduct);
-            		refreshComboBox();
-            		gestionStockView.getQteErrorLab().setVisible(false);
-            		gestionStockView.getQteAjout().setForeground(Color.black);
+			if (e.getSource()== gestionStockView.getSousQte()) {
+				//check if global qte is bigger than quatity subtracted
+				int qteOfSelectedProduct= Integer.parseInt(gestionStockView.getQteAjout().getText());
+				//
+				Produit produit=produitQueries.getProduct(productId);
+				int qteGlobale= produit.getQte();
+				if (qteOfSelectedProduct>qteGlobale) {
+					//error message
+					gestionStockView.getQteErrorLab().setVisible(true);
+					gestionStockView.getQteAjout().setForeground(Color.red);
+				}
+				else{
+					changeQte(-qteOfSelectedProduct);
+					refreshComboBox();
+					gestionStockView.getQteErrorLab().setVisible(false);
+					gestionStockView.getQteAjout().setForeground(Color.black);
 
 
-            	}
-            }
-            if (e.getSource()== gestionStockView.getProduitCombo()) {
-            	int selectedItem= selectedComboItem(e);
-            	showInfoProduct(selectedItem);
+				}
 			}
-            if (e.getSource()== gestionStockView.getChoixBtn()) {
-            	        gestionStockView.getPopmenu().show(gestionStockView.getChoixBtn(), 
-            			gestionStockView.getChoixBtn().getBounds().x-312,
-            			gestionStockView.getChoixBtn().getBounds().y-65 + gestionStockView.getChoixBtn().getBounds().height);
-	
+			if (e.getSource()== gestionStockView.getProduitCombo()) {
+				int selectedItem= selectedComboItem(e);
+				showInfoProduct(selectedItem);
 			}
-			
+			if (e.getSource()== gestionStockView.getChoixBtn()) {
+				gestionStockView.getPopmenu().show(gestionStockView.getChoixBtn(), 
+						gestionStockView.getChoixBtn().getBounds().x-312,
+						gestionStockView.getChoixBtn().getBounds().y-65 + gestionStockView.getChoixBtn().getBounds().height);
+
+			}
+
 		}
 		public void setEmptyAjoutProduitComponents(){
 			gestionStockView.getTextPrixAjout().setText("");
@@ -95,8 +95,8 @@ public class ControllerGestionStock {
 		}
 		public void refreshComboBox(){
 			try{
-			DefaultComboBoxModel dftb=produitQueries.getComboModel();
-			gestionStockView.getProduitCombo().setModel(dftb);
+				DefaultComboBoxModel dftb=produitQueries.getComboModel();
+				gestionStockView.getProduitCombo().setModel(dftb);
 			}catch(Exception ex){
 				ex.printStackTrace();
 			}
@@ -118,21 +118,21 @@ public class ControllerGestionStock {
 			gestionStockView.getProduitNomInfo().setText(ProductName);
 			gestionStockView.getProduitPrixInfo().setText(prixProduct.toString());
 			gestionStockView.getQteInfo().setText(qte.toString());
-		    //calculate prix total:
+			//calculate prix total:
 			Double prixTotal= prixProduct*qte;
 			gestionStockView.getPrixTotal().setText(prixTotal.toString());
 		}
 		public void changeQte(int qte){
 			int selectedItem= productId;
-        	produitQueries.addQteToProduct(selectedItem, qte);
-        	setEmptyAjoutQteComponenets();
+			produitQueries.addQteToProduct(selectedItem, qte);
+			setEmptyAjoutQteComponenets();
 		}
-		
-		
+
+
 	}
-	
-	
-	
+
+
+
 	//This is for getting buttons from menu
 	//addingquantity.getPopmenu().show(addingquantity.getChoixBtn(), addingquantity.getChoixBtn().getBounds().x-312, addingquantity.getChoixBtn().getBounds().y-65 + addingquantity.getChoixBtn().getBounds().height);
 

@@ -11,10 +11,12 @@ import org.hicham.Controller.ControllerInfoPatient;
 import org.hicham.Controller.ControllerMenuBar;
 import org.hicham.Controller.ControllerOrdonance;
 import org.hicham.Controller.ControllerPatient;
+import org.hicham.Controller.ControllerRendezVous;
 import org.hicham.Model.ActQueries;
 import org.hicham.Model.MedicamentQueries;
 import org.hicham.Model.PatientQueries;
 import org.hicham.Model.ProduitQueries;
+import org.hicham.Model.RendezVousQueries;
 import org.hicham.View.ActPatientView;
 import org.hicham.View.GestionStockView;
 import org.hicham.View.HomePanel;
@@ -45,7 +47,8 @@ public class Main {
 		ProduitQueries prq= new ProduitQueries();
 		ActQueries aq= new ActQueries();
 		MedicamentQueries mq= new MedicamentQueries();
-		
+		RendezVousQueries rvq= new RendezVousQueries();
+
 		//views
 		InfoPatient ip= new InfoPatient();
 		ActPatientView ap= new ActPatientView();
@@ -58,7 +61,7 @@ public class Main {
 		HomePanel hp= new HomePanel();
 		RendezVousView rvv= new RendezVousView();
 		MainFrame mf= new MainFrame(hp,p,gs,rvv,mb);
-		
+
 		//controllers
 		ControllerInfoPatient cip= new ControllerInfoPatient(ip, pq,rp);
 		ControllerAct ca= new ControllerAct(ap, aq, pq,cip);
@@ -66,15 +69,16 @@ public class Main {
 		ControllerOrdonance co= new ControllerOrdonance(mf,hp, p, o,mq);
 		ControllerMenuBar cmb= new ControllerMenuBar(mf,hp,mb , p, o,gs,rvv,rp,prq,pq);
 		ControllerGestionStock cgs= new ControllerGestionStock(gs, prq);
+		ControllerRendezVous crv= new ControllerRendezVous(rvv,rvq);
 		mf.setVisible(true);
 	}
 
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
-		    public void run() {
+			public void run() {
 				SystemLookFeel();
 				showInterface();
-		    }
+			}
 		});
 
 	}
