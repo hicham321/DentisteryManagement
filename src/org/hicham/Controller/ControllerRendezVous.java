@@ -2,13 +2,16 @@ package org.hicham.Controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.JComboBox;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.hicham.Model.Act;
 import org.hicham.Model.Patient;
 import org.hicham.Model.RendezVousQueries;
 import org.hicham.View.RendezVousView;
@@ -17,6 +20,7 @@ public class ControllerRendezVous {
 
 	RendezVousView rendezVousView= new RendezVousView();
 	RendezVousQueries rendezVousQueries= new RendezVousQueries();
+	
 	public ControllerRendezVous(RendezVousView rendezVousView,RendezVousQueries rendezVousQueries){
 		this.rendezVousView= rendezVousView;
 		this.rendezVousQueries= rendezVousQueries;
@@ -29,7 +33,7 @@ public class ControllerRendezVous {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (e.getSource()==rendezVousView.getRechercheBtn()) {
+			if (e.getSource()==rendezVousView.getRechercheBtn() & rendezVousView.getModeRechercheList().getSelectedIndex()==1) {
 				//show panel based on mode of search
 				//int patientid=rendezVousView.getPatientCombo().getSelectedIndex();
 				
@@ -41,6 +45,18 @@ public class ControllerRendezVous {
 
 				}
 
+			}
+			if (e.getSource()==rendezVousView.getRechercheBtn() & rendezVousView.getModeRechercheList().getSelectedIndex()==0) {
+				
+				int selectedIndex=rendezVousView.getPatientCombo().getSelectedIndex();
+				List<Act> acts=rendezVousQueries.getActFromPatient(selectedIndex);
+				for (Iterator iterator = acts.iterator(); iterator.hasNext();) {
+					Act act = (Act) iterator.next();
+					System.out.println(act.getDateRendezVous() +"a" +act.getTempRendezVous() +"/n"
+					+ "l'act est: "	+ act.getAct() );
+					
+				}
+				
 			}
 
 		}
