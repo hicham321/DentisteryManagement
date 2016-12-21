@@ -17,6 +17,7 @@ import org.hicham.Model.MedicamentQueries;
 import org.hicham.Model.PatientQueries;
 import org.hicham.Model.ProduitQueries;
 import org.hicham.Model.RendezVousQueries;
+import org.hicham.Model.SessionsDB;
 import org.hicham.View.ActPatientView;
 import org.hicham.View.GestionStockView;
 import org.hicham.View.HomePanel;
@@ -27,6 +28,7 @@ import org.hicham.View.OdfPatient;
 import org.hicham.View.Ordonance;
 import org.hicham.View.PatientView;
 import org.hicham.View.RecherchePatientView;
+import org.hicham.View.RegisterView;
 import org.hicham.View.RendezVousView;
 
 public class Main {
@@ -48,8 +50,9 @@ public class Main {
 		ActQueries aq= new ActQueries();
 		MedicamentQueries mq= new MedicamentQueries();
 		RendezVousQueries rvq= new RendezVousQueries();
-
+		
 		//views
+		RegisterView rv= new RegisterView();
 		InfoPatient ip= new InfoPatient();
 		ActPatientView ap= new ActPatientView();
 		OdfPatient op= new OdfPatient();
@@ -58,10 +61,9 @@ public class Main {
 		PatientView p = new PatientView(ip,ap,op,o,rp);
 		GestionStockView gs= new GestionStockView();
 		MenuBar mb= new MenuBar();
-		HomePanel hp= new HomePanel();
+		HomePanel hp= new HomePanel(rv);
 		RendezVousView rvv= new RendezVousView();
-		MainFrame mf= new MainFrame(hp,p,gs,rvv,mb);
-
+		MainFrame mf= new MainFrame(hp,p,gs,rvv,rv,mb);
 		//controllers
 		ControllerInfoPatient cip= new ControllerInfoPatient(ip, pq,rp);
 		ControllerAct ca= new ControllerAct(ap, aq, pq,cip);
@@ -70,10 +72,18 @@ public class Main {
 		ControllerMenuBar cmb= new ControllerMenuBar(mf,hp,mb , p, o,gs,rvv,rp,prq,pq);
 		ControllerGestionStock cgs= new ControllerGestionStock(gs, prq);
 		ControllerRendezVous crv= new ControllerRendezVous(rvv,rvq);
+		
 		mf.setVisible(true);
+		rv.setVisible(true);
 	}
 
 	public static void main(String[] args) {
+		
+		new Thread(new Runnable() {
+		    public void run() {
+				SessionsDB FactoryObject= new SessionsDB();
+		    }
+		}).start();
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				SystemLookFeel();

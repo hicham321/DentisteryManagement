@@ -18,6 +18,7 @@ import org.hicham.View.OdfPatient;
 import org.hicham.View.Ordonance;
 import org.hicham.View.PatientView;
 import org.hicham.View.RecherchePatientView;
+import org.hicham.View.RegisterView;
 import org.hicham.View.RendezVousView;
 
 public class ControllerOrdonance {
@@ -34,9 +35,10 @@ public class ControllerOrdonance {
 	MenuBar menuBar= new MenuBar();
     GestionStockView gestionStockView= new GestionStockView();
     MedicamentQueries medicamentQueries= new MedicamentQueries();
-    HomePanel homePanel= new HomePanel();
+    RegisterView registerView= new RegisterView();
+    HomePanel homePanel= new HomePanel(registerView);
     RendezVousView rendezVousView= new RendezVousView();
-	MainFrame mainFrame= new MainFrame( homePanel,patient,gestionStockView,rendezVousView,menuBar);
+	MainFrame mainFrame= new MainFrame( homePanel,patient,gestionStockView,rendezVousView,registerView,menuBar);
 	public ControllerOrdonance(MainFrame mainFrame,HomePanel homePanel,PatientView patient,Ordonance ordonance ,MedicamentQueries medicamentQueries){
 		this.patient= patient;
 		this.ordonance= ordonance;

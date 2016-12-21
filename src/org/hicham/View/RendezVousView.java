@@ -98,7 +98,7 @@ public class RendezVousView extends JPanel{
 		panelRechercheRendezVous.setBounds(0, 0, 700, 300);
 		panelPatient.setBounds(0, 300, 1000, 300);
 		panelRendezVous.setBounds(0, 300, 1000, 300);
-
+        
 	}
 	
 	public void addRendezVousActionListener(ActionListener listener){

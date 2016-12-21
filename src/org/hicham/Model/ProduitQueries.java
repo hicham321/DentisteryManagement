@@ -28,7 +28,6 @@ public class ProduitQueries extends UsefulMethods{
 	public List<Produit> findAllProducts(){
 		SessionsDB FactoryObject= new SessionsDB();
 		Session session= FactoryObject.getFactory().openSession();
-		//Session session = SessionsDB.getFactory().openSession();
 		try {
 
 			List<Produit> listProduit= session.createQuery("from Produit").list();

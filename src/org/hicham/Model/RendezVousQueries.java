@@ -33,11 +33,8 @@ public class RendezVousQueries {
 		}	
 		return PatientActs;
 	}
-	public List<Integer> getPatientsIds(){
-		List<Integer> listIds= new ArrayList<>();
-		
-		return listIds;
-	}
+	
+	
 	public List<Patient> getPatientsFromDate(Date date){
 
 		SessionsDB FactoryObject= new SessionsDB();

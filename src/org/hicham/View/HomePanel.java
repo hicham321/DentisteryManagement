@@ -1,40 +1,54 @@
 package org.hicham.View;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.JDesktopPane;
 
-public class HomePanel  extends JPanel{
 
-	private BufferedImage image;
-    private JLabel picLabel;
+public class HomePanel  extends JDesktopPane{
 
-	public HomePanel() {
+	private Image image;
+    RegisterView registerView= new RegisterView();
+    
+
+	public HomePanel(RegisterView registerView) {
+		
 		try{
-
+			
 			this.setLayout( null);
 			this.setBackground(Color.decode("#d2fdf9"));
 			
-			image = ImageIO.read(this.getClass().getResource("/resources/Tooth-Background.jpg"));
-			Image newimg = image.getScaledInstance( 400, 400,  java.awt.Image.SCALE_SMOOTH ) ;  
+			Image image = ImageIO.read(this.getClass().getResource("/resources/Tooth-Background.jpg"));
+			//Image newimg = image.getScaledInstance( 1400, 750,  java.awt.Image.SCALE_SMOOTH ) ;  
+			 this.image =  image.getScaledInstance( 1400, 750,  java.awt.Image.SCALE_SMOOTH ) ;  
 
-			picLabel = new JLabel(new ImageIcon(newimg));
-			this.add(picLabel);
+			this.registerView.setVisible(true);
+			this.registerView.toFront();
+			this.registerView.setSelected(true);
+			Dimension jInternalFrameSize = this.registerView.getSize();
 			
-			picLabel.setBounds(0,0 , 400, 400);	
+			this.registerView.setLocation((1400 - jInternalFrameSize.width)/2,
+			    (750- jInternalFrameSize.height)/2);
+			this.add(this.registerView);
+			
 			}catch(Exception ex){
 
 			ex.printStackTrace();
 		}
 
 	}
+	 @Override
+     protected void paintComponent(Graphics grphcs) {
+         super.paintComponent(grphcs);
+         grphcs.drawImage(image, 0, 0, null);
+     }
+
+     @Override
+     public Dimension getPreferredSize() {
+         return new Dimension(1400, 750);
+     }
 	
 }

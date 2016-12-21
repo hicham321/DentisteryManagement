@@ -35,24 +35,24 @@ public class ControllerAct {
 	ActPatientView actPatientView= new ActPatientView();
 	ActQueries actQueries        = new     ActQueries();
 	PatientQueries patientQueries= new PatientQueries();
-	
-	
+
+
 	InfoPatient infoPatient = new InfoPatient();
 	RecherchePatientView recherchePatientView = new RecherchePatientView();
-	
+
 	ControllerInfoPatient controllerInfoPatient= new ControllerInfoPatient(infoPatient,patientQueries,recherchePatientView);
-	
+
 	Act currentAct= new Act();
-    
+
 	int returnVal;
 	JFileChooser filechooser= new JFileChooser();
 	File sourceFileImage;
 	String dbPathToFileImage="";
-	
+
 	BufferedImage bfImage;
 	JLabel picLabel= new JLabel();
 	public ControllerAct(ActPatientView actPatientView,ActQueries actQueries,PatientQueries patientQueries ,ControllerInfoPatient controllerInfoPatient){
-		
+
 		this.actPatientView= actPatientView;
 		this.actQueries= actQueries;
 		this.patientQueries=patientQueries;
@@ -66,13 +66,13 @@ public class ControllerAct {
 		public void actionPerformed(ActionEvent arg0) {
 
 			if(arg0.getSource()==actPatientView.getOk()){
-				
+
 				//put act information
 				String actText=actPatientView.getActText().getText();
 				Date actDate=actPatientView.getDatePicker().getDate();
 				String actTemp= actPatientView.getTimePicker().getValue().toString();
 				double actPayement= Double.parseDouble(actPatientView.getPayementCombo().getSelectedItem().toString());
-                String dbImagePath=dbPathToFileImage;
+				String dbImagePath=dbPathToFileImage;
 				currentAct= new Act(actText,actPayement,actDate,actTemp,dbImagePath);
 				//setting patient for oneToMany relationship between Patient and Act
 				currentAct.setPatient(controllerInfoPatient.getCurrentPatient());
@@ -99,8 +99,8 @@ public class ControllerAct {
 				}
 
 			}
-            if (arg0.getSource()==actPatientView.getOkImage()) {
-            	//destination file should changed after packaging the Jar  
+			if (arg0.getSource()==actPatientView.getOkImage()) {
+				//destination file should changed after packaging the Jar  
 				String imageDestinationDir="C://Users/Hicham/ImageRadio";
 
 				dbPathToFileImage=imageDestinationDir+"/"+CopyFileImage(imageDestinationDir);
@@ -108,9 +108,9 @@ public class ControllerAct {
 			}
 
 		}
-		
-		
-        //this copies selected image into the directory and gets the new path of the image
+
+
+		//this copies selected image into the directory and gets the new path of the image
 		public String CopyFileImage(String pathTodestinationImageDir){
 			String imageName="";
 			try{
@@ -148,8 +148,8 @@ public class ControllerAct {
 			picLabel.setIcon(new ImageIcon(newimg));
 			actPatientView.getPanelImageAct().add(picLabel);
 
-						actPatientView.getPanelImageAct().revalidate();
-						actPatientView.getPanelImageAct().repaint();
+			actPatientView.getPanelImageAct().revalidate();
+			actPatientView.getPanelImageAct().repaint();
 
 			picLabel.setBounds(0,0 , 300, 300);	
 

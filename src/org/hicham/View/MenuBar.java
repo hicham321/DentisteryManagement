@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.event.MenuListener;
 
 public class MenuBar {
 
@@ -90,6 +91,9 @@ public class MenuBar {
 
 		this.menuapropos.addActionListener(listener);
 
+	}
+	public void addMenuBarMenuListener(MenuListener menuListener){
+		this.retour.addMenuListener(menuListener);
 	}
 
 	public JMenuBar getMenu() {

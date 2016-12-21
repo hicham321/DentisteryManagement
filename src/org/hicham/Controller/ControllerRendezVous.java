@@ -52,7 +52,7 @@ public class ControllerRendezVous {
 				List<Act> acts=rendezVousQueries.getActFromPatient(selectedIndex);
 				for (Iterator iterator = acts.iterator(); iterator.hasNext();) {
 					Act act = (Act) iterator.next();
-					System.out.println(act.getDateRendezVous() +"a" +act.getTempRendezVous() +"/n"
+					System.out.println(act.getDateRendezVous() +" a " +act.getTempRendezVous() +"\n"
 					+ "l'act est: "	+ act.getAct() );
 					
 				}

@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
 
 import org.hicham.Model.PatientQueries;
 import org.hicham.Model.ProduitQueries;
@@ -18,6 +20,7 @@ import org.hicham.View.OdfPatient;
 import org.hicham.View.Ordonance;
 import org.hicham.View.PatientView;
 import org.hicham.View.RecherchePatientView;
+import org.hicham.View.RegisterView;
 import org.hicham.View.RendezVousView;
 
 import jdk.internal.org.objectweb.asm.tree.TryCatchBlockNode;
@@ -36,13 +39,14 @@ public class ControllerMenuBar {
     RendezVousView rendezVousView= new RendezVousView();
 	PatientView patient= new PatientView(infoPatient,actPatient,odfPatient,ordonance,recherchePatientView);
 	PatientQueries patientQueries= new PatientQueries();
-	public HomePanel homePanel= new HomePanel();
+	RegisterView registerView= new RegisterView ();
+	public HomePanel homePanel= new HomePanel(registerView);
 		
 	
 
 	ProduitQueries produitQueries= new ProduitQueries();
 
-	MainFrame mainFrame= new MainFrame(homePanel,patient,gestionStockView,rendezVousView,menuBar);
+	MainFrame mainFrame= new MainFrame(homePanel,patient,gestionStockView,rendezVousView,registerView,menuBar);
 
 	public ControllerMenuBar(MainFrame mainFrame,HomePanel homePanel,MenuBar menuBar
 			,PatientView patient,Ordonance ordonance,GestionStockView gestionStockView
@@ -60,6 +64,7 @@ public class ControllerMenuBar {
 		this.rendezVousView= rendezVousView;
 		this.recherchePatientView= recherchePatientView;
 		this.menuBar.addMenuBarActionListener(new MenuBarActionListener() );
+		this.menuBar.addMenuBarMenuListener(new MenuBarMenuListener() );
 
 	}
 	class MenuBarActionListener implements ActionListener{
@@ -69,6 +74,7 @@ public class ControllerMenuBar {
 
 			if (e.getSource()== menuBar.getOrdonance()) {
 				//show ordonance card
+				
 			}
 			if (e.getSource()== menuBar.getPatient()) {
 				//show patient card
@@ -105,6 +111,7 @@ public class ControllerMenuBar {
 			
 			if (e.getSource()== menuBar.getRetour()) {
 				//show first card
+				showHomeCard();
 
 			}
 			if (e.getSource()== menuBar.getMotpasse()) {
@@ -121,6 +128,25 @@ public class ControllerMenuBar {
 			}
 		}
 	}
+	class MenuBarMenuListener implements MenuListener{
+
+		@Override
+		public void menuCanceled(MenuEvent e) {
+			
+		}
+
+		@Override
+		public void menuDeselected(MenuEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void menuSelected(MenuEvent e) {
+			showHomeCard();			
+		}
+		
+	}
 	public void showGestionStockCard(){
 		CardLayout cardLayout = (CardLayout) mainFrame.cards.getLayout();
 		cardLayout.show(mainFrame.cards, "Card 3");	
@@ -134,6 +160,10 @@ public class ControllerMenuBar {
 		CardLayout cardLayout = (CardLayout) mainFrame.cards.getLayout();
 		cardLayout.show(mainFrame.cards, "Card 4");	
 
+	}
+	public void showHomeCard(){
+		CardLayout cardLayout = (CardLayout) mainFrame.cards.getLayout();
+		cardLayout.show(mainFrame.cards, "Card 1");	
 	}
 
 }
