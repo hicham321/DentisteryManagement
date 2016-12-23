@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="Register")
-public class Register {
+public class Register{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="Id")
@@ -18,6 +18,11 @@ public class Register {
 	String typeUtil;
 	@Column(name="Password")
 	String password;
+	
+	public Register(String typeUtil,String password){
+		this.password= password;
+		this.typeUtil= typeUtil;
+	}
 	
 	public Register(){
 		
@@ -33,6 +38,14 @@ public class Register {
 
 	public String getPassword() {
 		return password;
+	}
+
+	public void setTypeUtil(String typeUtil) {
+		this.typeUtil = typeUtil;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 

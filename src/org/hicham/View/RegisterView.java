@@ -8,12 +8,15 @@ import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 import com.sun.prism.paint.Color;
+
+import javafx.scene.control.PasswordField;
 
 public class RegisterView extends JInternalFrame {
 	
@@ -23,7 +26,7 @@ public class RegisterView extends JInternalFrame {
 	private JScrollPane typeUserListScrol = new JScrollPane(typeUserCombo);
 	
 	private JLabel passwordLab= new JLabel("Mot De Passe: ");
-	private JTextField password= new JTextField();
+	private JPasswordField password= new JPasswordField();
 	
 	private JButton ok =new JButton("Ok");
 	private JButton annule =new JButton("Annuler");
@@ -32,7 +35,8 @@ public class RegisterView extends JInternalFrame {
 	public RegisterView (){
 		
 		this.setLayout(null);
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		//this.setClosable(true);
+		//this.setDefaultCloseOperation(s);
 		
 		this.typeUserModel.addElement("");
 		this.typeUserModel.addElement("Assistant");
@@ -79,5 +83,14 @@ public class RegisterView extends JInternalFrame {
 	public JButton getAnnule() {
 		return annule;
 	}
+
+	public JComboBox getTypeUserCombo() {
+		return typeUserCombo;
+	}
+
+	public JPasswordField getPassword() {
+		return password;
+	}
+	
 	
 }

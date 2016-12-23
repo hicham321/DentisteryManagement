@@ -11,6 +11,7 @@ import javax.swing.event.MenuListener;
 import org.hicham.Model.PatientQueries;
 import org.hicham.Model.ProduitQueries;
 import org.hicham.View.ActPatientView;
+import org.hicham.View.ChangeMotPassView;
 import org.hicham.View.GestionStockView;
 import org.hicham.View.HomePanel;
 import org.hicham.View.InfoPatient;
@@ -40,7 +41,9 @@ public class ControllerMenuBar {
 	PatientView patient= new PatientView(infoPatient,actPatient,odfPatient,ordonance,recherchePatientView);
 	PatientQueries patientQueries= new PatientQueries();
 	RegisterView registerView= new RegisterView ();
-	public HomePanel homePanel= new HomePanel(registerView);
+    ChangeMotPassView changeMotPassView= new ChangeMotPassView();
+
+	public HomePanel homePanel= new HomePanel(registerView,changeMotPassView);
 		
 	
 

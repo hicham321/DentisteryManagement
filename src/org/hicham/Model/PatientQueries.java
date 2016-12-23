@@ -4,12 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
-
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-
 
 
 public class PatientQueries {
@@ -41,7 +36,7 @@ public class PatientQueries {
 	    //Session session = SessionsDB.getFactory().openSession();
 		try {
 
-			List<Patient> listPatient= session.createQuery("from Patient").list();
+			List<Patient> listPatient= session.createQuery("from Register").list();
 
 			return listPatient;
 		} finally {

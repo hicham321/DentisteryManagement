@@ -19,8 +19,9 @@ public class MainFrame extends JFrame{
 	RecherchePatientView recherchePatientView= new RecherchePatientView();
 	
 	RegisterView registerView= new RegisterView();
-	
-	public HomePanel card1= new HomePanel(registerView);
+    ChangeMotPassView changeMotPassView= new ChangeMotPassView();
+
+	public HomePanel card1= new HomePanel(registerView,changeMotPassView);
 	
 	public PatientView card2= new PatientView(infoPatient,actPatient,odfPatient,ordonance,recherchePatientView);
 	

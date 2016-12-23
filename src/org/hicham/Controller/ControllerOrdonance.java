@@ -9,6 +9,7 @@ import javax.swing.DefaultComboBoxModel;
 
 import org.hicham.Model.MedicamentQueries;
 import org.hicham.View.ActPatientView;
+import org.hicham.View.ChangeMotPassView;
 import org.hicham.View.GestionStockView;
 import org.hicham.View.HomePanel;
 import org.hicham.View.InfoPatient;
@@ -36,7 +37,9 @@ public class ControllerOrdonance {
     GestionStockView gestionStockView= new GestionStockView();
     MedicamentQueries medicamentQueries= new MedicamentQueries();
     RegisterView registerView= new RegisterView();
-    HomePanel homePanel= new HomePanel(registerView);
+    ChangeMotPassView changeMotPassView= new ChangeMotPassView();
+
+    HomePanel homePanel= new HomePanel(registerView,changeMotPassView);
     RendezVousView rendezVousView= new RendezVousView();
 	MainFrame mainFrame= new MainFrame( homePanel,patient,gestionStockView,rendezVousView,registerView,menuBar);
 	public ControllerOrdonance(MainFrame mainFrame,HomePanel homePanel,PatientView patient,Ordonance ordonance ,MedicamentQueries medicamentQueries){

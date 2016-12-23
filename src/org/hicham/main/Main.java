@@ -11,14 +11,17 @@ import org.hicham.Controller.ControllerInfoPatient;
 import org.hicham.Controller.ControllerMenuBar;
 import org.hicham.Controller.ControllerOrdonance;
 import org.hicham.Controller.ControllerPatient;
+import org.hicham.Controller.ControllerRegister;
 import org.hicham.Controller.ControllerRendezVous;
 import org.hicham.Model.ActQueries;
 import org.hicham.Model.MedicamentQueries;
 import org.hicham.Model.PatientQueries;
 import org.hicham.Model.ProduitQueries;
+import org.hicham.Model.RegisterQueries;
 import org.hicham.Model.RendezVousQueries;
 import org.hicham.Model.SessionsDB;
 import org.hicham.View.ActPatientView;
+import org.hicham.View.ChangeMotPassView;
 import org.hicham.View.GestionStockView;
 import org.hicham.View.HomePanel;
 import org.hicham.View.InfoPatient;
@@ -50,9 +53,10 @@ public class Main {
 		ActQueries aq= new ActQueries();
 		MedicamentQueries mq= new MedicamentQueries();
 		RendezVousQueries rvq= new RendezVousQueries();
-		
+		RegisterQueries rq= new RegisterQueries();
 		//views
 		RegisterView rv= new RegisterView();
+		ChangeMotPassView cmpv= new ChangeMotPassView();
 		InfoPatient ip= new InfoPatient();
 		ActPatientView ap= new ActPatientView();
 		OdfPatient op= new OdfPatient();
@@ -61,9 +65,10 @@ public class Main {
 		PatientView p = new PatientView(ip,ap,op,o,rp);
 		GestionStockView gs= new GestionStockView();
 		MenuBar mb= new MenuBar();
-		HomePanel hp= new HomePanel(rv);
+		HomePanel hp= new HomePanel(rv,cmpv);
 		RendezVousView rvv= new RendezVousView();
 		MainFrame mf= new MainFrame(hp,p,gs,rvv,rv,mb);
+		
 		//controllers
 		ControllerInfoPatient cip= new ControllerInfoPatient(ip, pq,rp);
 		ControllerAct ca= new ControllerAct(ap, aq, pq,cip);
@@ -72,16 +77,22 @@ public class Main {
 		ControllerMenuBar cmb= new ControllerMenuBar(mf,hp,mb , p, o,gs,rvv,rp,prq,pq);
 		ControllerGestionStock cgs= new ControllerGestionStock(gs, prq);
 		ControllerRendezVous crv= new ControllerRendezVous(rvv,rvq);
+		ControllerRegister cr= new ControllerRegister(rq, rv, mf);
 		
 		mf.setVisible(true);
-		rv.setVisible(true);
 	}
 
 	public static void main(String[] args) {
+		//see if register table is empty and insert the passwords if it is
+		
 		
 		new Thread(new Runnable() {
 		    public void run() {
 				SessionsDB FactoryObject= new SessionsDB();
+				RegisterQueries rq= new RegisterQueries();
+				if (rq.CheckRegisterEmpty()) {
+					rq.putInitialPasswords();
+				}
 		    }
 		}).start();
 		SwingUtilities.invokeLater(new Runnable() {
