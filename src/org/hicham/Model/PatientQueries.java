@@ -36,14 +36,14 @@ public class PatientQueries {
 	    //Session session = SessionsDB.getFactory().openSession();
 		try {
 
-			List<Patient> listPatient= session.createQuery("from Register").list();
+			List<Patient> listPatient= session.createQuery("from Patient").list();
 
 			return listPatient;
 		} finally {
 			session.close();
 		}	
 	}
-	public List<String>findPatientsNames(){
+	public List<String> findPatientsNames(){
 		List<String> listPatientNames= new ArrayList<>();
         List<Patient> listOfallPatients= findAllPatients();
         for (int i = 0; i < listOfallPatients.size(); i++) {

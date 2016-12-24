@@ -19,10 +19,12 @@ import org.hicham.View.RecherchePatientView;
 import org.hicham.View.RegisterView;
 import org.hicham.View.RendezVousView;
 
+import com.sun.xml.internal.fastinfoset.util.CharArray;
+
 public class ControllerRegister {
 	MenuBar menuBar= new MenuBar();
 
-	RegisterQueries registerModel= new RegisterQueries();
+	RegisterQueries registerQueries= new RegisterQueries();
 	RegisterView registerView= new RegisterView();
     ChangeMotPassView changeMotPassView= new ChangeMotPassView();
 	
@@ -45,7 +47,7 @@ public class ControllerRegister {
 	public ControllerRegister(RegisterQueries registerModel,RegisterView registerView, MainFrame mainFrame ){
 
 		this.mainFrame= mainFrame;
-		this.registerModel= registerModel;
+		this.registerQueries= registerModel;
 		this.registerView= registerView;
 		this.registerView.addRegisterViewActionListener(new RegisterViewActionListener());
 	}
@@ -54,12 +56,24 @@ public class ControllerRegister {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 
-			if(arg0.getSource()== registerView.getOk()){
-				mainFrame.setEnabled(true);
+			if(arg0.getSource()== registerView.getOk()){				
+				//check if password is correct depending on user type:
+				char[] password= registerView.getPassword().getPassword();
+				String typeUser= registerView.getTypeUserCombo().getSelectedItem().toString();
+				if (registerQueries.checkPassCorrect(password, typeUser)) {
+					mainFrame.setEnabled(true);
+					registerView.dispose();
+
+				}
+				else{
+					//error message 
+				}
+				
 			} 
 			if(arg0.getSource()== registerView.getAnnule()){
 				//get out of the program
-				System.exit(0);
+				//System.exit(0);
+				registerView.dispose();
 			}
 		}
 

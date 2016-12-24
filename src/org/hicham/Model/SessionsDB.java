@@ -8,13 +8,6 @@ import org.hibernate.cfg.Configuration;
 //once according to Hibernate guidelines.
 public class SessionsDB {
 	
-	/*static Configuration configuration = new Configuration().configure("/resources/hibernate.cfg.xml")
-			.addAnnotatedClass(Patient.class)
-			.addAnnotatedClass(Produit.class)
-			.addAnnotatedClass(Medicament.class)
-			.addAnnotatedClass(Act.class);
-	static StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
-	static SessionFactory factory = configuration.buildSessionFactory(builder.build());*/
 	 static SessionFactory factory = null;
 
 	

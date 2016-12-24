@@ -38,7 +38,7 @@ public class Main {
 
 	public static void SystemLookFeel(){
 		try { 
-			//This line is for system look and feel
+			
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 
 		} catch (Exception e) {

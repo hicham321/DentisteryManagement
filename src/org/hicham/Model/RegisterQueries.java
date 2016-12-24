@@ -1,12 +1,13 @@
 package org.hicham.Model;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.hibernate.Session;
 
 public class RegisterQueries {
 	
-	public boolean checkPassIncorrect(String enteredPass, String selectedUser){
+	public boolean checkPassCorrect(char[] enteredPass, String selectedUser){
 		SessionsDB FactoryObject= new SessionsDB();
 		Session session= FactoryObject.getFactory().openSession();
 		//Session session = SessionsDB.getFactory().openSession();
@@ -15,7 +16,7 @@ public class RegisterQueries {
 			List<Register> listUsers= session.createQuery("from Register").list();
 			for (int i = 0; i < listUsers.size(); i++) {
 				if(selectedUser.equals(listUsers.get(i).getTypeUtil())){
-					if(enteredPass.equals(listUsers.get(i).getPassword())){
+					if(Arrays.equals(enteredPass, listUsers.get(i).getPassword().toCharArray()) ){
 						passIsCorrect=true;
 					}
 				}
