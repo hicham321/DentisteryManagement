@@ -54,7 +54,7 @@ public class ControllerMenuBar {
 	public ControllerMenuBar(MainFrame mainFrame,HomePanel homePanel,MenuBar menuBar
 			,PatientView patient,Ordonance ordonance,GestionStockView gestionStockView
 			,RendezVousView rendezVousView,RecherchePatientView recherchePatientView
-			,ProduitQueries produitQueries,PatientQueries patientQueries){
+			,ProduitQueries produitQueries,PatientQueries patientQueries,ChangeMotPassView changeMotPassView){
 
 		this.patient= patient;
 		this.ordonance= ordonance;
@@ -66,6 +66,7 @@ public class ControllerMenuBar {
 		this.patientQueries= patientQueries;
 		this.rendezVousView= rendezVousView;
 		this.recherchePatientView= recherchePatientView;
+		this.changeMotPassView= changeMotPassView;
 		this.menuBar.addMenuBarActionListener(new MenuBarActionListener() );
 		this.menuBar.addMenuBarMenuListener(new MenuBarMenuListener() );
 
@@ -119,6 +120,8 @@ public class ControllerMenuBar {
 			}
 			if (e.getSource()== menuBar.getMotpasse()) {
 				//show motpasse frame
+				changeMotPassView.setVisible(true);
+				showHomeCard();			
 
 			}
 			if (e.getSource()== menuBar.getMenuapropos()) {

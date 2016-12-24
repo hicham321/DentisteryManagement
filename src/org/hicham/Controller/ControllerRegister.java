@@ -2,7 +2,6 @@ package org.hicham.Controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import org.hicham.Model.PatientQueries;
 import org.hicham.Model.RegisterQueries;
 import org.hicham.View.ActPatientView;
@@ -19,29 +18,27 @@ import org.hicham.View.RecherchePatientView;
 import org.hicham.View.RegisterView;
 import org.hicham.View.RendezVousView;
 
-import com.sun.xml.internal.fastinfoset.util.CharArray;
-
 public class ControllerRegister {
 	MenuBar menuBar= new MenuBar();
 
 	RegisterQueries registerQueries= new RegisterQueries();
 	RegisterView registerView= new RegisterView();
-    ChangeMotPassView changeMotPassView= new ChangeMotPassView();
-	
+	ChangeMotPassView changeMotPassView= new ChangeMotPassView();
+
 	Ordonance ordonance = new Ordonance();
 	InfoPatient infoPatient= new InfoPatient();
 	ActPatientView actPatient= new ActPatientView();
 	OdfPatient odfPatient= new OdfPatient();
-    RecherchePatientView recherchePatientView= new RecherchePatientView();
-    GestionStockView gestionStockView= new GestionStockView();
+	RecherchePatientView recherchePatientView= new RecherchePatientView();
+	GestionStockView gestionStockView= new GestionStockView();
 
 	RendezVousView rendezVousView= new RendezVousView();
 	PatientView patient= new PatientView(infoPatient,actPatient,odfPatient,ordonance,recherchePatientView);
 	PatientQueries patientQueries= new PatientQueries();
 	public HomePanel homePanel= new HomePanel(registerView,changeMotPassView);
-		
-	
-    
+
+
+
 	MainFrame mainFrame= new MainFrame(homePanel,patient,gestionStockView,rendezVousView,registerView,menuBar);
 
 	public ControllerRegister(RegisterQueries registerModel,RegisterView registerView, MainFrame mainFrame ){
@@ -60,15 +57,18 @@ public class ControllerRegister {
 				//check if password is correct depending on user type:
 				char[] password= registerView.getPassword().getPassword();
 				String typeUser= registerView.getTypeUserCombo().getSelectedItem().toString();
+
 				if (registerQueries.checkPassCorrect(password, typeUser)) {
 					mainFrame.setEnabled(true);
+					
 					registerView.dispose();
 
 				}
 				else{
 					//error message 
+					registerView.getErrorLab().setVisible(true);
 				}
-				
+
 			} 
 			if(arg0.getSource()== registerView.getAnnule()){
 				//get out of the program

@@ -69,4 +69,26 @@ public class RegisterQueries {
 			session.close();
 		}
 	}
+	public void  changePassword(String userType,char[] oldPass,char[] newPass){
+			//insert new password in db
+			SessionsDB FactoryObject= new SessionsDB();
+			Session session= FactoryObject.getFactory().openSession();
+			List<Register> listUsers= session.createQuery("from Register").list();
+			try{
+				Register registerObject= null;
+				for (int i = 0; i < listUsers.size(); i++) {
+					if (userType.equals(listUsers.get(i).getTypeUtil())) {
+						 registerObject= listUsers.get(i);
+					}
+				}
+				registerObject.setPassword(String.valueOf(newPass));
+				session.beginTransaction();
+				session.saveOrUpdate(registerObject);
+				session.getTransaction().commit();;
+
+			} finally {
+				session.close();
+			}
+
+	}
 }

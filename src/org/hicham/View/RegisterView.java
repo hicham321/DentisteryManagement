@@ -14,7 +14,6 @@ import javax.swing.JTextField;
 
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
-import com.sun.prism.paint.Color;
 
 import javafx.scene.control.PasswordField;
 
@@ -30,6 +29,9 @@ public class RegisterView extends JInternalFrame {
 	
 	private JButton ok =new JButton("Ok");
 	private JButton annule =new JButton("Annuler");
+	
+	JLabel errorLab= new JLabel("*  Incorrect");
+
 	
 	
 	public RegisterView (){
@@ -56,6 +58,9 @@ public class RegisterView extends JInternalFrame {
 		panel.add(typeUserCombo);
 		panel.add(password);
 		panel.add(passwordLab);	
+		panel.add(errorLab);
+		errorLab.setForeground(java.awt.Color.red);
+		errorLab.setVisible(false);
 		panel.setBackground(java.awt.Color.WHITE);
 
 		this.typeUserLab.setBounds(30,30 , 120,20 );
@@ -64,6 +69,8 @@ public class RegisterView extends JInternalFrame {
 		this.password.setBounds(180,90 , 120,20 );
 		this.ok.setBounds(30, 140, 120,20 );
 		this.annule.setBounds(180,140 , 120,20 );
+		errorLab.setBounds(305,90 , 120,20);
+
 		
         panel.setBounds(0, 0, this.getWidth(), this.getHeight());
 		this.add(panel);
@@ -90,6 +97,9 @@ public class RegisterView extends JInternalFrame {
 
 	public JPasswordField getPassword() {
 		return password;
+	}
+	public JLabel getErrorLab() {
+		return errorLab;
 	}
 	
 	

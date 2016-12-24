@@ -6,6 +6,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 import org.hicham.Controller.ControllerAct;
+import org.hicham.Controller.ControllerChangePass;
 import org.hicham.Controller.ControllerGestionStock;
 import org.hicham.Controller.ControllerInfoPatient;
 import org.hicham.Controller.ControllerMenuBar;
@@ -74,10 +75,11 @@ public class Main {
 		ControllerAct ca= new ControllerAct(ap, aq, pq,cip);
 		ControllerPatient cp= new ControllerPatient(mf, p,o);
 		ControllerOrdonance co= new ControllerOrdonance(mf,hp, p, o,mq);
-		ControllerMenuBar cmb= new ControllerMenuBar(mf,hp,mb , p, o,gs,rvv,rp,prq,pq);
+		ControllerMenuBar cmb= new ControllerMenuBar(mf,hp,mb , p, o,gs,rvv,rp,prq,pq,cmpv);
 		ControllerGestionStock cgs= new ControllerGestionStock(gs, prq);
 		ControllerRendezVous crv= new ControllerRendezVous(rvv,rvq);
 		ControllerRegister cr= new ControllerRegister(rq, rv, mf);
+		ControllerChangePass ccmp= new ControllerChangePass(cmpv, rq);
 		
 		mf.setVisible(true);
 	}

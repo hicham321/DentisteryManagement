@@ -12,13 +12,15 @@ import javax.swing.JPasswordField;
 
 public class ChangeMotPassView extends JInternalFrame{
 
-	JLabel oldPassLab= new JLabel("");
+	JLabel oldPassLab= new JLabel("Ancien mot de passe: ");
 	JPasswordField oldPass= new JPasswordField();
-	JLabel newPassLab= new JLabel("");
+	JLabel newPassLab= new JLabel("Nouveau mot de passe:");
 	JPasswordField newPass= new JPasswordField();
 
 	JButton ok= new JButton("Ok");
 	JButton annuler= new JButton("Annuler");
+	
+	JLabel errorLab= new JLabel("*  Incorrect");
 
 	public ChangeMotPassView(){
 
@@ -35,6 +37,9 @@ public class ChangeMotPassView extends JInternalFrame{
 		panel.add(newPass);
 		panel.add(ok);
 		panel.add(annuler);
+		panel.add(errorLab);
+		errorLab.setForeground(Color.red);
+		errorLab.setVisible(false);
 
 		oldPassLab.setBounds(30,30 , 120,20);
 		oldPass.setBounds(180,30 , 120,20);
@@ -42,6 +47,7 @@ public class ChangeMotPassView extends JInternalFrame{
 		newPass.setBounds(180,90 , 120,20 );
 		ok.setBounds(30, 140, 120,20);
 		annuler.setBounds(180,140 , 120,20);
+		errorLab.setBounds(305,30 , 120,20);
 
 
 		this.add(panel);
@@ -68,6 +74,10 @@ public class ChangeMotPassView extends JInternalFrame{
 
 	public JButton getAnnuler() {
 		return annuler;
+	}
+
+	public JLabel getErrorLab() {
+		return errorLab;
 	}
 
 
