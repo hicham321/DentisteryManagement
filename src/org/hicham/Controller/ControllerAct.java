@@ -147,13 +147,14 @@ public class ControllerAct {
 			//picLabel= new JLabel(new ImageIcon(newimg));
 			picLabel.setIcon(new ImageIcon(newimg));
 			actPatientView.getPanelImageAct().add(picLabel);
-
+             
 			actPatientView.getPanelImageAct().revalidate();
 			actPatientView.getPanelImageAct().repaint();
 
 			picLabel.setBounds(0,0 , 300, 300);	
 
 		}
+		
 
 
 

@@ -1,13 +1,19 @@
 package org.hicham.Controller;
 
+import java.awt.CardLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -36,27 +42,42 @@ public class ControllerRendezVous {
 			if (e.getSource()==rendezVousView.getRechercheBtn() & rendezVousView.getModeRechercheList().getSelectedIndex()==1) {
 				//show panel based on mode of search
 				//int patientid=rendezVousView.getPatientCombo().getSelectedIndex();
+				//show par rendez vous  panel
 				
+				System.out.println("rendez vous panel is executed ");
 				Date dateObject= rendezVousView.getDatePicker().getDate();
 				List<Patient> listPatient=rendezVousQueries.getPatientsFromDate(dateObject);
+				
+				
 				for (int i = 0; i < listPatient.size(); i++) {
 					
 					System.out.println(listPatient.get(i).getNom());
 
 				}
+				showRendezVousInfoPanel();
 
 			}
 			if (e.getSource()==rendezVousView.getRechercheBtn() & rendezVousView.getModeRechercheList().getSelectedIndex()==0) {
+				//show par patient  panel
 				
+                System.out.println("patient panel is executed");
+                
 				int selectedIndex=rendezVousView.getPatientCombo().getSelectedIndex();
 				List<Act> acts=rendezVousQueries.getActFromPatient(selectedIndex);
+
+
 				for (Iterator iterator = acts.iterator(); iterator.hasNext();) {
 					Act act = (Act) iterator.next();
 					System.out.println(act.getDateRendezVous() +" a " +act.getTempRendezVous() +"\n"
-					+ "l'act est: "	+ act.getAct() );
-					
+							+ "l'act est: "	+ act.getAct() );
+
+					setPatientPanel(rendezVousView.getPatientCombo().getSelectedItem().toString()
+							, act.getDateRendezVous().toString()
+							,act.getAct(), act.getPayement());
+					showPatientInfoPanel();
+
 				}
-				
+
 			}
 
 		}
@@ -72,7 +93,8 @@ public class ControllerRendezVous {
 					//deactivate recherche par date
 					rendezVousView.getDatePicker().setEnabled(false);
 					rendezVousView.getPatientCombo().setEnabled(true);
-
+					
+					
 
 				}
 				if (rendezVousView.getModeRechercheList().getSelectedIndex()==1) {
@@ -103,6 +125,35 @@ public class ControllerRendezVous {
 		//		Double prixTotal= prixProduct*qte;
 		//		gestionStockView.getPrixTotal().setText(prixTotal.toString());
 	}
+	public void setPatientPanel(String nomPatient,String dateRendezVous, String actPatient, double Payement){
+        
+		rendezVousView.getNomPatient().setText(nomPatient);
+		rendezVousView.getPayement().setText(new Double(Payement).toString());
+		rendezVousView.getDateRendezVous().setText(dateRendezVous);
+		rendezVousView.getActPatient().setText(actPatient);
+		
+		//rendezVousView.getPanelRechercheRendezVous().add(rendezVousView.getPanelPatient());
+		rendezVousView.getPanelRechercheRendezVous().revalidate();
+		rendezVousView.getPanelRechercheRendezVous().repaint();
+
+	}
+	public void setRendezVousPanel(){
+
+		rendezVousView.getPanelRechercheRendezVous().add(rendezVousView.getPanelRendezVous());
+        
+		rendezVousView.getPanelRechercheRendezVous().revalidate();
+		rendezVousView.getPanelRechercheRendezVous().repaint();
+
+	}
+	public void showPatientInfoPanel(){
+		CardLayout cardLayout = (CardLayout) rendezVousView.cards.getLayout();
+		cardLayout.show(rendezVousView.cards, "Card 1");
+	}
+	public void showRendezVousInfoPanel(){
+		CardLayout cardLayout = (CardLayout) rendezVousView.cards.getLayout();
+		cardLayout.show(rendezVousView.cards, "Card 2");
+	}
+	
 	
 
 }
