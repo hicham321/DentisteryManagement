@@ -37,14 +37,17 @@ public class RendezVousView extends JPanel{
 	JButton rechercheBtn = new JButton("Recherche");
 	
 	//patient panel
-	JLabel nomPatientLab= new JLabel("Nom De Patient: ");
-	JLabel actPatientLab= new JLabel("Act de patient: ");
-	JLabel dateRendezVousLab= new JLabel("Date De Rendez Vous: ");
+	JLabel nomPatientLab= new JLabel("Nom du patient: ");
+	JLabel dateRendezVousLab= new JLabel("Dates de rendez vous: ");
+	JLabel actRendezVousLab= new JLabel("Act De Rendez Vous: ");
 	JLabel payementLab= new JLabel("Le payement: ");
 	
 	JLabel nomPatient= new JLabel("");
-	JLabel actPatient= new JLabel("");
-	JLabel dateRendezVous= new JLabel("");
+	
+	final DefaultComboBoxModel actModel = new DefaultComboBoxModel();
+	final JComboBox actCombo = new JComboBox(actModel);    
+	private JScrollPane produitListScrol = new JScrollPane(actCombo);
+	JLabel actRendezVous= new JLabel("");
 	JLabel payement= new JLabel("");
 
 	//Rendez Vous Panel
@@ -66,19 +69,19 @@ public class RendezVousView extends JPanel{
 	public RendezVousView(){
 		
 		this.setLayout( null);
-		this.setBackground(Color.decode("#d2fdf9"));
+		this.setBackground(Color.WHITE);
 		panelRechercheRendezVous= new JPanel();
-		panelRechercheRendezVous.setBackground(Color.cyan);
+		panelRechercheRendezVous.setBackground(Color.WHITE);
 		panelRechercheRendezVous.setLayout(null);
 		panelRechercheRendezVous.setBorder(BorderFactory.createTitledBorder("Info De Recherche: "));
 		
 		panelPatient= new JPanel();
-		panelPatient.setBackground(Color.cyan);
+		panelPatient.setBackground(Color.WHITE);
 		panelPatient.setLayout(null);
 		panelPatient.setBorder(BorderFactory.createTitledBorder("Recherche Par Patient: "));
 		
 	    panelRendezVous= new JPanel();
-		panelRendezVous.setBackground(Color.cyan);
+		panelRendezVous.setBackground(Color.WHITE);
 		panelRendezVous.setLayout(null);
 		panelRendezVous.setBorder(BorderFactory.createTitledBorder("Recherche Par Rendez Vous: "));
 		
@@ -109,23 +112,27 @@ public class RendezVousView extends JPanel{
 		panelRendezVous.add(scrolPane);
 		
 		//panel patient components
+		
+		this.actModel.addElement("");
+		actCombo.setSelectedIndex(0);
+
 		panelPatient.add(nomPatient);
-		panelPatient.add(actPatient);
-		panelPatient.add(dateRendezVous);
+		panelPatient.add(actCombo);
+		panelPatient.add(actRendezVous);
 		panelPatient.add(payement);
 		panelPatient.add(nomPatientLab);
-		panelPatient.add(actPatientLab);
 		panelPatient.add(dateRendezVousLab);
+		panelPatient.add(actRendezVousLab);
 		panelPatient.add(payementLab);
 		
 		nomPatientLab.setBounds(30, 30, 120, 20);
-		actPatientLab.setBounds(30, 90, 120, 20);
-		dateRendezVousLab.setBounds(30, 160, 120, 20);
+		dateRendezVousLab.setBounds(30, 90, 120, 20);
+		actRendezVousLab.setBounds(30, 160, 120, 20);
 		payementLab.setBounds(30, 210, 120, 20);
 		
 		nomPatient.setBounds(160,30,120,20);
-		actPatient.setBounds(160, 90, 120, 20);
-		dateRendezVous.setBounds(160, 160, 120, 20);
+		actCombo.setBounds(160, 90, 120, 20);
+		actRendezVous.setBounds(160, 160, 120, 20);
 		payement.setBounds(160, 210, 120, 20);
 
 
@@ -194,12 +201,16 @@ public class RendezVousView extends JPanel{
 		return nomPatient;
 	}
 
-	public JLabel getActPatient() {
-		return actPatient;
+	public JComboBox getActCombo() {
+		return actCombo;
 	}
 
-	public JLabel getDateRendezVous() {
-		return dateRendezVous;
+	public DefaultComboBoxModel getActModel() {
+		return actModel;
+	}
+
+	public JLabel getActRendezVous() {
+		return actRendezVous;
 	}
 
 	public JLabel getPayement() {

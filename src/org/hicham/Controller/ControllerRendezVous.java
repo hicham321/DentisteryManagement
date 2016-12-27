@@ -11,6 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.imageio.ImageIO;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -20,12 +21,18 @@ import javax.swing.event.ListSelectionListener;
 import org.hicham.Model.Act;
 import org.hicham.Model.Patient;
 import org.hicham.Model.RendezVousQueries;
+import org.hicham.Model.ProduitQueries.MyClass;
 import org.hicham.View.RendezVousView;
 
 public class ControllerRendezVous {
 
 	RendezVousView rendezVousView= new RendezVousView();
 	RendezVousQueries rendezVousQueries= new RendezVousQueries();
+	
+	int selectedposition=0;
+	List<String> datesRendezVous= new ArrayList<>();
+    List<String> actsRendezVous= new ArrayList<>();
+    List<String> payements= new ArrayList<>();
 	
 	public ControllerRendezVous(RendezVousView rendezVousView,RendezVousQueries rendezVousQueries){
 		this.rendezVousView= rendezVousView;
@@ -59,25 +66,39 @@ public class ControllerRendezVous {
 			}
 			if (e.getSource()==rendezVousView.getRechercheBtn() & rendezVousView.getModeRechercheList().getSelectedIndex()==0) {
 				//show par patient  panel
-				
-                System.out.println("patient panel is executed");
-                
+
+				System.out.println("patient panel is executed");
+
 				int selectedIndex=rendezVousView.getPatientCombo().getSelectedIndex();
 				List<Act> acts=rendezVousQueries.getActFromPatient(selectedIndex);
 
+				String nomPatient= rendezVousView.getPatientCombo().getSelectedItem().toString();
+                
 
-				for (Iterator iterator = acts.iterator(); iterator.hasNext();) {
-					Act act = (Act) iterator.next();
+                
+				for (int i=0; i<acts.size();i++) {
+					
+					/*Act act = (Act) iterator.next();
 					System.out.println(act.getDateRendezVous() +" a " +act.getTempRendezVous() +"\n"
 							+ "l'act est: "	+ act.getAct() );
 
 					setPatientPanel(rendezVousView.getPatientCombo().getSelectedItem().toString()
 							, act.getDateRendezVous().toString()
-							,act.getAct(), act.getPayement());
-					showPatientInfoPanel();
-
+							,act.getAct(), act.getPayement());*/
+					Act act= acts.get(i);
+					datesRendezVous.add(act.getDateRendezVous().toString());
+					actsRendezVous.add(act.getAct());
+					payements.add(new Double(act.getPayement()).toString());
 				}
+				//chargé dateCombo avec les dates 
+				DefaultComboBoxModel dcbm=addDateToCombo(datesRendezVous);
+				rendezVousView.getActCombo().setModel(dcbm);
+				
+				showPatientInfoPanel();
 
+			}
+			if (e.getSource()== rendezVousView.getActCombo()) {
+				int selectedItem= selectedComboItem(e);
 			}
 
 		}
@@ -125,12 +146,12 @@ public class ControllerRendezVous {
 		//		Double prixTotal= prixProduct*qte;
 		//		gestionStockView.getPrixTotal().setText(prixTotal.toString());
 	}
-	public void setPatientPanel(String nomPatient,String dateRendezVous, String actPatient, double Payement){
+	public void setPatientPanel(String nomPatient,List<String> datesRendezVous, String actPatient, double Payement){
         
 		rendezVousView.getNomPatient().setText(nomPatient);
 		rendezVousView.getPayement().setText(new Double(Payement).toString());
-		rendezVousView.getDateRendezVous().setText(dateRendezVous);
-		rendezVousView.getActPatient().setText(actPatient);
+		//rendezVousView.getDateRendezVous().setText(dateRendezVous);
+		//rendezVousView.getActCombo().setText(actPatient);
 		
 		//rendezVousView.getPanelRechercheRendezVous().add(rendezVousView.getPanelPatient());
 		rendezVousView.getPanelRechercheRendezVous().revalidate();
@@ -145,6 +166,24 @@ public class ControllerRendezVous {
 		rendezVousView.getPanelRechercheRendezVous().repaint();
 
 	}
+	public DefaultComboBoxModel addDateToCombo(List<String> datesRendezVous){
+		DefaultComboBoxModel comboModel= new DefaultComboBoxModel<>();
+		for(int i=0;i<datesRendezVous.size();i++){
+			comboModel.addElement(new MyClass(datesRendezVous.get(i)));	
+		}
+		return comboModel;
+	}
+	
+	public int selectedComboItem(ActionEvent e){
+		//get action from product combobox
+		JComboBox comboBox = (JComboBox) e.getSource();
+		int selected = comboBox.getSelectedIndex();
+		selectedposition=selected;
+		return selected;
+	}
+	
+	
+	
 	public void showPatientInfoPanel(){
 		CardLayout cardLayout = (CardLayout) rendezVousView.cards.getLayout();
 		cardLayout.show(rendezVousView.cards, "Card 1");

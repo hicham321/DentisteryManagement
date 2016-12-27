@@ -94,7 +94,7 @@ public class ProduitQueries extends UsefulMethods{
 	public void modifyProduct(int idProduct){
 		
 	}
-	public class MyClass{
+	public static class MyClass{
 
 		private String myName;
 
