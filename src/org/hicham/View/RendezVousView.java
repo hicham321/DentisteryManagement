@@ -41,21 +41,41 @@ public class RendezVousView extends JPanel{
 	JLabel dateRendezVousLab= new JLabel("Dates de rendez vous: ");
 	JLabel actRendezVousLab= new JLabel("Act De Rendez Vous: ");
 	JLabel payementLab= new JLabel("Le payement: ");
+	JLabel tempsRendezVousLab= new JLabel("Le temps: ");
+
+	
+
 	
 	JLabel nomPatient= new JLabel("");
-	
 	final DefaultComboBoxModel actModel = new DefaultComboBoxModel();
 	final JComboBox actCombo = new JComboBox(actModel);    
 	private JScrollPane produitListScrol = new JScrollPane(actCombo);
 	JLabel actRendezVous= new JLabel("");
 	JLabel payement= new JLabel("");
+	JLabel tempsRendezVous= new JLabel("");
+
 
 	//Rendez Vous Panel
-	public  DefaultTableModel dt;
+	JLabel dateRVLab= new JLabel("La date: ");
+	JLabel dateRV= new JLabel("");
+	JLabel patientNomRVLab= new JLabel("Nom du patient");
+	final DefaultComboBoxModel patientRVModel = new DefaultComboBoxModel();
+	final JComboBox patientComboRV = new JComboBox(patientRVModel);    
+	private JScrollPane patientListScrolRV = new JScrollPane(patientComboRV);
+	
+	JLabel actPatientRVLab= new JLabel("Act du patient: ");
+	JLabel actPatientRV= new JLabel("");
+	JLabel tempRVLab= new JLabel("Temp du rendez vous: ");
+	JLabel tempRV= new JLabel("");
+	JLabel payementRVLab= new JLabel("Payement: ");
+	JLabel payementRV= new JLabel("");
 
-	public  JTable listPatients;
 
-	private JScrollPane scrolPane;	
+	
+
+
+	
+	
 	
 	JPanel panelPatient;
     
@@ -105,11 +125,32 @@ public class RendezVousView extends JPanel{
 		panelRechercheRendezVous.add(datePicker);
 		panelRechercheRendezVous.add(rechercheBtn);
 		
-        //panel rendezVous compoenents
-		listPatients =new JTable(dt);
-		scrolPane= new JScrollPane(listPatients);
-		scrolPane.setBounds(50, 70, 1250, 470);
-		panelRendezVous.add(scrolPane);
+        //panel rendezVous components
+		
+		panelRendezVous.add(dateRVLab);
+		panelRendezVous.add(dateRV);
+		panelRendezVous.add(patientNomRVLab);
+		panelRendezVous.add(patientComboRV);
+		panelRendezVous.add(actPatientRVLab);
+		panelRendezVous.add(actPatientRV);
+		panelRendezVous.add(tempRVLab);
+		panelRendezVous.add(tempRV);
+		panelRendezVous.add(payementRVLab);
+		panelRendezVous.add(payementRV);
+		
+		dateRVLab.setBounds(30, 30, 120, 20);
+		patientNomRVLab.setBounds(30, 90, 120, 20);
+		actPatientRVLab.setBounds(30, 160, 120, 20);
+		tempRVLab.setBounds(30, 210, 120, 20);
+		payementRVLab.setBounds(30, 260, 120, 20);
+
+		dateRV.setBounds(160,30,120,20);
+		patientComboRV.setBounds(160, 90, 120, 20);
+		actPatientRV.setBounds(160, 160, 120, 20);
+		tempRV.setBounds(160, 210, 120, 20);
+		payementRV.setBounds(160, 	260, 120, 20);
+
+
 		
 		//panel patient components
 		
@@ -124,16 +165,24 @@ public class RendezVousView extends JPanel{
 		panelPatient.add(dateRendezVousLab);
 		panelPatient.add(actRendezVousLab);
 		panelPatient.add(payementLab);
+		panelPatient.add(tempsRendezVousLab);
+		panelPatient.add(tempsRendezVous);
+		
+
+		
 		
 		nomPatientLab.setBounds(30, 30, 120, 20);
 		dateRendezVousLab.setBounds(30, 90, 120, 20);
 		actRendezVousLab.setBounds(30, 160, 120, 20);
 		payementLab.setBounds(30, 210, 120, 20);
-		
+		tempsRendezVousLab.setBounds(30, 260, 120, 20);
+
 		nomPatient.setBounds(160,30,120,20);
 		actCombo.setBounds(160, 90, 120, 20);
 		actRendezVous.setBounds(160, 160, 120, 20);
 		payement.setBounds(160, 210, 120, 20);
+		tempsRendezVous.setBounds(160, 	260, 120, 20);
+
 
 
         
@@ -175,6 +224,10 @@ public class RendezVousView extends JPanel{
 	
 	public void addRendezVousActionListener(ActionListener listener){
 		this.rechercheBtn.addActionListener(listener);
+		this.actCombo.addActionListener(listener);
+		this.patientCombo.addActionListener(listener);
+		this.patientComboRV.addActionListener(listener);
+
 	}
 	
 	public void addRendezVousListSelectionListener(ListSelectionListener Listlistener){
@@ -217,10 +270,6 @@ public class RendezVousView extends JPanel{
 		return payement;
 	}
 
-	public JTable getListPatients() {
-		return listPatients;
-	}
-
 	public JPanel getPanelPatient() {
 		return panelPatient;
 	}
@@ -232,9 +281,33 @@ public class RendezVousView extends JPanel{
 	public JPanel getPanelRechercheRendezVous() {
 		return panelRechercheRendezVous;
 	}
+
+	public JLabel getTempsRendezVous() {
+		return tempsRendezVous;
+	}
+
+	public JLabel getDateRV() {
+		return dateRV;
+	}
+
+	public JComboBox getPatientComboRV() {
+		return patientComboRV;
+	}
+
+	public JLabel getActPatientRV() {
+		return actPatientRV;
+	}
+
+	public JLabel getTempRV() {
+		return tempRV;
+	}
+
+	public JLabel getPayementRV() {
+		return payementRV;
+	}
 	
-	
-	
+
+
 	
 	
 }

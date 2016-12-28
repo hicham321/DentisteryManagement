@@ -33,6 +33,9 @@ public class ControllerRendezVous {
 	List<String> datesRendezVous= new ArrayList<>();
     List<String> actsRendezVous= new ArrayList<>();
     List<String> payements= new ArrayList<>();
+    List<String> temps= new ArrayList<>();
+    
+    List<Patient> patients= new ArrayList<>();
 	
 	public ControllerRendezVous(RendezVousView rendezVousView,RendezVousQueries rendezVousQueries){
 		this.rendezVousView= rendezVousView;
@@ -53,53 +56,101 @@ public class ControllerRendezVous {
 				
 				System.out.println("rendez vous panel is executed ");
 				Date dateObject= rendezVousView.getDatePicker().getDate();
-				List<Patient> listPatient=rendezVousQueries.getPatientsFromDate(dateObject);
+				patients=rendezVousQueries.getPatientsFromDate(dateObject);
+				rendezVousView.getDateRV().setText(dateObject.toString());
 				
 				
-				for (int i = 0; i < listPatient.size(); i++) {
+				List<String>names = new ArrayList<>();
+				for (int i = 0; i < patients.size(); i++) {
+					//populate combobox with patient nom
+					 names.add(patients.get(i).getNom());
 					
-					System.out.println(listPatient.get(i).getNom());
+					
+					/*for (int j = 0; j < patients.size(); j++) {
+						if (acts.get(j).getDateRendezVous()== rendezVousView.getDatePicker().getDate()){
+							actPatients =acts.get(j);
+						}
+					}
+					
+					
+					System.out.println(patients.get(i).getNom());*/
 
 				}
+				//populate patient combo with names
+				DefaultComboBoxModel dcbm=addNamesToCombo(names);
+				rendezVousView.getPatientComboRV().setModel(dcbm);
+
+				
 				showRendezVousInfoPanel();
 
 			}
 			if (e.getSource()==rendezVousView.getRechercheBtn() & rendezVousView.getModeRechercheList().getSelectedIndex()==0) {
 				//show par patient  panel
-
-				System.out.println("patient panel is executed");
-
 				int selectedIndex=rendezVousView.getPatientCombo().getSelectedIndex();
 				List<Act> acts=rendezVousQueries.getActFromPatient(selectedIndex);
 
 				String nomPatient= rendezVousView.getPatientCombo().getSelectedItem().toString();
-                
-
+				datesRendezVous= new ArrayList<>();
+				actsRendezVous= new ArrayList<>();
+				payements= new ArrayList<>();
+				temps= new ArrayList<>();
                 
 				for (int i=0; i<acts.size();i++) {
 					
-					/*Act act = (Act) iterator.next();
-					System.out.println(act.getDateRendezVous() +" a " +act.getTempRendezVous() +"\n"
-							+ "l'act est: "	+ act.getAct() );
-
-					setPatientPanel(rendezVousView.getPatientCombo().getSelectedItem().toString()
-							, act.getDateRendezVous().toString()
-							,act.getAct(), act.getPayement());*/
 					Act act= acts.get(i);
 					datesRendezVous.add(act.getDateRendezVous().toString());
 					actsRendezVous.add(act.getAct());
 					payements.add(new Double(act.getPayement()).toString());
+					temps.add(act.getTempRendezVous());
+
 				}
 				//chargé dateCombo avec les dates 
 				DefaultComboBoxModel dcbm=addDateToCombo(datesRendezVous);
 				rendezVousView.getActCombo().setModel(dcbm);
-				
+
+				rendezVousView.getNomPatient().setText(nomPatient);
+
 				showPatientInfoPanel();
 
 			}
 			if (e.getSource()== rendezVousView.getActCombo()) {
 				int selectedItem= selectedComboItem(e);
+
+				String tempRV=temps.get(selectedItem);
+				String actRV=actsRendezVous.get(selectedItem);
+				String payRV=payements.get(selectedItem);
+				setPatientPanel(actRV,payRV,tempRV);
 			}
+			if (e.getSource()== rendezVousView.getPatientCombo()) {
+
+				//resetting the rendez Vous labels when another patient is selected
+				rendezVousView.getTempsRendezVous().setText("");
+				rendezVousView.getActRendezVous().setText("");
+				rendezVousView.getPayement().setText("");
+
+			}
+			if (e.getSource()== rendezVousView.getPatientComboRV()) {
+				int selectedItem= selectedComboItem(e);
+				Date dateObject= rendezVousView.getDatePicker().getDate();
+                Patient patient=patients.get(selectedItem);
+               
+				List<Act> acts= patient.getActList();
+                Act searchedAct= new Act();
+				for (int i = 0; i < acts.size(); i++) {
+					
+					if (acts.get(i).getDateRendezVous().equals(rendezVousView.getDatePicker().getDate())){
+						searchedAct=acts.get(i);
+					}
+				}
+				//set labels depending on selected act
+				rendezVousView.getPayementRV().setText(new Double(searchedAct.getPayement()).toString());
+				rendezVousView.getActPatientRV().setText(searchedAct.getAct());
+				rendezVousView.getTempRV().setText(searchedAct.getTempRendezVous());
+
+			}
+			
+			
+			
 
 		}
 
@@ -146,14 +197,12 @@ public class ControllerRendezVous {
 		//		Double prixTotal= prixProduct*qte;
 		//		gestionStockView.getPrixTotal().setText(prixTotal.toString());
 	}
-	public void setPatientPanel(String nomPatient,List<String> datesRendezVous, String actPatient, double Payement){
+	public void setPatientPanel(String actPatient, String Payement, String temp){
         
-		rendezVousView.getNomPatient().setText(nomPatient);
+		rendezVousView.getActRendezVous().setText(actPatient);
+		rendezVousView.getTempsRendezVous().setText(temp);
 		rendezVousView.getPayement().setText(new Double(Payement).toString());
-		//rendezVousView.getDateRendezVous().setText(dateRendezVous);
-		//rendezVousView.getActCombo().setText(actPatient);
 		
-		//rendezVousView.getPanelRechercheRendezVous().add(rendezVousView.getPanelPatient());
 		rendezVousView.getPanelRechercheRendezVous().revalidate();
 		rendezVousView.getPanelRechercheRendezVous().repaint();
 
@@ -170,6 +219,13 @@ public class ControllerRendezVous {
 		DefaultComboBoxModel comboModel= new DefaultComboBoxModel<>();
 		for(int i=0;i<datesRendezVous.size();i++){
 			comboModel.addElement(new MyClass(datesRendezVous.get(i)));	
+		}
+		return comboModel;
+	}
+	public DefaultComboBoxModel addNamesToCombo(List<String> patientNames){
+		DefaultComboBoxModel comboModel= new DefaultComboBoxModel<>();
+		for(int i=0;i<patientNames.size();i++){
+			comboModel.addElement(new MyClass(patientNames.get(i)));	
 		}
 		return comboModel;
 	}
