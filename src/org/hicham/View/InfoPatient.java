@@ -56,6 +56,15 @@ public class InfoPatient extends JPanel{
     JLabel errorLabSex= new JLabel("*");
     JLabel errorLabAnticident= new JLabel("*");
     JLabel errorLabFonction= new JLabel("*");
+    
+    JLabel patientRechLab= new JLabel("Recherche Patient: ");
+	final DefaultComboBoxModel rechModel = new DefaultComboBoxModel();
+	final JComboBox rechCombo = new JComboBox(rechModel);    
+	private JScrollPane rechListScrol = new JScrollPane(rechCombo);
+	
+	JButton nouveauPatient= new JButton("Nouveau");
+	
+
 
 
 	public InfoPatient(){
@@ -93,6 +102,10 @@ public class InfoPatient extends JPanel{
 		this.add(fonction);
 		this.add(ok);
 		this.add(modifie);
+		
+		this.add(patientRechLab);
+		this.add(rechCombo);
+		this.add(nouveauPatient);
 		
 		
 		this.add(errorLabNom);
@@ -174,64 +187,19 @@ public class InfoPatient extends JPanel{
         this.fonction.setBounds(200,420 ,250, 20);
         this.ok.setBounds(100,500 ,100, 20);
         this.modifie.setBounds(200,500 ,100, 20);
+        
+        this.patientRechLab.setBounds(500,100 ,100, 20);
+        this.rechCombo.setBounds(610,100 ,100, 20);
+        this.nouveauPatient.setBounds(400,50,100, 20);
+        
+        this.rechModel.addElement("");
+		AutoCompleteDecorator.decorate(rechCombo);
+		rechCombo.setSelectedIndex(0);
+
 
 
        this.modifie.setEnabled(false);
 
-
-
-
-
-		
-		/*this.setLayout(new GridBagLayout());
-		GridBagConstraints c= new GridBagConstraints();
-		c.anchor= GridBagConstraints.NORTHWEST;
-		c.gridx=0;
-		c.gridy=0;
-	    this.add(nomLab,c);
-	    c.gridy+=4;
-	    this.add(prenomLab,c);
-	    c.gridy+=4;
-	    this.add(ageLab,c);
-	    c.gridy+=4;
-	    this.add(addressLab,c);
-	    c.gridy+=4;
-	    this.add(telLab,c);
-	    c.gridy+=4;
-	    this.add(sexLab,c);
-	    c.gridy+=4;
-	    this.add(teinteLab,c);
-	    c.gridy+=4;
-	    this.add(anticidentLab,c);
-	    c.gridy+=4;
-	    this.add(fonctionLab,c);
-	    c.gridy+=4;
-	    this.add(ok,c);
-	    c.gridy+=4;
-
-	    c.gridx=4;
-		c.gridy=0;
-		this.add(nom,c);
-	    c.gridy+=4;
-	    this.add(prenom,c);
-	    c.gridy+=4;
-	    this.add(age,c);
-	    c.gridy+=4;
-	    this.add(address,c);
-	    c.gridy+=4;
-	    this.add(tel,c);
-	    c.gridy+=4;
-	    this.add(sex,c);
-	    c.gridy+=4;
-	    this.add(teinte,c);
-	    c.gridy+=4;
-	    this.add(anticident,c);
-	    c.gridy+=4;
-	    this.add(fonction,c);
-	    c.gridy+=4;
-	    this.add(modifie,c);
-	    c.gridy+=4;
-*/
 
 		
 	}
@@ -240,6 +208,8 @@ public class InfoPatient extends JPanel{
 
 		this.ok.addActionListener(listener);
 		this.modifie.addActionListener(listener);	
+		this.nouveauPatient.addActionListener(listener);
+		this.rechCombo.addActionListener(listener);
 
 	}
 
@@ -323,6 +293,14 @@ public class InfoPatient extends JPanel{
 
 	public JLabel getErrorLabFonction() {
 		return errorLabFonction;
+	}
+
+	public JButton getNouveauPatient() {
+		return nouveauPatient;
+	}
+
+	public JComboBox getRechCombo() {
+		return rechCombo;
 	}
 	
 	

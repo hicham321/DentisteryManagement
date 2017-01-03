@@ -2,7 +2,6 @@ package org.hicham.Model;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.DefaultComboBoxModel;
 import org.hibernate.Session;
 
@@ -47,7 +46,7 @@ public class PatientQueries {
 		List<String> listPatientNames= new ArrayList<>();
         List<Patient> listOfallPatients= findAllPatients();
         for (int i = 0; i < listOfallPatients.size(); i++) {
-        	listPatientNames.add(listOfallPatients.get(i).getNom());
+        	listPatientNames.add(listOfallPatients.get(i).getNomEtPrenom());
 		}
 		return listPatientNames ;
 	}

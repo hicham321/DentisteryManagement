@@ -63,7 +63,7 @@ public class ControllerRendezVous {
 				List<String>names = new ArrayList<>();
 				for (int i = 0; i < patients.size(); i++) {
 					//populate combobox with patient nom
-					 names.add(patients.get(i).getNom());
+					 names.add(patients.get(i).getNomEtPrenom());
 					
 					
 					/*for (int j = 0; j < patients.size(); j++) {
@@ -115,11 +115,15 @@ public class ControllerRendezVous {
 			}
 			if (e.getSource()== rendezVousView.getActCombo()) {
 				int selectedItem= selectedComboItem(e);
+				try {
+					String tempRV=temps.get(selectedItem);
+					String actRV=actsRendezVous.get(selectedItem);
+					String payRV=payements.get(selectedItem);
+					setPatientPanel(actRV,payRV,tempRV);
+				} catch (Exception e2) {
+					e2.printStackTrace();			
+				}
 
-				String tempRV=temps.get(selectedItem);
-				String actRV=actsRendezVous.get(selectedItem);
-				String payRV=payements.get(selectedItem);
-				setPatientPanel(actRV,payRV,tempRV);
 			}
 			if (e.getSource()== rendezVousView.getPatientCombo()) {
 

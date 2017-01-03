@@ -52,11 +52,12 @@ public class ControllerMenuBar {
 	MainFrame mainFrame= new MainFrame(homePanel,patient,gestionStockView,rendezVousView,registerView,menuBar);
 
 	public ControllerMenuBar(MainFrame mainFrame,HomePanel homePanel,MenuBar menuBar
-			,PatientView patient,Ordonance ordonance,GestionStockView gestionStockView
+			,PatientView patient,InfoPatient infoPatient,Ordonance ordonance,GestionStockView gestionStockView
 			,RendezVousView rendezVousView,RecherchePatientView recherchePatientView
 			,ProduitQueries produitQueries,PatientQueries patientQueries,ChangeMotPassView changeMotPassView){
 
 		this.patient= patient;
+		this.infoPatient= infoPatient;
 		this.ordonance= ordonance;
 		this.gestionStockView=gestionStockView;
 		this.menuBar= menuBar;
@@ -89,6 +90,7 @@ public class ControllerMenuBar {
 				showInfoPatientCard();
 				DefaultComboBoxModel dftb=patientQueries.getComboModel();
 				recherchePatientView.getRech().setModel(dftb);
+				infoPatient.getRechCombo().setModel(dftb);
 			}
 			if (e.getSource()== menuBar.getRendezVousPatient()) {
 				//show rendez vous card

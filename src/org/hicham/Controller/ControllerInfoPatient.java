@@ -2,6 +2,7 @@ package org.hicham.Controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
 
@@ -19,6 +20,8 @@ public class ControllerInfoPatient {
 	
 	//this field needs to be updated when adding a new patient or when selecting a new patient
 	Patient currentPatient= new Patient();
+	
+	
 	
 	
 	public ControllerInfoPatient(InfoPatient infoPatient, PatientQueries patientQueries ,RecherchePatientView recherchePatientView){
@@ -40,6 +43,8 @@ public class ControllerInfoPatient {
 				//a bunch of if statements to control what's in the text fields and than an else to 
 				currentPatient= new Patient(infoPatient.getNom().getText()
 						+ " "+infoPatient.getPrenom().getText()
+						,infoPatient.getNom().getText()
+						,infoPatient.getPrenom().getText()
 						,Integer.parseInt(infoPatient.getAge().getText())
 						,infoPatient.getAddress().getText()
 						,Integer.parseInt(infoPatient.getTel().getText())
@@ -55,9 +60,31 @@ public class ControllerInfoPatient {
 				setFieldsEmpty();
 
 			}
+			if (e.getSource()== infoPatient.getRechCombo()) {
+				 
+				int selecteditem=infoPatient.getRechCombo().getSelectedIndex();
+                List<Patient>patients=patientQueries.findAllPatients();
+                Patient selectedPatient=patients.get(selecteditem);
+                //show selected patient info in text fields
+                setFieldsInfo(selectedPatient.getName(), selectedPatient.getPrenom(), 
+                		selectedPatient.getAge(), selectedPatient.getAddress(),
+                		selectedPatient.getTel(), selectedPatient.getTeinte(),
+                		selectedPatient.getSex(),selectedPatient.getAnticident(), selectedPatient.getFonction());
+                //show related patient acts
+                
+                
+			}
+			if (e.getSource()== infoPatient.getNouveauPatient()) {
+				//set all fields empty and enable ok button 
+				setFieldsEmpty();
+				infoPatient.getOk().setEnabled(true);
+				infoPatient.getModifie().setEnabled(false);
+
+			}
 			if (e.getSource()== infoPatient.getModifie()) {
 
 			}
+			
 		}
 
 		//condition methods for patient:
@@ -73,6 +100,18 @@ public class ControllerInfoPatient {
 			infoPatient.getSex().setSelectedIndex(0);
 			infoPatient.getAnticident().setText("");
 			infoPatient.getFonction().setText("");
+		}
+		public void setFieldsInfo(String nom,String prenom, int age,String address,int tel,
+				String teinte,String sex,String anticident, String fonction){
+			infoPatient.getNom().setText(nom);
+			infoPatient.getPrenom().setText(prenom);
+		    infoPatient.getAge().setText(new Integer(age).toString());
+			infoPatient.getAddress().setText(address);
+			infoPatient.getTel().setText(new Integer(tel).toString());
+			infoPatient.getTeinte().setSelectedItem(teinte);
+			infoPatient.getSex().setSelectedItem(sex);;
+			infoPatient.getAnticident().setText(anticident);
+			infoPatient.getFonction().setText(fonction);
 		}
 		
 		

@@ -24,8 +24,12 @@ public class Patient {
 	@GeneratedValue(strategy= GenerationType.AUTO)
 	@Column (name="Id",nullable = false)
 	int id;
-	@Column (name="Nom",nullable = false)
-	String nom;
+	@Column (name="NomEtPrenom",nullable = true)
+	String nomEtPrenom;
+	@Column (name="nom",nullable = false)
+	String name;
+	@Column (name="Prenom",nullable = false)
+	String prenom;
 	@Column (name="Age",nullable = false)
 	int age; 
 	@Column (name="Address")
@@ -46,8 +50,10 @@ public class Patient {
 
 	
 	
-	public Patient(String nom, int age, String address, int tel, String teinte, String sex, String anticident,String fonction){
-		this.nom= nom;
+	public Patient(String nomEtPrenom,String nom ,String prenom, int age, String address, int tel, String teinte, String sex, String anticident,String fonction){
+		this.nomEtPrenom= nomEtPrenom;
+		this.name= nom;
+		this.prenom= prenom;
 		this.age= age;
 		this.address= address;
 		this.tel= tel;
@@ -59,60 +65,69 @@ public class Patient {
 	public Patient(){
 
 	}
+	
 	public int getId() {
 		return id;
 	}
-	public String getNom() {
-		return nom;
+	public void setId(int id) {
+		this.id = id;
 	}
-	
+	public String getNomEtPrenom() {
+		return nomEtPrenom;
+	}
+	public void setNomEtPrenom(String nomEtPrenom) {
+		this.nomEtPrenom = nomEtPrenom;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getPrenom() {
+		return prenom;
+	}
+	public void setPrenom(String prenom) {
+		this.prenom = prenom;
+	}
 	public int getAge() {
 		return age;
+	}
+	public void setAge(int age) {
+		this.age = age;
 	}
 	public String getAddress() {
 		return address;
 	}
-	public int getTel() {
-		return tel;
-	}
-	public String getTeinte() {
-		return teinte;
-	}
-	public String getSex() {
-		return sex;
-	}
-	public String getAnticident() {
-		return anticident;
-	}
-	public String getFonction() {
-		return fonction;
-	}
-	
-	
-	public void setId(int id) {
-		this.id = id;
-	}
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
-	
-	public void setAge(int age) {
-		this.age = age;
-	}
 	public void setAddress(String address) {
 		this.address = address;
+	}
+	public int getTel() {
+		return tel;
 	}
 	public void setTel(int tel) {
 		this.tel = tel;
 	}
+	public String getTeinte() {
+		return teinte;
+	}
 	public void setTeinte(String teinte) {
 		this.teinte = teinte;
+	}
+	public String getSex() {
+		return sex;
 	}
 	public void setSex(String sex) {
 		this.sex = sex;
 	}
+	public String getAnticident() {
+		return anticident;
+	}
 	public void setAnticident(String anticident) {
 		this.anticident = anticident;
+	}
+	public String getFonction() {
+		return fonction;
 	}
 	public void setFonction(String fonction) {
 		this.fonction = fonction;
@@ -123,6 +138,7 @@ public class Patient {
 	public void setActList(List<Act> actList) {
 		this.actList = actList;
 	}
+	
 	
     
 	
