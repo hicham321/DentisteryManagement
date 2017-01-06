@@ -4,29 +4,32 @@ import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.text.MaskFormatter;
 
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 public class InfoPatient extends JPanel{
 	
     JLabel nomLab= new JLabel("Nom: ");
-	JTextField nom= new JTextField(15);
+	JTextField nom= new JTextField();
     JLabel prenomLab= new JLabel("Prenom: ");
-	JTextField prenom= new JTextField(15);
+	JTextField prenom= new JTextField();
     JLabel ageLab= new JLabel("Age: ");
-	JTextField age= new JTextField(15);
+	JFormattedTextField age;
     JLabel addressLab= new JLabel("address: ");
-	JTextField address= new JTextField(15);
+	JTextField address= new JTextField();
     JLabel telLab= new JLabel("Tel: ");
-	JTextField tel= new JTextField(15);
+	JFormattedTextField tel;
 
     JLabel teinteLab= new JLabel("Teinte: ");
 	final DefaultComboBoxModel TeintModel = new DefaultComboBoxModel();
@@ -87,10 +90,38 @@ public class InfoPatient extends JPanel{
 		this.add(prenomLab);
 		this.add(prenom);
 		this.add(ageLab);
+        MaskFormatter maskAge = null;
+		
+        try {
+            //
+            // Create a MaskFormatter for accepting phone number, the # symbol accept
+            // only a number. We can also set the empty value with a place holder
+            // character.
+            //
+        	maskAge = new MaskFormatter("##");
+        	maskAge.setPlaceholderCharacter('_');
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        age= new JFormattedTextField(maskAge);
 		this.add(age);
 		this.add(addressLab);
 		this.add(address);
 		this.add(telLab);
+		MaskFormatter maskTelphone = null;
+		
+        try {
+            //
+            // Create a MaskFormatter for accepting phone number, the # symbol accept
+            // only a number. We can also set the empty value with a place holder
+            // character.
+            //
+            maskTelphone = new MaskFormatter("# ## ## ## ##");
+            maskTelphone.setPlaceholderCharacter('_');
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        tel= new JFormattedTextField(maskTelphone);
 		this.add(tel);
 		this.add(teinteLab);
 		this.add(teinte);

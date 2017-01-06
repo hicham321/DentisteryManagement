@@ -19,7 +19,8 @@ public class ControllerGestionStock {
 
 	int productId=0;
 
-	public ControllerGestionStock(GestionStockView gestionStockView,ProduitQueries produitQueries){
+	public ControllerGestionStock(GestionStockView gestionStockView
+			,ProduitQueries produitQueries){
 
 		this.gestionStockView= gestionStockView;
 		this.produitQueries=produitQueries;

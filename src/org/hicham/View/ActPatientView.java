@@ -35,7 +35,7 @@ public class ActPatientView extends JPanel {
 	private JScrollPane payementListScrol = new JScrollPane(payementCombo);
 	
 	JButton ok= new JButton("Ok");
-	JButton annule= new JButton("Annulé");
+	JButton modifie= new JButton("Annulé");
 
 	
 	JXDatePicker datePicker = new JXDatePicker();
@@ -45,6 +45,15 @@ public class ActPatientView extends JPanel {
     private JButton okImage= new JButton("Ok");
     
     private JPanel panelImageAct= new JPanel();
+    
+    private JButton nouveauAct= new JButton("Nouveau");
+    
+	JLabel  actComboLab= new JLabel("Act: ");
+    final DefaultComboBoxModel actModel = new DefaultComboBoxModel();
+    private JComboBox listActCombo= new JComboBox(actModel);
+	private JScrollPane actListScrol = new JScrollPane(listActCombo);
+
+
     
 	public ActPatientView(){
 		
@@ -86,6 +95,10 @@ public class ActPatientView extends JPanel {
         timePicker.setEditor(timeEditor);
         timePicker.setValue(new Date()); // will only show the current time
         
+        AutoCompleteDecorator.decorate(listActCombo);
+		this.actModel.addElement("");
+        listActCombo.setSelectedIndex(0);
+        
         
         panelAct.add(datePicker);
         panelAct.add(timePicker);
@@ -95,7 +108,14 @@ public class ActPatientView extends JPanel {
         panelAct.add(dateRendezVousLab);
         panelAct.add(payementLab);
         panelAct.add(payementCombo);
-        panelAct.add(annule);
+        panelAct.add(modifie);
+        
+        panelAct.add(actComboLab);
+        panelAct.add(listActCombo);
+        panelAct.add(nouveauAct);
+
+
+        
         
         panelImagecontrol.add(ouvrir);
         panelImagecontrol.add(okImage);
@@ -110,10 +130,15 @@ public class ActPatientView extends JPanel {
         payementLab.setBounds(30, 140, 100, 20);
         payementCombo.setBounds(150, 140, 100, 20);
         ok.setBounds(30, 190, 100, 20);
-        annule.setBounds(150, 190, 100, 20);
+        modifie.setBounds(150, 190, 100, 20);
+        
+        actComboLab.setBounds(150, 20, 100, 20);
+        listActCombo.setBounds(30, 20, 100, 20);
+        nouveauAct.setBounds(300, 20,100 ,20 );
 
         ouvrir.setBounds(0, 0, 100, 20);
         okImage.setBounds(130, 0, 100, 20);
+        
         
 		
        
@@ -129,6 +154,9 @@ public class ActPatientView extends JPanel {
 		this.ok.addActionListener(listener);
 		this.ouvrir.addActionListener(listener);
 		this.okImage.addActionListener(listener);
+		this.nouveauAct.addActionListener(listener);
+		this.listActCombo.addActionListener(listener);
+
 
 	}
 
@@ -163,6 +191,19 @@ public class ActPatientView extends JPanel {
 	public JButton getOkImage() {
 		return okImage;
 	}
+
+	public JButton getNouveauAct() {
+		return nouveauAct;
+	}
+
+	public JComboBox getListActCombo() {
+		return listActCombo;
+	}
+
+	public JButton getModifie() {
+		return modifie;
+	}
+	
     
 	
 }

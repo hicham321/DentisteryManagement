@@ -3,7 +3,10 @@ package org.hicham.Model;
 import java.util.Date;
 import java.util.List;
 
+import javax.swing.DefaultComboBoxModel;
+
 import org.hibernate.Session;
+import org.hicham.Model.PatientQueries.MyClass;
 
 public class ActQueries extends UsefulMethods{
 	
@@ -36,9 +39,10 @@ public class ActQueries extends UsefulMethods{
 			session.close();
 		}	
 	}
+	
 	public Act getAct(int id){
-        List<Act> listOfallActs= findAllActs(); 
-        return listOfallActs.get(id);
+		List<Act> listOfallActs= findAllActs(); 
+		return listOfallActs.get(id);
 	}
 
 }

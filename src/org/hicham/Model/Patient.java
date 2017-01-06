@@ -31,11 +31,11 @@ public class Patient {
 	@Column (name="Prenom",nullable = false)
 	String prenom;
 	@Column (name="Age",nullable = false)
-	int age; 
+	String age; 
 	@Column (name="Address")
 	String address; 
 	@Column (name="Tel")
-	int tel;
+	String tel;
 	@Column (name="Teinte")
 	String teinte; 
 	@Column (name="Sex",nullable = false)
@@ -50,7 +50,8 @@ public class Patient {
 
 	
 	
-	public Patient(String nomEtPrenom,String nom ,String prenom, int age, String address, int tel, String teinte, String sex, String anticident,String fonction){
+	public Patient(String nomEtPrenom,String nom ,String prenom, String age, String address
+			,String tel, String teinte, String sex, String anticident,String fonction){
 		this.nomEtPrenom= nomEtPrenom;
 		this.name= nom;
 		this.prenom= prenom;
@@ -90,10 +91,10 @@ public class Patient {
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;
 	}
-	public int getAge() {
+	public String getAge() {
 		return age;
 	}
-	public void setAge(int age) {
+	public void setAge(String age) {
 		this.age = age;
 	}
 	public String getAddress() {
@@ -102,10 +103,10 @@ public class Patient {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public int getTel() {
+	public String getTel() {
 		return tel;
 	}
-	public void setTel(int tel) {
+	public void setTel(String tel) {
 		this.tel = tel;
 	}
 	public String getTeinte() {

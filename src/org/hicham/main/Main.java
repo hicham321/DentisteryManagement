@@ -71,7 +71,7 @@ public class Main {
 		MainFrame mf= new MainFrame(hp,p,gs,rvv,rv,mb);
 		
 		//controllers
-		ControllerInfoPatient cip= new ControllerInfoPatient(ip, pq,rp);
+		ControllerInfoPatient cip= new ControllerInfoPatient(ip, pq,rp,ap);
 		ControllerAct ca= new ControllerAct(ap, aq, pq,cip);
 		ControllerPatient cp= new ControllerPatient(mf, p,o);
 		ControllerOrdonance co= new ControllerOrdonance(mf,hp, p, o,mq);
@@ -86,16 +86,16 @@ public class Main {
 
 	public static void main(String[] args) {
 		//see if register table is empty and insert the passwords if it is
-		
-		
+
+
 		new Thread(new Runnable() {
-		    public void run() {
+			public void run() {
 				SessionsDB FactoryObject= new SessionsDB();
 				RegisterQueries rq= new RegisterQueries();
 				if (rq.CheckRegisterEmpty()) {
 					rq.putInitialPasswords();
 				}
-		    }
+			}
 		}).start();
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {

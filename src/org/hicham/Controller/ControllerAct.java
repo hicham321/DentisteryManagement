@@ -9,7 +9,12 @@ import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import javax.accessibility.AccessibleTableModelChange;
 import javax.imageio.ImageIO;
@@ -40,7 +45,7 @@ public class ControllerAct {
 	InfoPatient infoPatient = new InfoPatient();
 	RecherchePatientView recherchePatientView = new RecherchePatientView();
 
-	ControllerInfoPatient controllerInfoPatient= new ControllerInfoPatient(infoPatient,patientQueries,recherchePatientView);
+	ControllerInfoPatient controllerInfoPatient= new ControllerInfoPatient(infoPatient,patientQueries,recherchePatientView,actPatientView);
 
 	Act currentAct= new Act();
 
@@ -106,6 +111,17 @@ public class ControllerAct {
 				dbPathToFileImage=imageDestinationDir+"/"+CopyFileImage(imageDestinationDir);
 				actPatientView.getOuvrir().setEnabled(false);
 			}
+			if (arg0.getSource()== actPatientView.getListActCombo()) {
+				//show related act info
+				int selecteditem=actPatientView.getListActCombo().getSelectedIndex();
+				setSelectedActInfo(selecteditem);
+               
+				
+			}
+			if (arg0.getSource()== actPatientView.getNouveauAct()) {
+				//set act empty  fields
+				setfieldsActEmpty();
+			}
 
 		}
 
@@ -153,6 +169,37 @@ public class ControllerAct {
 
 			picLabel.setBounds(0,0 , 300, 300);	
 
+		}
+		public void setSelectedActInfo(int selectedAct ){
+			Act act=controllerInfoPatient.getCurrentPatient().getActList().get(selectedAct);
+			
+			actPatientView.getActText().setText(act.getAct());
+			DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+            String time= act.getTempRendezVous();
+            DateFormat df = new SimpleDateFormat("HH:mm:ss"); 
+            Date startDate=new Date();
+            try {
+                startDate = df.parse(time);
+                String newDateString = df.format(startDate);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+			actPatientView.getTimePicker().setValue(startDate);
+			actPatientView.getDatePicker().setDate(act.getDateRendezVous());
+			actPatientView.getPayementCombo().setSelectedItem(act.getPayement());
+			File imageFile= new File(act.getLienImageRadio());
+			setImageInPanel(imageFile);
+
+			
+		}
+		public void setfieldsActEmpty(){
+			actPatientView.getActText().setText("");
+			DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+			Calendar cal = Calendar.getInstance();
+			actPatientView.getTimePicker().setValue(cal.getTime());
+			Date date= new Date();
+			actPatientView.getDatePicker().setDate(date);
+			actPatientView.getPayementCombo().setSelectedIndex(0);
 		}
 		
 
