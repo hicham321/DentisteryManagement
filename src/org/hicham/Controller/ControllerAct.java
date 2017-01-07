@@ -125,6 +125,7 @@ public class ControllerAct {
 				setfieldsActEmpty();
 			}
 			if (arg0.getSource()== actPatientView.getModifie()) {
+				modifyFieldsAct();
 				
 			}
             if (arg0.getSource()== actPatientView.getSuppAct()) {
@@ -222,6 +223,14 @@ public class ControllerAct {
 			actPatientView.getDatePicker().setDate(date);
 			actPatientView.getPayementCombo().setSelectedIndex(0);
 		}
+		public void modifyFieldsAct(){
+			currentAct.setAct(actPatientView.getActText().getText());     
+			currentAct.setDateRendezVous(actPatientView.getDatePicker().getDate());
+			currentAct.setTempRendezVous(actPatientView.getTimePicker().getValue().toString());
+			currentAct.setPayement(Double.parseDouble(actPatientView.getPayementCombo().getSelectedItem().toString()));
+			currentAct.setAct(dbPathToFileImage);
+		}
+
 		
 
 
