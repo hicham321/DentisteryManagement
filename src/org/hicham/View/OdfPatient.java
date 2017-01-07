@@ -19,6 +19,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SpinnerDateModel;
+import javax.swing.border.Border;
 
 import org.jdesktop.swingx.JXDatePicker;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
@@ -84,7 +85,9 @@ public class OdfPatient extends JPanel{
 		panelImagecontrol.setBackground(Color.decode("#d2fdf9"));
 		panelImagecontrol.setLayout(null);
 
-
+		Border border = BorderFactory.createLineBorder(Color.BLACK);
+        actText.setBorder(BorderFactory.createCompoundBorder(border
+        		,BorderFactory.createEmptyBorder(0, 0, 10, 10)));
 
 		actText.setLineWrap(true);
 		actText.setWrapStyleWord(true);

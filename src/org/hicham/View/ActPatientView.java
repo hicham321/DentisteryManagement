@@ -17,6 +17,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.SpinnerDateModel;
+import javax.swing.border.Border;
 
 import org.jdesktop.swingx.JXDatePicker;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
@@ -35,7 +36,10 @@ public class ActPatientView extends JPanel {
 	private JScrollPane payementListScrol = new JScrollPane(payementCombo);
 	
 	JButton ok= new JButton("Ok");
-	JButton modifie= new JButton("Annulé");
+	JButton modifie= new JButton("Modifie");
+	JButton suppAct= new JButton("Supprimer");
+
+	
 
 	
 	JXDatePicker datePicker = new JXDatePicker();
@@ -99,6 +103,10 @@ public class ActPatientView extends JPanel {
 		this.actModel.addElement("");
         listActCombo.setSelectedIndex(0);
         
+        Border border = BorderFactory.createLineBorder(Color.BLACK);
+        actText.setBorder(BorderFactory.createCompoundBorder(border
+        		,BorderFactory.createEmptyBorder(0, 0, 10, 10)));
+        
         
         panelAct.add(datePicker);
         panelAct.add(timePicker);
@@ -109,6 +117,7 @@ public class ActPatientView extends JPanel {
         panelAct.add(payementLab);
         panelAct.add(payementCombo);
         panelAct.add(modifie);
+        panelAct.add(suppAct);
         
         panelAct.add(actComboLab);
         panelAct.add(listActCombo);
@@ -129,8 +138,9 @@ public class ActPatientView extends JPanel {
         timePicker.setBounds(270, 90, 100, 20);
         payementLab.setBounds(30, 140, 100, 20);
         payementCombo.setBounds(150, 140, 100, 20);
-        ok.setBounds(30, 190, 100, 20);
-        modifie.setBounds(150, 190, 100, 20);
+        ok.setBounds(50, 300, 120, 40);
+        modifie.setBounds(190, 300, 120, 40);
+        suppAct.setBounds(330,300,120,40);
         
         actComboLab.setBounds(150, 20, 100, 20);
         listActCombo.setBounds(30, 20, 100, 20);
@@ -156,6 +166,8 @@ public class ActPatientView extends JPanel {
 		this.okImage.addActionListener(listener);
 		this.nouveauAct.addActionListener(listener);
 		this.listActCombo.addActionListener(listener);
+		this.modifie.addActionListener(listener);
+		this.suppAct.addActionListener(listener);
 
 
 	}
@@ -203,6 +215,11 @@ public class ActPatientView extends JPanel {
 	public JButton getModifie() {
 		return modifie;
 	}
+
+	public JButton getSuppAct() {
+		return suppAct;
+	}
+	
 	
     
 	

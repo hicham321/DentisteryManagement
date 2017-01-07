@@ -67,9 +67,11 @@ public class ControllerInfoPatient {
 
 
 				setFieldsEmpty();
+				setFieldsActEnabled();
 
 			}
 			if (e.getSource()== infoPatient.getRechCombo()) {
+				setFieldsActEnabled();
 				infoPatient.getOk().setEnabled(false);
 				infoPatient.getModifie().setEnabled(true);
 
@@ -123,12 +125,17 @@ public class ControllerInfoPatient {
 				patientQueries.addPatient(currentPatient);
 			}
 			if (e.getSource()== infoPatient.getSuppPatient()) {
-				int input = JOptionPane.showOptionDialog(null, "est ce que vous ete sure de supprimé ce patient", "The title", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+				int input = JOptionPane.showOptionDialog(null
+						,"Etes vous sure de vouloir supprimer ce patient?"
+						, "Supprimer Un Patient"
+						, JOptionPane.OK_CANCEL_OPTION
+						, JOptionPane.INFORMATION_MESSAGE, null, null, null);
 
-				if(input == JOptionPane.OK_OPTION)
-				{
-				    // do something
+				if(input == JOptionPane.OK_OPTION){
+					// do something
 					patientQueries.deletePatient(currentPatient);
+					setFieldsEmpty();
+					//refresh combobox
 
 				}
 			}

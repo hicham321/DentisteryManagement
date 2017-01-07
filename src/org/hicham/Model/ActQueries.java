@@ -18,7 +18,22 @@ public class ActQueries extends UsefulMethods{
 
 			//save act object
 			session.beginTransaction();
-			session.save(act);
+			session.saveOrUpdate(act);
+			session.getTransaction().commit();
+
+		} finally {
+			session.close();
+		}
+	}
+	public void deleteAct(Act act){
+		SessionsDB FactoryObject= new SessionsDB();
+		Session session= FactoryObject.getFactory().openSession();
+		//Session session = SessionsDB.getFactory().openSession();
+		try {
+
+			//delete act object
+			session.beginTransaction();
+			session.delete(act);
 			session.getTransaction().commit();
 
 		} finally {

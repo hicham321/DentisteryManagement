@@ -21,6 +21,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -120,7 +121,24 @@ public class ControllerAct {
 			}
 			if (arg0.getSource()== actPatientView.getNouveauAct()) {
 				//set act empty  fields
+				actPatientView.getOk().setEnabled(true);
 				setfieldsActEmpty();
+			}
+			if (arg0.getSource()== actPatientView.getModifie()) {
+				
+			}
+            if (arg0.getSource()== actPatientView.getSuppAct()) {
+            	int input = JOptionPane.showOptionDialog(null
+						,"Etes vous sure de vouloir supprimer ce Act?"
+						, "Supprimer l'act courant"
+						, JOptionPane.OK_CANCEL_OPTION
+						, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+
+				if(input == JOptionPane.OK_OPTION){
+					// do something
+					System.out.println("this executes");
+					actQueries.deleteAct(currentAct);
+				}	
 			}
 
 		}
@@ -174,7 +192,7 @@ public class ControllerAct {
 			Act act=controllerInfoPatient.getCurrentPatient().getActList().get(selectedAct);
 			
 			actPatientView.getActText().setText(act.getAct());
-			DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+			/*DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
             String time= act.getTempRendezVous();
             DateFormat df = new SimpleDateFormat("HH:mm:ss"); 
             Date startDate=new Date();
@@ -184,13 +202,16 @@ public class ControllerAct {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-			actPatientView.getTimePicker().setValue(startDate);
+			actPatientView.getTimePicker().setValue(startDate);*/
 			actPatientView.getDatePicker().setDate(act.getDateRendezVous());
 			actPatientView.getPayementCombo().setSelectedItem(act.getPayement());
 			File imageFile= new File(act.getLienImageRadio());
-			setImageInPanel(imageFile);
-
-			
+			if (!"".equals(act.getLienImageRadio())) {
+				setImageInPanel(imageFile);
+			}
+			else{
+				//code to empty image panel
+			}
 		}
 		public void setfieldsActEmpty(){
 			actPatientView.getActText().setText("");
