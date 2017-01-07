@@ -67,8 +67,8 @@ public class InfoPatient extends JPanel{
 	
 	JButton nouveauPatient= new JButton("Nouveau");
 	
-
-
+	JButton suppPatient= new JButton("Supprimer");	
+	
 
 	public InfoPatient(){
         this.setLayout(null);
@@ -137,6 +137,8 @@ public class InfoPatient extends JPanel{
 		this.add(patientRechLab);
 		this.add(rechCombo);
 		this.add(nouveauPatient);
+		
+		this.add(suppPatient);
 		
 		
 		this.add(errorLabNom);
@@ -216,12 +218,14 @@ public class InfoPatient extends JPanel{
         
         
         this.fonction.setBounds(200,420 ,250, 20);
-        this.ok.setBounds(100,500 ,100, 20);
-        this.modifie.setBounds(200,500 ,100, 20);
+        this.ok.setBounds(100,540 ,120, 40);
+        this.modifie.setBounds(260,540 ,120, 40);
         
         this.patientRechLab.setBounds(500,100 ,100, 20);
         this.rechCombo.setBounds(610,100 ,100, 20);
         this.nouveauPatient.setBounds(400,50,100, 20);
+        
+        this.suppPatient.setBounds(420, 540, 120, 40);
         
         this.rechModel.addElement("");
 		AutoCompleteDecorator.decorate(rechCombo);
@@ -241,6 +245,7 @@ public class InfoPatient extends JPanel{
 		this.modifie.addActionListener(listener);	
 		this.nouveauPatient.addActionListener(listener);
 		this.rechCombo.addActionListener(listener);
+		this.suppPatient.addActionListener(listener);
 
 	}
 
@@ -332,6 +337,10 @@ public class InfoPatient extends JPanel{
 
 	public JComboBox getRechCombo() {
 		return rechCombo;
+	}
+
+	public JButton getSuppPatient() {
+		return suppPatient;
 	}
 	
 	

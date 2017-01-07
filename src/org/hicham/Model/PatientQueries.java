@@ -22,7 +22,22 @@ public class PatientQueries {
 
 			//save patient object
 			session.beginTransaction();
-			session.save(patientAdded );
+			session.saveOrUpdate(patientAdded );
+			session.getTransaction().commit();
+
+		} finally {
+			session.close();
+		}
+	}
+	public void  deletePatient(Patient patient){
+		SessionsDB FactoryObject= new SessionsDB();
+		Session session= FactoryObject.getFactory().openSession();
+		//Session session = SessionsDB.getFactory().openSession();
+		try {
+
+			//save patient object
+			session.beginTransaction();
+			session.delete(patient);
 			session.getTransaction().commit();
 
 		} finally {

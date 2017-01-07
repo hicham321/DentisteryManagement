@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
 import org.hicham.Model.Act;
 import org.hicham.Model.Patient;
@@ -83,7 +84,7 @@ public class ControllerInfoPatient {
 						selectedPatient.getSex(),selectedPatient.getAnticident(),
 						selectedPatient.getFonction());
 				
-				setfieldPatientDisabled();
+				//setfieldPatientDisabled();
 				//show related patient acts
 				setFieldsActInfo();
 				//set info in act for the selected patient
@@ -107,7 +108,29 @@ public class ControllerInfoPatient {
 
 			}
 			if (e.getSource()== infoPatient.getModifie()) {
-                  setfieldPatientenabled();
+				setfieldPatientenabled();
+
+				modifyPatientFields(infoPatient.getNom().getText()
+						, infoPatient.getPrenom().getText()
+						, infoPatient.getNom().getText()+ " "+infoPatient.getPrenom().getText()
+						, infoPatient.getAge().getText()
+						, infoPatient.getTeinte().getSelectedItem().toString()
+						, infoPatient.getFonction().getText()
+						, infoPatient.getTel().getText()
+						, infoPatient.getAnticident().getText()
+						, infoPatient.getAddress().getText()
+						, infoPatient.getSex().getSelectedItem().toString());
+				patientQueries.addPatient(currentPatient);
+			}
+			if (e.getSource()== infoPatient.getSuppPatient()) {
+				int input = JOptionPane.showOptionDialog(null, "est ce que vous ete sure de supprimé ce patient", "The title", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+
+				if(input == JOptionPane.OK_OPTION)
+				{
+				    // do something
+					patientQueries.deletePatient(currentPatient);
+
+				}
 			}
 
 		}
@@ -197,6 +220,23 @@ public class ControllerInfoPatient {
 			actPatientView.getNouveauAct().setEnabled(true);
 			actPatientView.getOk().setEnabled(false);
 			actPatientView.getModifie().setEnabled(true);
+		}
+		
+		public void modifyPatientFields(String name, String prenom,String nomEtPrenom
+				,String age, String teinte, String fonction,String tel, String anticident
+				,String address ,String sex ){
+			
+			currentPatient.setAge(age);
+			currentPatient.setAddress(address);
+			currentPatient.setAnticident(anticident);
+			currentPatient.setFonction(fonction);
+			currentPatient.setName(name);
+			currentPatient.setNomEtPrenom(nomEtPrenom);
+			currentPatient.setPrenom(prenom);
+			currentPatient.setSex(sex);
+			currentPatient.setTel(tel);
+			currentPatient.setTeinte(teinte);
+			
 		}
 
 
