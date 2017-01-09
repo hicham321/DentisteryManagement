@@ -27,14 +27,18 @@ public class PatientView extends JPanel{
 	InfoPatient infoPatient= new InfoPatient();
 	ActPatientView actPatient= new ActPatientView();
 	OdfPatient odfPatient= new OdfPatient();
+	ProtheseView protheseView= new ProtheseView();
     Ordonance ordonance= new Ordonance();
     RecherchePatientView recherchePatientView= new RecherchePatientView();
     
-	public PatientView (InfoPatient infoPatient,ActPatientView actPatient, OdfPatient odfPatient, Ordonance ordonance, RecherchePatientView recherchePatientView){
+	public PatientView (InfoPatient infoPatient,ActPatientView actPatient
+			,OdfPatient odfPatient,ProtheseView protheseView, Ordonance ordonance
+			,RecherchePatientView recherchePatientView){
 		
 		this.infoPatient= infoPatient;
 		this.actPatient= actPatient;
 		this.odfPatient= odfPatient;
+		this.protheseView= protheseView;
 		this.ordonance= ordonance;
 		this.recherchePatientView= recherchePatientView;
 		
@@ -49,14 +53,10 @@ public class PatientView extends JPanel{
 		tabbedPane.addTab("Info       ", this.infoPatient);
 		tabbedPane.addTab("Act      ", this.actPatient);
 		tabbedPane.addTab("ODF       ", this.odfPatient);
+		tabbedPane.addTab("Prothese       ", this.protheseView);
 		tabbedPane.addTab("Ordonance       ", this.ordonance);
 		tabbedPane.addTab("Rechreche  ", this.recherchePatientView);
-
-
-
-
-		
-		
+	
 		/*btn.setBounds(600,300 , 100,20 );
 		b.setBounds(600, 600, 100, 100);
 		tabbedPane.setBounds(0, 20, 700, 200);*/

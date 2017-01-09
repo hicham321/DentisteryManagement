@@ -16,6 +16,7 @@ public class MainFrame extends JFrame{
 	InfoPatient infoPatient= new InfoPatient();
 	ActPatientView actPatient= new ActPatientView();
 	OdfPatient odfPatient= new OdfPatient();
+	ProtheseView protheseView= new ProtheseView();
 	RecherchePatientView recherchePatientView= new RecherchePatientView();
 	
 	RegisterView registerView= new RegisterView();
@@ -23,17 +24,19 @@ public class MainFrame extends JFrame{
 
 	public HomePanel card1= new HomePanel(registerView,changeMotPassView);
 	
-	public PatientView card2= new PatientView(infoPatient,actPatient,odfPatient,ordonance,recherchePatientView);
-	
+	public PatientView card2= new PatientView(infoPatient,actPatient,odfPatient,
+			protheseView,ordonance,recherchePatientView);
+
 	public GestionStockView card3= new GestionStockView();
-	
+
 	public RendezVousView card4= new RendezVousView();
 
 
 
 	private MenuBar menuBar= new MenuBar();
 
-	public MainFrame(HomePanel card1,PatientView card2,GestionStockView card3,RendezVousView card4,RegisterView registerView , MenuBar menuBar){
+	public MainFrame(HomePanel card1,PatientView card2,GestionStockView card3
+			,RendezVousView card4,RegisterView registerView , MenuBar menuBar){
 		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setBounds(0,0,screenSize.width, screenSize.height);

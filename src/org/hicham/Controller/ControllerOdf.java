@@ -71,6 +71,7 @@ public class ControllerOdf {
             if (e.getSource()== odfPatient.getModifie()) {
 				//edit current odf
             	modifyFieldsOdf();
+            	odfQueries.addOdf(currentOdf);
 			}
             if (e.getSource()== odfPatient.getSupp()) {
 				//delete odf
@@ -115,7 +116,7 @@ public class ControllerOdf {
 		odfPatient.getPayementRestText().setText(new Integer(odf.getPayementRest()).toString());
 		odfPatient.getPayementTotal().setText(new Integer(odf.getPayementTotal()).toString());
 
-		
+		currentOdf= odf;
 	}
 
 	public void setOdfFieldsEmpty(){
