@@ -10,12 +10,14 @@ import org.hicham.Controller.ControllerChangePass;
 import org.hicham.Controller.ControllerGestionStock;
 import org.hicham.Controller.ControllerInfoPatient;
 import org.hicham.Controller.ControllerMenuBar;
+import org.hicham.Controller.ControllerOdf;
 import org.hicham.Controller.ControllerOrdonance;
 import org.hicham.Controller.ControllerPatient;
 import org.hicham.Controller.ControllerRegister;
 import org.hicham.Controller.ControllerRendezVous;
 import org.hicham.Model.ActQueries;
 import org.hicham.Model.MedicamentQueries;
+import org.hicham.Model.OdfQueries;
 import org.hicham.Model.PatientQueries;
 import org.hicham.Model.ProduitQueries;
 import org.hicham.Model.RegisterQueries;
@@ -55,6 +57,7 @@ public class Main {
 		MedicamentQueries mq= new MedicamentQueries();
 		RendezVousQueries rvq= new RendezVousQueries();
 		RegisterQueries rq= new RegisterQueries();
+		OdfQueries oq= new OdfQueries();
 		//views
 		RegisterView rv= new RegisterView();
 		ChangeMotPassView cmpv= new ChangeMotPassView();
@@ -71,8 +74,9 @@ public class Main {
 		MainFrame mf= new MainFrame(hp,p,gs,rvv,rv,mb);
 		
 		//controllers
-		ControllerInfoPatient cip= new ControllerInfoPatient(ip, pq,rp,ap);
+		ControllerInfoPatient cip= new ControllerInfoPatient(ip, pq,rp,ap,op);
 		ControllerAct ca= new ControllerAct(ap, aq, pq,cip);
+		ControllerOdf codf= new ControllerOdf(op, oq,pq,cip);
 		ControllerPatient cp= new ControllerPatient(mf, p,o);
 		ControllerOrdonance co= new ControllerOrdonance(mf,hp, p, o,mq);
 		ControllerMenuBar cmb= new ControllerMenuBar(mf,hp,mb, p,ip, o,gs,rvv,rp,prq,pq,cmpv);

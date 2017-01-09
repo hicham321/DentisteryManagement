@@ -1,11 +1,13 @@
 package org.hicham.View;
 
 import java.awt.Color;
+import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.swing.text.AbstractDocument;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -20,79 +22,62 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SpinnerDateModel;
 import javax.swing.border.Border;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
 
 import org.jdesktop.swingx.JXDatePicker;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
-public class OdfPatient extends JPanel{
+public class OdfPatient extends JPanel {
 
-	JLabel actLab= new JLabel("Act: ");
-	JTextArea actText= new JTextArea();
+	JLabel actLab = new JLabel("Diagnostique: ");
+	JTextArea actText = new JTextArea();
 
-	JLabel dateRendezVousLab= new JLabel("Rendez Vous: ");
+	JLabel dateRendezVousLab = new JLabel("Rendez Vous: ");
 
+	JLabel payementTotalLab = new JLabel("Payement: ");
+	JTextField payementTotal = new JTextField();
 
-	JLabel payementTotalLab= new JLabel("Payement: ");
-    JTextField payementTotal = new JTextField();    
-
-	JButton ok= new JButton("Ok");
-	JButton modifie= new JButton("Annulé");
-
+	JButton ok = new JButton("Ok");
+	JButton modifie = new JButton("Modifié");
+	JButton supp = new JButton("Supprimer");
 
 	JXDatePicker datePicker = new JXDatePicker();
-	JSpinner timePicker= new JSpinner(new SpinnerDateModel());
+	JSpinner timePicker = new JSpinner(new SpinnerDateModel());
 
-	private JButton ouvrir= new JButton("Selectioné");
-	private JButton okImage= new JButton("Ok");
+	private JButton nouveauAct = new JButton("Nouveau");
 
-	private JPanel panelImageAct= new JPanel();
-
-	private JButton nouveauAct= new JButton("Nouveau");
-
-	JLabel  actComboLab= new JLabel("Act: ");
-	final DefaultComboBoxModel actModel = new DefaultComboBoxModel();
-	private JComboBox listActCombo= new JComboBox(actModel);
-	private JScrollPane actListScrol = new JScrollPane(listActCombo);
+	JLabel actComboLab = new JLabel("Rendez Vous: ");
+	final DefaultComboBoxModel odfModel = new DefaultComboBoxModel();
+	private JComboBox listOdfCombo = new JComboBox(odfModel);
+	private JScrollPane actListScrol = new JScrollPane(listOdfCombo);
 	//
 	//
-	JLabel nomPrenomLab= new JLabel("Nom et Prenom: ");
-	JLabel nomPrenom= new JLabel("");
-	
+	JLabel nomPrenomLab = new JLabel("Nom et Prenom: ");
+	JLabel nomPrenom = new JLabel("");
+
 	JLabel payementOdfLab = new JLabel("Payement Total: ");
-	JTextField payementOdfText= new JTextField();
+	JTextField payementOdfText = new JTextField();
 	JLabel payementRestLab = new JLabel("Le Reste de Payement: ");
-	JTextField payementRestText= new JTextField();
+	JTextField payementRestText = new JTextField();
 
-	
-    JScrollPane scrol= new JScrollPane(actText);
+	JScrollPane scrol = new JScrollPane(actText);
 
-	
-	public OdfPatient(){
+	public OdfPatient() {
 
 		this.setLayout(null);
 		this.setBackground(Color.decode("#d2fdf9"));
-		JPanel panelOdf= new JPanel();
+		JPanel panelOdf = new JPanel();
 		panelOdf.setBackground(Color.WHITE);
 		panelOdf.setLayout(null);
 		panelOdf.setBorder(BorderFactory.createTitledBorder("Info Act: "));
 
-		panelImageAct= new JPanel();
-		panelImageAct.setBackground(Color.decode("#d2fdf9"));
-		panelImageAct.setLayout(null);
-		panelImageAct.setBorder(BorderFactory.createTitledBorder("Radio: "));
-
-		JPanel panelImagecontrol= new JPanel();
-		panelImagecontrol.setBackground(Color.decode("#d2fdf9"));
-		panelImagecontrol.setLayout(null);
-
 		Border border = BorderFactory.createLineBorder(Color.BLACK);
-        actText.setBorder(BorderFactory.createCompoundBorder(border
-        		,BorderFactory.createEmptyBorder(0, 0, 10, 10)));
+		actText.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(0, 0, 10, 10)));
 
 		actText.setLineWrap(true);
 		actText.setWrapStyleWord(true);
-
-	
 
 		datePicker.setDate(Calendar.getInstance().getTime());
 		datePicker.setFormats(new SimpleDateFormat("dd.MM.yyyy"));
@@ -101,95 +86,118 @@ public class OdfPatient extends JPanel{
 		timePicker.setEditor(timeEditor);
 		timePicker.setValue(new Date()); // will only show the current time
 
-		AutoCompleteDecorator.decorate(listActCombo);
-		this.actModel.addElement("");
-		listActCombo.setSelectedIndex(0);
-
+		AutoCompleteDecorator.decorate(listOdfCombo);
+		this.odfModel.addElement("");
+		listOdfCombo.setSelectedIndex(0);
 
 		panelOdf.add(datePicker);
 		panelOdf.add(timePicker);
 		panelOdf.add(ok);
 		panelOdf.add(actLab);
-		
+
 		panelOdf.add(actText);
 		panelOdf.add(dateRendezVousLab);
 		panelOdf.add(payementTotalLab);
+		((AbstractDocument) payementTotal.getDocument()).setDocumentFilter(new MyDocumentFilter());
 		panelOdf.add(payementTotal);
 		panelOdf.add(modifie);
+		panelOdf.add(supp);
 
 		panelOdf.add(actComboLab);
-		panelOdf.add(listActCombo);
+		panelOdf.add(listOdfCombo);
 		panelOdf.add(nouveauAct);
 		//
 		//
+		((AbstractDocument) payementOdfText.getDocument()).setDocumentFilter(new MyDocumentFilter());
+		((AbstractDocument) payementRestText.getDocument()).setDocumentFilter(new MyDocumentFilter());
+
 		panelOdf.add(nomPrenomLab);
 		panelOdf.add(nomPrenom);
 		panelOdf.add(payementOdfLab);
 		panelOdf.add(payementOdfText);
 		panelOdf.add(payementRestLab);
 		panelOdf.add(payementRestText);
-		
+
 		panelOdf.add(scrol);
 		scrol.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
-
-
-
-		
-
-
-
-
-		panelImagecontrol.add(ouvrir);
-		panelImagecontrol.add(okImage);
-
-        
-		nouveauAct.setBounds(200,30,100,40);
+		nouveauAct.setBounds(200, 30, 100, 40);
 		//
 		//
-		 nomPrenomLab.setBounds(30, 70, 150, 20);
-		 nomPrenom.setBounds(220, 70, 150, 20);
-		 payementOdfLab.setBounds(30,320,150,20); 
-		 payementOdfText.setBounds(220, 320, 150, 20);
-		 payementRestLab.setBounds(30,360 ,150 ,20 );
-		 payementRestText.setBounds(220, 360, 150, 20);
+		nomPrenomLab.setBounds(30, 70, 150, 20);
+		nomPrenom.setBounds(220, 70, 150, 20);
+		payementOdfLab.setBounds(30, 320, 150, 20);
+		payementOdfText.setBounds(220, 320, 150, 20);
+		payementRestLab.setBounds(30, 360, 150, 20);
+		payementRestText.setBounds(220, 360, 150, 20);
 		//
 		//
-		actLab.setBounds(30,190,150,20);
-		actText.setBounds(220,150,350,100);
-		dateRendezVousLab.setBounds(30,280,150,20);
-		datePicker.setBounds(220,280,150,20);
-		timePicker.setBounds(400,280,150,20);
-		payementTotalLab.setBounds(30,400,150,20);
-		payementTotal.setBounds(220,400,150,20);
-		ok.setBounds(180,470,150,40);
-		modifie.setBounds(350,470,150,40);
+		actLab.setBounds(30, 190, 150, 20);
+		actText.setBounds(220, 150, 350, 100);
+		dateRendezVousLab.setBounds(30, 280, 150, 20);
+		datePicker.setBounds(220, 280, 150, 20);
+		timePicker.setBounds(400, 280, 150, 20);
+		payementTotalLab.setBounds(30, 400, 150, 20);
+		payementTotal.setBounds(220, 400, 150, 20);
+		ok.setBounds(180, 470, 150, 40);
+		modifie.setBounds(350, 470, 150, 40);
+		supp.setBounds(520, 470, 150, 40);
 
-		actComboLab.setBounds(30,110,150,20);
-		listActCombo.setBounds(220,110,150,20);
-
-//		ouvrir.setBounds();
-//		okImage.setBounds();
-
-
-
+		actComboLab.setBounds(30, 110, 150, 20);
+		listOdfCombo.setBounds(220, 110, 150, 20);
 
 		panelOdf.setBounds(0, 0, 700, 600);
-		panelImageAct.setBounds(600, 0, 300, 300);
-		panelImagecontrol.setBounds(600, 300, 300, 50);
+
 		this.add(panelOdf);
-		this.add(panelImageAct);
-		this.add(panelImagecontrol);
 	}
 
-	public void addActPatientViewActionListener(ActionListener listener){
+	public void addActPatientViewActionListener(ActionListener listener) {
 		this.ok.addActionListener(listener);
-		this.ouvrir.addActionListener(listener);
-		this.okImage.addActionListener(listener);
 		this.nouveauAct.addActionListener(listener);
-		this.listActCombo.addActionListener(listener);
+		this.listOdfCombo.addActionListener(listener);
+		this.modifie.addActionListener(listener);
+		this.supp.addActionListener(listener);
 
+	}
 
+	// this is a document filter for using only digits in a Jtextfield(related
+	// to payement
+	class MyDocumentFilter extends DocumentFilter {
+		@Override
+		public void insertString(DocumentFilter.FilterBypass fp, int offset
+				, String string, AttributeSet aset)throws BadLocationException{
+			int len = string.length();
+			boolean isValidInteger = true;
+
+			for (int i = 0; i < len; i++) {
+				if (!Character.isDigit(string.charAt(i))) {
+					isValidInteger = false;
+					break;
+				}
+			}
+			if (isValidInteger)
+				super.insertString(fp, offset, string, aset);
+			else
+				Toolkit.getDefaultToolkit().beep();
+		}
+
+		@Override
+		public void replace(DocumentFilter.FilterBypass fp, int offset, int length
+				,String string, AttributeSet aset)throws BadLocationException {
+			int len = string.length();
+			boolean isValidInteger = true;
+
+			for (int i = 0; i < len; i++) {
+				if (!Character.isDigit(string.charAt(i))) {
+					isValidInteger = false;
+					break;
+				}
+			}
+			if (isValidInteger)
+				super.replace(fp, offset, length, string, aset);
+			else
+				Toolkit.getDefaultToolkit().beep();
+		}
 	}
 
 	public JTextArea getActText() {
@@ -208,24 +216,12 @@ public class OdfPatient extends JPanel{
 		return timePicker;
 	}
 
-	public JButton getOuvrir() {
-		return ouvrir;
-	}
-	//
-	public JPanel getPanelImageAct() {
-		return panelImageAct;
-	}
-
-	public JButton getOkImage() {
-		return okImage;
-	}
-
 	public JButton getNouveauAct() {
 		return nouveauAct;
 	}
 
 	public JComboBox getListActCombo() {
-		return listActCombo;
+		return listOdfCombo;
 	}
 
 	public JButton getModifie() {
@@ -235,10 +231,14 @@ public class OdfPatient extends JPanel{
 	public JTextField getPayementTotal() {
 		return payementTotal;
 	}
-	
+
 	//
 	//
-	
+
+	public JButton getSupp() {
+		return supp;
+	}
+
 	public JTextField getPayementOdfText() {
 		return payementOdfText;
 	}
@@ -246,6 +246,5 @@ public class OdfPatient extends JPanel{
 	public JTextField getPayementRestText() {
 		return payementRestText;
 	}
-	
-	
+
 }

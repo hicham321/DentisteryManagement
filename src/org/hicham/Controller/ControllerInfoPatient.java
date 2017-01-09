@@ -13,10 +13,12 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 import org.hicham.Model.Act;
+import org.hicham.Model.Odf;
 import org.hicham.Model.Patient;
 import org.hicham.Model.PatientQueries;
 import org.hicham.View.ActPatientView;
 import org.hicham.View.InfoPatient;
+import org.hicham.View.OdfPatient;
 import org.hicham.View.RecherchePatientView;
 
 public class ControllerInfoPatient {
@@ -25,6 +27,7 @@ public class ControllerInfoPatient {
 	PatientQueries patientQueries= new PatientQueries();
 	RecherchePatientView recherchePatientView= new RecherchePatientView();
 	ActPatientView actPatientView= new ActPatientView();
+	OdfPatient odfPatient= new OdfPatient();
 	//this field needs to be updated when adding a new patient or when selecting a new patient
 	Patient currentPatient= new Patient();
 
@@ -32,12 +35,14 @@ public class ControllerInfoPatient {
 
 
 	public ControllerInfoPatient(InfoPatient infoPatient, PatientQueries patientQueries 
-			,RecherchePatientView recherchePatientView,ActPatientView actPatientView){
+			,RecherchePatientView recherchePatientView
+			,ActPatientView actPatientView,OdfPatient odfPatient){
 
 		this.infoPatient= infoPatient;
 		this.patientQueries=patientQueries;
 		this.recherchePatientView=recherchePatientView;
 		this.actPatientView= actPatientView;
+		this.odfPatient= odfPatient;
 		this.infoPatient.addInfoPatientActionListener(new InfoPatientActionListener());
 	}
 	class InfoPatientActionListener implements ActionListener{
@@ -63,8 +68,6 @@ public class ControllerInfoPatient {
 						,infoPatient.getFonction().getText()
 						);
 				patientQueries.addPatient(currentPatient);
-
-
 
 				setFieldsEmpty();
 				setFieldsActEnabled();
@@ -96,8 +99,18 @@ public class ControllerInfoPatient {
 					String date= acts.get(i).getDateRendezVous().toString();
 					actsDates.add(date);
 				}
-				DefaultComboBoxModel dfcm=patientQueries.comboBoxModel(actsDates);
-				actPatientView.getListActCombo().setModel(dfcm);
+				DefaultComboBoxModel dfcmAct=patientQueries.comboBoxModel(actsDates);
+				actPatientView.getListActCombo().setModel(dfcmAct);
+				//set info in act for the selected patient
+				List<Odf>odfs=currentPatient.getOdfList();
+				List<String> odfsDates= new ArrayList<>();
+				for (int i = 0; i < odfs.size(); i++) {
+					String date= odfs.get(i).getDateRendezVous().toString();
+					odfsDates.add(date);
+				}
+				DefaultComboBoxModel dfcmOdf=patientQueries.comboBoxModel(odfsDates);
+				odfPatient.getListActCombo().setModel(dfcmOdf);
+
 
 			}
 			if (e.getSource()== infoPatient.getNouveauPatient()) {

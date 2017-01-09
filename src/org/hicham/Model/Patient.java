@@ -45,8 +45,13 @@ public class Patient {
 	@Column (name="Fonction")
 	String fonction;
 	
-	@OneToMany(targetEntity=Act.class, mappedBy="patient",cascade=CascadeType.ALL,fetch= FetchType.EAGER)
+	@OneToMany(targetEntity=Act.class, mappedBy="patient"
+			,cascade=CascadeType.ALL,fetch= FetchType.EAGER)
 	private List<Act> actList;
+	@OneToMany(targetEntity=Odf.class, mappedBy="patient"
+			,cascade=CascadeType.ALL,fetch= FetchType.EAGER)
+	private List<Odf> odfList;
+
 
 	
 	
@@ -139,8 +144,12 @@ public class Patient {
 	public void setActList(List<Act> actList) {
 		this.actList = actList;
 	}
+	public List<Odf> getOdfList() {
+		return odfList;
+	}
+	public void setOdfList(List<Odf> odfList) {
+		this.odfList = odfList;
+	}
 	
-	
-    
 	
 }

@@ -18,12 +18,14 @@ public class SessionsDB {
     	
     	if (singletonCounter==0) {
 			//create singleton factory object
-    		 Configuration configuration = new Configuration().configure("/resources/hibernate.cfg.xml")
+    		 Configuration configuration = new Configuration()
+    				.configure("/resources/hibernate.cfg.xml")
     				.addAnnotatedClass(Patient.class)
     				.addAnnotatedClass(Produit.class)
     				.addAnnotatedClass(Medicament.class)
     				.addAnnotatedClass(Act.class)
-    				.addAnnotatedClass(Register.class);
+    				.addAnnotatedClass(Register.class)
+    				.addAnnotatedClass(Odf.class);
     		 StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
     		 factory = configuration.buildSessionFactory(builder.build());
      		 System.out.println("Creating a new Factory");

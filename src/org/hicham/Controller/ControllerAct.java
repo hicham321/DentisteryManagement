@@ -32,6 +32,7 @@ import org.hicham.Model.Patient;
 import org.hicham.Model.PatientQueries;
 import org.hicham.View.ActPatientView;
 import org.hicham.View.InfoPatient;
+import org.hicham.View.OdfPatient;
 import org.hicham.View.RecherchePatientView;
 
 import javafx.stage.FileChooser;
@@ -41,12 +42,13 @@ public class ControllerAct {
 	ActPatientView actPatientView= new ActPatientView();
 	ActQueries actQueries        = new     ActQueries();
 	PatientQueries patientQueries= new PatientQueries();
-
-
+	OdfPatient odfPatient= new OdfPatient();
 	InfoPatient infoPatient = new InfoPatient();
+	
 	RecherchePatientView recherchePatientView = new RecherchePatientView();
 
-	ControllerInfoPatient controllerInfoPatient= new ControllerInfoPatient(infoPatient,patientQueries,recherchePatientView,actPatientView);
+	ControllerInfoPatient controllerInfoPatient= new ControllerInfoPatient(infoPatient
+			,patientQueries,recherchePatientView,actPatientView,odfPatient);
 
 	Act currentAct= new Act();
 
@@ -136,8 +138,7 @@ public class ControllerAct {
 						, JOptionPane.INFORMATION_MESSAGE, null, null, null);
 
 				if(input == JOptionPane.OK_OPTION){
-					// do something
-					System.out.println("this executes");
+					
 					actQueries.deleteAct(currentAct);
 				}	
 			}
