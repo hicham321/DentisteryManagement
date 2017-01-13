@@ -1,15 +1,19 @@
 package org.hicham.View;
 
 import java.awt.Color;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.text.AbstractDocument;
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
@@ -39,9 +43,9 @@ public class OdfPatient extends JPanel {
 	JLabel payementTotalLab = new JLabel("Payement: ");
 	JTextField payementTotal = new JTextField();
 
-	JButton ok = new JButton("Ok");
-	JButton modifie = new JButton("Modifié");
-	JButton supp = new JButton("Supprimer");
+	JButton ok = new JButton("");
+	JButton modifie = new JButton("");
+	JButton supp = new JButton("");
 
 	JXDatePicker datePicker = new JXDatePicker();
 	JSpinner timePicker = new JSpinner(new SpinnerDateModel());
@@ -61,6 +65,9 @@ public class OdfPatient extends JPanel {
 	JTextField payementOdfText = new JTextField();
 	JLabel payementRestLab = new JLabel("Le Reste de Payement: ");
 	JTextField payementRestText = new JTextField();
+	JLabel payementActuelLab = new JLabel("Payement Actuel: ");
+	JTextField payementActuelText = new JTextField();
+
 
 	JScrollPane scrol = new JScrollPane(actText);
 
@@ -85,6 +92,12 @@ public class OdfPatient extends JPanel {
 		JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(timePicker, "HH:mm");
 		timePicker.setEditor(timeEditor);
 		timePicker.setValue(new Date()); // will only show the current time
+		
+		//put images on Buttons
+		putImageIcon("/resources/addImageIcon.png", this.ok);
+		putImageIcon("/resources/editImageIcon.jpg", this.modifie);
+		putImageIcon("/resources/deleteIcon.png", this.supp);
+
 
 		AutoCompleteDecorator.decorate(listOdfCombo);
 		this.odfModel.addElement("");
@@ -108,8 +121,13 @@ public class OdfPatient extends JPanel {
 		panelOdf.add(nouveauAct);
 		//
 		//
-		((AbstractDocument) payementOdfText.getDocument()).setDocumentFilter(new MyDocumentFilter());
-		((AbstractDocument) payementRestText.getDocument()).setDocumentFilter(new MyDocumentFilter());
+		((AbstractDocument) payementOdfText.getDocument())
+		        .setDocumentFilter(new MyDocumentFilter());
+		((AbstractDocument) payementRestText.getDocument())
+		        .setDocumentFilter(new MyDocumentFilter());
+		((AbstractDocument) payementActuelText.getDocument())
+        .setDocumentFilter(new MyDocumentFilter());
+
 
 		panelOdf.add(nomPrenomLab);
 		panelOdf.add(nomPrenom);
@@ -117,6 +135,10 @@ public class OdfPatient extends JPanel {
 		panelOdf.add(payementOdfText);
 		panelOdf.add(payementRestLab);
 		panelOdf.add(payementRestText);
+		panelOdf.add(payementActuelLab);
+		panelOdf.add(payementActuelText);
+
+		
 
 		panelOdf.add(scrol);
 		scrol.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -130,6 +152,8 @@ public class OdfPatient extends JPanel {
 		payementOdfText.setBounds(220, 320, 150, 20);
 		payementRestLab.setBounds(30, 360, 150, 20);
 		payementRestText.setBounds(220, 360, 150, 20);
+		payementActuelLab.setBounds(30, 440, 150, 20);
+		payementActuelText.setBounds(220, 440, 150, 20);
 		//
 		//
 		actLab.setBounds(30, 190, 150, 20);
@@ -139,9 +163,9 @@ public class OdfPatient extends JPanel {
 		timePicker.setBounds(400, 280, 150, 20);
 		payementTotalLab.setBounds(30, 400, 150, 20);
 		payementTotal.setBounds(220, 400, 150, 20);
-		ok.setBounds(180, 470, 150, 40);
-		modifie.setBounds(350, 470, 150, 40);
-		supp.setBounds(520, 470, 150, 40);
+		ok.setBounds(180, 470, 80, 65);
+		modifie.setBounds(350, 470, 80, 65);
+		supp.setBounds(520, 470, 80, 65);
 
 		actComboLab.setBounds(30, 110, 150, 20);
 		listOdfCombo.setBounds(220, 110, 150, 20);
@@ -158,6 +182,17 @@ public class OdfPatient extends JPanel {
 		this.modifie.addActionListener(listener);
 		this.supp.addActionListener(listener);
 
+	}
+	
+	//method to put image Icon
+	public void putImageIcon(String sourseImagePath,JButton button){
+		try {
+			Image img = ImageIO.read(getClass().getResource(sourseImagePath));
+			Image newimg = img.getScaledInstance( 70, 63,  java.awt.Image.SCALE_SMOOTH ) ;  
+			button.setIcon(new ImageIcon(newimg));
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
 	}
 
 	// this is a document filter for using only digits in a Jtextfield(related
@@ -246,5 +281,10 @@ public class OdfPatient extends JPanel {
 	public JTextField getPayementRestText() {
 		return payementRestText;
 	}
+
+	public JTextField getPayementActuelText() {
+		return payementActuelText;
+	}
+	
 
 }

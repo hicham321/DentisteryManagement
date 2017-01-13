@@ -185,22 +185,6 @@ public class ControllerRendezVous {
 
 	}
 
-
-
-	public void showInfoProduct(int selectedItem){
-		//get product
-		//		Produit produit=produitQueries.getProduct(selectedItem);
-		//		String ProductName= produit.getProduitNom();
-		//		Double prixProduct=produit.getPrix();
-		//		Integer qte= produit.getQte();
-		//		//set labels for selected product
-		//		gestionStockView.getProduitNomInfo().setText(ProductName);
-		//		gestionStockView.getProduitPrixInfo().setText(prixProduct.toString());
-		//		gestionStockView.getQteInfo().setText(qte.toString());
-		//	    //calculate prix total:
-		//		Double prixTotal= prixProduct*qte;
-		//		gestionStockView.getPrixTotal().setText(prixTotal.toString());
-	}
 	public void setPatientPanel(String actPatient, String Payement, String temp){
         
 		rendezVousView.getActRendezVous().setText(actPatient);

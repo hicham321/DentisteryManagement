@@ -24,6 +24,7 @@ public class Odf {
 	String odf;
 	@Column (name="payement" ,nullable=false,length=1000)
     int payement;
+	
 	@Column (name="payementTotal" ,nullable=false,length=1000)
     int payementTotal;
 	@Column (name="payementRest" ,nullable=false,length=1000)
@@ -115,6 +116,9 @@ public class Odf {
 	public void setPatient(Patient patient) {
 		this.patient = patient;
 	}
+
+	
+	
 
 	
 }

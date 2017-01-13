@@ -69,12 +69,20 @@ public class RendezVousView extends JPanel{
 	JLabel tempRV= new JLabel("");
 	JLabel payementRVLab= new JLabel("Payement: ");
 	JLabel payementRV= new JLabel("");
-
-
+    //panel odf rendez vous
+	JLabel diagnistiqeOdfLab= new JLabel("diagnostique du patient: ");
+	JLabel diagnistiqeOdf= new JLabel("ODF Text: ");
+	JLabel odfTeRendezVousLab= new JLabel("Temp du rendez vous: ");
+	JLabel odfTeRendezVous= new JLabel("");
 	
+	/*JLabel = new JLabel("Payement: ");
+	JLabel = new JLabel("");
+	JLabel = new JLabel("Rest du Payemen: ");
+	JLabel = new JLabel("");
+	JLabel = new JLabel("Payement: ");
+	JLabel = new JLabel("");
+	*/
 
-
-	
 	
 	
 	JPanel panelPatient;
@@ -82,6 +90,10 @@ public class RendezVousView extends JPanel{
 	JPanel panelRendezVous;
 	
     JPanel panelRechercheRendezVous;
+    
+    JPanel panelPatientOdf;
+
+    
     
 	public JPanel cards ;
 
@@ -99,6 +111,11 @@ public class RendezVousView extends JPanel{
 		panelPatient.setBackground(Color.WHITE);
 		panelPatient.setLayout(null);
 		panelPatient.setBorder(BorderFactory.createTitledBorder("Recherche Par Patient: "));
+		
+		panelPatientOdf= new JPanel();
+		panelPatientOdf.setBackground(Color.WHITE);
+		panelPatientOdf.setLayout(null);
+		panelPatientOdf.setBorder(BorderFactory.createTitledBorder("Rendez Vous Odf: "));
 		
 	    panelRendezVous= new JPanel();
 		panelRendezVous.setBackground(Color.WHITE);
@@ -168,6 +185,8 @@ public class RendezVousView extends JPanel{
 		panelPatient.add(tempsRendezVousLab);
 		panelPatient.add(tempsRendezVous);
 		
+		panelPatient.add(panelPatientOdf);
+		panelPatientOdf.setBounds(300, 0, 300, 300);
 
 		
 		

@@ -186,6 +186,8 @@ public class GestionStockView extends JPanel{
 	
 	}
 	
+
+	
 	public void addGestionStockActionListener(ActionListener Listener){
 		
 		this.sousQte.addActionListener(Listener);

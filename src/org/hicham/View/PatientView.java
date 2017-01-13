@@ -27,8 +27,12 @@ public class PatientView extends JPanel{
 	InfoPatient infoPatient= new InfoPatient();
 	ActPatientView actPatient= new ActPatientView();
 	OdfPatient odfPatient= new OdfPatient();
-	ProtheseView protheseView= new ProtheseView();
-    Ordonance ordonance= new Ordonance();
+	ProthesePartielleView prothesePartielleView= new ProthesePartielleView();
+	ProtheseFixeView protheseFixeView= new ProtheseFixeView();
+	ProtheseTotaleView protheseTotaleView= new ProtheseTotaleView();
+	ProtheseView protheseView= new ProtheseView(protheseTotaleView,prothesePartielleView
+			,protheseFixeView);   
+	Ordonance ordonance= new Ordonance();
     RecherchePatientView recherchePatientView= new RecherchePatientView();
     
 	public PatientView (InfoPatient infoPatient,ActPatientView actPatient

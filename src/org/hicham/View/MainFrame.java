@@ -16,7 +16,11 @@ public class MainFrame extends JFrame{
 	InfoPatient infoPatient= new InfoPatient();
 	ActPatientView actPatient= new ActPatientView();
 	OdfPatient odfPatient= new OdfPatient();
-	ProtheseView protheseView= new ProtheseView();
+	ProthesePartielleView prothesePartielleView= new ProthesePartielleView();
+	ProtheseFixeView protheseFixeView= new ProtheseFixeView();
+	ProtheseTotaleView protheseTotaleView= new ProtheseTotaleView();
+	ProtheseView protheseView= new ProtheseView(protheseTotaleView,prothesePartielleView
+			,protheseFixeView);
 	RecherchePatientView recherchePatientView= new RecherchePatientView();
 	
 	RegisterView registerView= new RegisterView();

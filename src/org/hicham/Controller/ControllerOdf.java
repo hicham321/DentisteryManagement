@@ -21,7 +21,7 @@ import org.hicham.View.RecherchePatientView;
 
 public class ControllerOdf {
 	
-	OdfPatient odfPatient= new OdfPatient();
+     OdfPatient odfPatient= new OdfPatient();
     OdfQueries odfQueries= new OdfQueries();
     Odf currentOdf= new Odf();
     
@@ -41,8 +41,7 @@ public class ControllerOdf {
 		this.controllerInfoPatient= controllerInfoPatient;
 		
 		this.odfPatient.addActPatientViewActionListener(new ActPatientViewActionListener());
-		
-	
+			
 	}
 	class ActPatientViewActionListener implements ActionListener{
 
@@ -59,9 +58,17 @@ public class ControllerOdf {
 				String odfText=odfPatient.getActText().getText();
 				Date odfDate=odfPatient.getDatePicker().getDate();
 				String odfTemp= odfPatient.getTimePicker().getValue().toString();
-				int payementOdf=new Integer(odfPatient.getPayementOdfText().getText());
-		        int payementRest=new Integer(odfPatient.getPayementRestText().getText());
+				
+				//calculate the rest payement and accumulated payements from the actual payement
+				
 		        int payementTotal= new Integer(odfPatient.getPayementTotal().getText());
+		        int payementActuel= new Integer(odfPatient.getPayementActuelText().getText());
+
+				//calc rest and total patient
+				int payementOdf= payementActuel;
+		        int payementRest=payementTotal-payementOdf;
+				odfPatient.getPayementOdfText().setText(new Integer(payementOdf).toString());
+				odfPatient.getPayementRestText().setText(new Integer(payementRest).toString());
 				currentOdf= new Odf(odfText, payementOdf, payementTotal, payementRest
 						, odfDate, odfTemp);
 				//setting patient for oneToMany relationship between Patient and Odf
@@ -72,6 +79,8 @@ public class ControllerOdf {
 				//edit current odf
             	modifyFieldsOdf();
             	odfQueries.addOdf(currentOdf);
+            	//add payement to total
+            	
 			}
             if (e.getSource()== odfPatient.getSupp()) {
 				//delete odf
@@ -90,6 +99,14 @@ public class ControllerOdf {
 				//display data depending on selected odf				
 				int selecteditem=odfPatient.getListActCombo().getSelectedIndex();
 				setSelectedOdfInfo(selecteditem);
+				//calculate the payements 
+				odfPatient.getPayementTotal().setEnabled(false);
+				odfPatient.getPayementActuelText().setEnabled(false);
+		    	Odf odf=controllerInfoPatient.getCurrentPatient().getOdfList().get(selecteditem);
+		    	int payTotal=odf.getPayementTotal();
+		    	int payPatient= odf.getPayement();
+		    	odfPatient.getPayementRestText()
+		    	          .setText(new Integer(payTotal-payPatient).toString());
             	
 			}
 		}
@@ -116,6 +133,7 @@ public class ControllerOdf {
 		odfPatient.getPayementRestText().setText(new Integer(odf.getPayementRest()).toString());
 		odfPatient.getPayementTotal().setText(new Integer(odf.getPayementTotal()).toString());
 
+
 		currentOdf= odf;
 	}
 
@@ -129,6 +147,7 @@ public class ControllerOdf {
 		odfPatient.getPayementOdfText().setText("");
 		odfPatient.getPayementRestText().setText("");
 		odfPatient.getPayementTotal().setText("");
+		odfPatient.getPayementActuelText().setText("");	
 
 	}
 	public void modifyFieldsOdf(){

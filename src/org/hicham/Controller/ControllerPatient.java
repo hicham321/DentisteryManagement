@@ -14,6 +14,9 @@ import org.hicham.View.MenuBar;
 import org.hicham.View.OdfPatient;
 import org.hicham.View.Ordonance;
 import org.hicham.View.PatientView;
+import org.hicham.View.ProtheseFixeView;
+import org.hicham.View.ProthesePartielleView;
+import org.hicham.View.ProtheseTotaleView;
 import org.hicham.View.ProtheseView;
 import org.hicham.View.RecherchePatientView;
 import org.hicham.View.RegisterView;
@@ -25,8 +28,11 @@ public class ControllerPatient {
 	InfoPatient infoPatient= new InfoPatient();
 	ActPatientView actPatient= new ActPatientView();
 	OdfPatient odfPatient= new OdfPatient();
-	ProtheseView protheseView= new ProtheseView();
-	Ordonance ordonance= new Ordonance();
+	ProthesePartielleView prothesePartielleView= new ProthesePartielleView();
+	ProtheseFixeView protheseFixeView= new ProtheseFixeView();
+	ProtheseTotaleView protheseTotaleView= new ProtheseTotaleView();
+	ProtheseView protheseView= new ProtheseView(protheseTotaleView,prothesePartielleView
+			,protheseFixeView);	Ordonance ordonance= new Ordonance();
     RecherchePatientView recherchePatientView= new RecherchePatientView();
 	
 	PatientView patient= new PatientView(infoPatient,actPatient
