@@ -48,12 +48,9 @@ public class PatientView extends JPanel{
 		
 		this.setLayout(new BorderLayout());
 		this.setBackground(Color.white);
-		
-		
-		
+				
 		this.add(tabbedPane);
-		
-		
+				
 		tabbedPane.addTab("Info       ", this.infoPatient);
 		tabbedPane.addTab("Act      ", this.actPatient);
 		tabbedPane.addTab("ODF       ", this.odfPatient);
@@ -61,9 +58,6 @@ public class PatientView extends JPanel{
 		tabbedPane.addTab("Ordonance       ", this.ordonance);
 		tabbedPane.addTab("Rechreche  ", this.recherchePatientView);
 	
-		/*btn.setBounds(600,300 , 100,20 );
-		b.setBounds(600, 600, 100, 100);
-		tabbedPane.setBounds(0, 20, 700, 200);*/
 
 	}
 	public void addPatientActionListener(ActionListener listener){

@@ -13,6 +13,7 @@ import org.hicham.Controller.ControllerMenuBar;
 import org.hicham.Controller.ControllerOdf;
 import org.hicham.Controller.ControllerOrdonance;
 import org.hicham.Controller.ControllerPatient;
+import org.hicham.Controller.ControllerProthese;
 import org.hicham.Controller.ControllerRegister;
 import org.hicham.Controller.ControllerRendezVous;
 import org.hicham.Model.ActQueries;
@@ -92,6 +93,7 @@ public class Main {
 		ControllerRendezVous crv= new ControllerRendezVous(rvv,rvq);
 		ControllerRegister cr= new ControllerRegister(rq, rv, mf);
 		ControllerChangePass ccmp= new ControllerChangePass(cmpv, rq);
+		ControllerProthese crpr= new ControllerProthese(prv, prtv, prpv, prfv);
 		
 		mf.setVisible(true);
 	}
