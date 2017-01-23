@@ -1,6 +1,7 @@
 package org.hicham.Main;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -33,6 +34,7 @@ import org.hicham.View.MainFrame;
 import org.hicham.View.MenuBar;
 import org.hicham.View.OdfPatient;
 import org.hicham.View.Ordonance;
+import org.hicham.View.OrdonnanceReport;
 import org.hicham.View.PatientView;
 import org.hicham.View.ProtheseFixeView;
 import org.hicham.View.ProthesePartielleView;
@@ -43,8 +45,8 @@ import org.hicham.View.RegisterView;
 import org.hicham.View.RendezVousView;
 
 public class Main {
-
-	public static void SystemLookFeel(){
+	
+	public static void systemLookFeel(){
 		try { 
 			
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -81,14 +83,14 @@ public class Main {
 		HomePanel hp= new HomePanel(rv,cmpv);
 		RendezVousView rvv= new RendezVousView();
 		MainFrame mf= new MainFrame(hp,p,gs,rvv,rv,mb);
-		
 		//controllers
-		ControllerInfoPatient cip= new ControllerInfoPatient(ip, pq,rp,ap,op);
+		ControllerInfoPatient cip= new ControllerInfoPatient(ip, pq,rp,ap,op,o);
 		ControllerAct ca= new ControllerAct(ap, aq, pq,cip);
 		ControllerOdf codf= new ControllerOdf(op, oq,pq,cip);
 		ControllerPatient cp= new ControllerPatient(mf, p,o);
-		ControllerOrdonance co= new ControllerOrdonance(mf,hp, p, o,mq);
-		ControllerMenuBar cmb= new ControllerMenuBar(mf,hp,mb, p,ip, o,gs,rvv,rp,prq,pq,cmpv);
+		ControllerOrdonance co= new ControllerOrdonance(mf,hp, p, o,mq,cip);
+		ControllerMenuBar cmb= new ControllerMenuBar(mf,hp,mb, p,ip, o,gs,rvv
+				,rp,prq,pq,cmpv);
 		ControllerGestionStock cgs= new ControllerGestionStock(gs, prq);
 		ControllerRendezVous crv= new ControllerRendezVous(rvv,rvq);
 		ControllerRegister cr= new ControllerRegister(rq, rv, mf);
@@ -100,20 +102,34 @@ public class Main {
 
 	public static void main(String[] args) {
 		//see if register table is empty and insert the passwords if it is
-
+		
 
 		new Thread(new Runnable() {
 			public void run() {
 				SessionsDB FactoryObject= new SessionsDB();
 				RegisterQueries rq= new RegisterQueries();
+				MedicamentQueries mq= new MedicamentQueries();
 				if (rq.CheckRegisterEmpty()) {
 					rq.putInitialPasswords();
 				}
+				if (mq.CheckMedicamentEmpty()) {
+					// batch inserts here
+					try{
+						List<String>med =mq.listOfMeds();
+						mq.addBatchMedicament(med);
+					}catch(Exception e){
+						e.printStackTrace();
+					}
+				}
+				else{
+				
+				}
 			}
 		}).start();
+		
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				SystemLookFeel();
+				systemLookFeel();
 				showInterface();
 			}
 		});

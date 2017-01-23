@@ -33,6 +33,7 @@ import org.hicham.Model.PatientQueries;
 import org.hicham.View.ActPatientView;
 import org.hicham.View.InfoPatient;
 import org.hicham.View.OdfPatient;
+import org.hicham.View.Ordonance;
 import org.hicham.View.RecherchePatientView;
 
 import javafx.stage.FileChooser;
@@ -43,12 +44,13 @@ public class ControllerAct {
 	ActQueries actQueries        = new     ActQueries();
 	PatientQueries patientQueries= new PatientQueries();
 	OdfPatient odfPatient= new OdfPatient();
+	Ordonance ordonance= new Ordonance();
 	InfoPatient infoPatient = new InfoPatient();
 	
 	RecherchePatientView recherchePatientView = new RecherchePatientView();
 
 	ControllerInfoPatient controllerInfoPatient= new ControllerInfoPatient(infoPatient
-			,patientQueries,recherchePatientView,actPatientView,odfPatient);
+			,patientQueries,recherchePatientView,actPatientView,odfPatient,ordonance);
 
 	Act currentAct= new Act();
 

@@ -20,13 +20,12 @@ public class MedicamentQueries {
 	
 	//for the real deal we need to get the data directly from the text file or perform 
 	//a data transfer to the database once 
+	
 	public void addBatchMedicament(List<String> nomMedList){
 		SessionsDB FactoryObject= new SessionsDB();
 		Session session= FactoryObject.getFactory().openSession();
-		//Session session = SessionsDB.getFactory().openSession();
 		try {
 
-			//save Medicament object
 			session.beginTransaction();
 			
 			for ( int i=0; i<nomMedList.size(); i++ ) {
@@ -49,7 +48,8 @@ public class MedicamentQueries {
 	public List<String> listOfMeds() throws FileNotFoundException, IOException{
 		List<String> listOfMeds= new ArrayList<>();
 		//read the file
-		BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("src/resources/BaseMed.txt")));         
+		BufferedReader br = new BufferedReader(new InputStreamReader
+				(new FileInputStream("src/resources/BaseMed.txt")));         
 
         String line;
         while ((line = br.readLine()) != null) {
@@ -59,6 +59,40 @@ public class MedicamentQueries {
         br.close();
 		//
 		return listOfMeds;
+	}
+	public List<String> listOfMedsDb() throws FileNotFoundException, IOException{
+		SessionsDB factoryObject= new SessionsDB();
+		Session session= factoryObject.getFactory().openSession();
+		List<Medicament>listOfMedObjects= new ArrayList<>();
+		try {
+			listOfMedObjects= session.createQuery("from Medicament").list();
+
+
+		} finally {
+			session.close();
+		}
+		List<String> meds= new ArrayList<>();
+		for (int i = 0; i < listOfMedObjects.size(); i++) {
+			meds.add(listOfMedObjects.get(i).getNomMed());
+		}
+
+		return meds;
+	}
+	public boolean CheckMedicamentEmpty(){
+		SessionsDB FactoryObject= new SessionsDB();
+		Session session= FactoryObject.getFactory().openSession();
+		boolean isEmpty= false;
+		try {
+			List<Register> listUsers= session.createQuery("from Medicament").list();
+			if (listUsers.isEmpty()) {
+				isEmpty= true;
+			}
+            
+		} finally {
+			session.close();
+
+		}
+		return isEmpty;
 	}
     public DefaultComboBoxModel comboBoxModel(List<String> listMed){
 		

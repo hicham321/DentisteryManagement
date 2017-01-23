@@ -19,6 +19,9 @@ public class Medicament {
 	public Medicament(String nomMed ){
 		this.nomMed= nomMed;
 	}
+	public Medicament( ){
+	}
+	
 	public int getId() {
 		return id;
 	}

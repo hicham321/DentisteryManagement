@@ -15,6 +15,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -53,7 +54,7 @@ public class ControllerRendezVous {
 				//show panel based on mode of search
 				//int patientid=rendezVousView.getPatientCombo().getSelectedIndex();
 				//show par rendez vous  panel
-				
+				try{
 				System.out.println("rendez vous panel is executed ");
 				Date dateObject= rendezVousView.getDatePicker().getDate();
 				patients=rendezVousQueries.getPatientsFromDate(dateObject);
@@ -80,12 +81,21 @@ public class ControllerRendezVous {
 				DefaultComboBoxModel dcbm=addNamesToCombo(names);
 				rendezVousView.getPatientComboRV().setModel(dcbm);
 
-				
+
 				showRendezVousInfoPanel();
+				}catch(Exception ex){
+					JOptionPane.showOptionDialog(null
+							,"Specifier une date"
+							, "Erreur"
+							, JOptionPane.OK_CANCEL_OPTION
+							, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+
+				}
 
 			}
 			if (e.getSource()==rendezVousView.getRechercheBtn() & rendezVousView.getModeRechercheList().getSelectedIndex()==0) {
 				//show par patient  panel
+				try{
 				int selectedIndex=rendezVousView.getPatientCombo().getSelectedIndex();
 				List<Act> acts=rendezVousQueries.getActFromPatient(selectedIndex);
 
@@ -111,7 +121,15 @@ public class ControllerRendezVous {
 				rendezVousView.getNomPatient().setText(nomPatient);
 
 				showPatientInfoPanel();
-
+				}catch(Exception ex){
+					
+					JOptionPane.showOptionDialog(null
+							,"il n'ya pas de rendez vous ou des patients ?"
+							, "Erreur"
+							, JOptionPane.OK_CANCEL_OPTION
+							, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+				}
+				
 			}
 			if (e.getSource()== rendezVousView.getActCombo()) {
 				int selectedItem= selectedComboItem(e);

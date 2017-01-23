@@ -3,13 +3,17 @@ package org.hicham.Controller;
 import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
+import org.hicham.Model.MedicamentQueries;
 import org.hicham.Model.PatientQueries;
 import org.hicham.Model.ProduitQueries;
+import org.hicham.Model.RegisterQueries;
+import org.hicham.Model.SessionsDB;
 import org.hicham.View.ActPatientView;
 import org.hicham.View.ChangeMotPassView;
 import org.hicham.View.GestionStockView;
@@ -52,6 +56,7 @@ public class ControllerMenuBar {
 	PatientQueries patientQueries= new PatientQueries();
 	RegisterView registerView= new RegisterView ();
     ChangeMotPassView changeMotPassView= new ChangeMotPassView();
+    ActPatientView actPatientView= new ActPatientView();
 
 	public HomePanel homePanel= new HomePanel(registerView,changeMotPassView);
 		
@@ -59,12 +64,14 @@ public class ControllerMenuBar {
 
 	ProduitQueries produitQueries= new ProduitQueries();
 
-	MainFrame mainFrame= new MainFrame(homePanel,patient,gestionStockView,rendezVousView,registerView,menuBar);
+	MainFrame mainFrame= new MainFrame(homePanel,patient,gestionStockView,rendezVousView
+			,registerView,menuBar);
 
 	public ControllerMenuBar(MainFrame mainFrame,HomePanel homePanel,MenuBar menuBar
-			,PatientView patient,InfoPatient infoPatient,Ordonance ordonance,GestionStockView gestionStockView
-			,RendezVousView rendezVousView,RecherchePatientView recherchePatientView
-			,ProduitQueries produitQueries,PatientQueries patientQueries,ChangeMotPassView changeMotPassView){
+			,PatientView patient,InfoPatient infoPatient,Ordonance ordonance
+			,GestionStockView gestionStockView,RendezVousView rendezVousView
+			,RecherchePatientView recherchePatientView,ProduitQueries produitQueries
+			,PatientQueries patientQueries,ChangeMotPassView changeMotPassView){
 
 		this.patient= patient;
 		this.infoPatient= infoPatient;
@@ -101,6 +108,21 @@ public class ControllerMenuBar {
 				DefaultComboBoxModel dftb=patientQueries.getComboModel();
 				recherchePatientView.getRech().setModel(dftb);
 				infoPatient.getRechCombo().setModel(dftb);
+				new Thread(new Runnable() {
+					public void run() {
+						try{
+							MedicamentQueries mq= new MedicamentQueries();
+							List<String>med =mq.listOfMedsDb();
+							System.out.println(med);
+							DefaultComboBoxModel dcm=mq.comboBoxModel(med);
+							ordonance.getNomMed().setModel(dcm);
+						}catch(Exception ex){
+							ex.printStackTrace();
+						}
+
+					}	
+
+				}).start();
 			}
 			if (e.getSource()== menuBar.getRendezVousPatient()) {
 				//show rendez vous card

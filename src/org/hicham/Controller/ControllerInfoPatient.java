@@ -19,6 +19,7 @@ import org.hicham.Model.PatientQueries;
 import org.hicham.View.ActPatientView;
 import org.hicham.View.InfoPatient;
 import org.hicham.View.OdfPatient;
+import org.hicham.View.Ordonance;
 import org.hicham.View.RecherchePatientView;
 
 public class ControllerInfoPatient {
@@ -28,6 +29,7 @@ public class ControllerInfoPatient {
 	RecherchePatientView recherchePatientView= new RecherchePatientView();
 	ActPatientView actPatientView= new ActPatientView();
 	OdfPatient odfPatient= new OdfPatient();
+	Ordonance ordonance= new Ordonance();
 	//this field needs to be updated when adding a new patient or when selecting a new patient
 	Patient currentPatient= new Patient();
 
@@ -36,13 +38,15 @@ public class ControllerInfoPatient {
 
 	public ControllerInfoPatient(InfoPatient infoPatient, PatientQueries patientQueries 
 			,RecherchePatientView recherchePatientView
-			,ActPatientView actPatientView,OdfPatient odfPatient){
+			,ActPatientView actPatientView,OdfPatient odfPatient
+			,	Ordonance ordonance){
 
 		this.infoPatient= infoPatient;
 		this.patientQueries=patientQueries;
 		this.recherchePatientView=recherchePatientView;
 		this.actPatientView= actPatientView;
 		this.odfPatient= odfPatient;
+		this.ordonance= ordonance;
 		this.infoPatient.addInfoPatientActionListener(new InfoPatientActionListener());
 	}
 	class InfoPatientActionListener implements ActionListener{
@@ -89,7 +93,6 @@ public class ControllerInfoPatient {
 						selectedPatient.getSex(),selectedPatient.getAnticident(),
 						selectedPatient.getFonction());
 				
-				//setfieldPatientDisabled();
 				//show related patient acts
 				setFieldsActInfo();
 				//set info in act for the selected patient
@@ -110,7 +113,9 @@ public class ControllerInfoPatient {
 				}
 				DefaultComboBoxModel dfcmOdf=patientQueries.comboBoxModel(odfsDates);
 				odfPatient.getListActCombo().setModel(dfcmOdf);
-
+                //ordonance
+				
+				showOrdonanceInfo();
 
 			}
 			if (e.getSource()== infoPatient.getNouveauPatient()) {
@@ -256,6 +261,12 @@ public class ControllerInfoPatient {
 			currentPatient.setSex(sex);
 			currentPatient.setTel(tel);
 			currentPatient.setTeinte(teinte);
+			
+		}
+		
+		public void showOrdonanceInfo(){
+			String nomEtPrenom=currentPatient.getNomEtPrenom();
+			ordonance.getNomEtPrenom().setText(nomEtPrenom);
 			
 		}
 
