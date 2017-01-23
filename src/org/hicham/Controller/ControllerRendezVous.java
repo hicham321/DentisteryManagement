@@ -89,7 +89,6 @@ public class ControllerRendezVous {
 							, "Erreur"
 							, JOptionPane.OK_CANCEL_OPTION
 							, JOptionPane.INFORMATION_MESSAGE, null, null, null);
-
 				}
 
 			}
