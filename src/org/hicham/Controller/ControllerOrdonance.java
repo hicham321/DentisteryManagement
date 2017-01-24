@@ -42,11 +42,12 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.view.JRViewer;
 import net.sf.jasperreports.view.JasperViewer;
 
 public class ControllerOrdonance {
-	
-	
+
+
 	//If we don't need the main frame or any of the other frames 
 	//than we can just delete the corresponding fields
 	InfoPatient infoPatient= new InfoPatient();
@@ -58,27 +59,29 @@ public class ControllerOrdonance {
 	ProtheseView protheseView= new ProtheseView(protheseTotaleView,prothesePartielleView
 			,protheseFixeView);
 	Ordonance ordonance= new Ordonance();
-    RecherchePatientView recherchePatientView= new RecherchePatientView();
-	
+	RecherchePatientView recherchePatientView= new RecherchePatientView();
+
 	PatientView patient= new PatientView(infoPatient,actPatient,odfPatient
 			,protheseView, ordonance,recherchePatientView);
 	MenuBar menuBar= new MenuBar();
-    GestionStockView gestionStockView= new GestionStockView();
-    MedicamentQueries medicamentQueries= new MedicamentQueries();
-    RegisterView registerView= new RegisterView();
-    ChangeMotPassView changeMotPassView= new ChangeMotPassView();
+	GestionStockView gestionStockView= new GestionStockView();
+	MedicamentQueries medicamentQueries= new MedicamentQueries();
+	RegisterView registerView= new RegisterView();
+	ChangeMotPassView changeMotPassView= new ChangeMotPassView();
 
-    HomePanel homePanel= new HomePanel(registerView,changeMotPassView);
-    RendezVousView rendezVousView= new RendezVousView();
+	HomePanel homePanel= new HomePanel(registerView,changeMotPassView);
+	RendezVousView rendezVousView= new RendezVousView();
 	MainFrame mainFrame= new MainFrame( homePanel,patient,gestionStockView
 			,rendezVousView,registerView,menuBar);
 	PatientQueries patientQueries= new PatientQueries();
 	ActPatientView actPatientView= new ActPatientView();
 	ControllerInfoPatient controllerInfoPatient= new ControllerInfoPatient(infoPatient
 			,patientQueries,recherchePatientView,actPatientView,odfPatient,ordonance);
+
+	Collection<OrdonanceReportBean> collBean = new ArrayList<OrdonanceReportBean>();
+	int id=1;
 	
-    Collection<OrdonanceReportBean> collBean = new ArrayList<OrdonanceReportBean>();
-    int id=1;
+	
 	public ControllerOrdonance(MainFrame mainFrame,HomePanel homePanel,PatientView patient
 			,Ordonance ordonance ,MedicamentQueries medicamentQueries
 			,ControllerInfoPatient controllerInfoPatient){
@@ -96,90 +99,102 @@ public class ControllerOrdonance {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(e.getSource()== ordonance.getOk()){
-				//code for showing ordonance
-				//temporarily for adding records to the database
 				try{
-					
-				List<String>med =medicamentQueries.listOfMeds();
-				medicamentQueries.addBatchMedicament(med);
-				DefaultComboBoxModel dcm=medicamentQueries.comboBoxModel(med);
-				ordonance.getNomMed().setModel(dcm);
-				
-				//report
-				//print ordonance rows into textArea
-				
-				
-				printReport();
-				
+					//report
+					//print ordonance rows into textArea
+					readTextArea();
+					printReport();
+					setOrdonanceEmpty();
+					id=1;
+					collBean.clear();
 				}catch(Exception ex){
 					ex.printStackTrace();
 				}
 			}
 			if(e.getSource()== ordonance.getAdd()){
-				String nom=controllerInfoPatient.getCurrentPatient().getName();
+				/*String nom=controllerInfoPatient.getCurrentPatient().getName();
 				String prenom=controllerInfoPatient.getCurrentPatient().getPrenom();
 				String age= controllerInfoPatient.getCurrentPatient().getAge();
 				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 				String date=sdf.format(System.currentTimeMillis());
-				
-				ArrayList<String> med= new ArrayList<>();
+
+				ArrayList<String> med= new ArrayList<>();*/
 				String medAndSituation= ordonance.getNomMed().getSelectedItem().toString()+" "
-				               + ordonance.getSituation().getText();
-				med.add(medAndSituation);
-				putReportInfo(nom, prenom, age, date, med);
+						+ ordonance.getSituation().getText();
+				//med.add(medAndSituation);
+			    //putReportInfo(nom, prenom, age, date, med);
 				
-			}
-			}
+                //textArea
+				String medLine= "->"+medAndSituation; 
+				ordonance.getMedList().append(medLine + "\n");
+                ordonance.getSituation().setText("");
 
-		}
-		private  JRDataSource getDataSource() {
-		    Collection<OrdonanceReportBean> coll = new ArrayList<OrdonanceReportBean>();
 
-		    OrdonanceReportBean bean = new OrdonanceReportBean(1,"21/01","Gherbi"
-		    		,"mohamed Amine","22",Arrays.asList("London", "Paris","zesdds","ssdd"));
-
-		    coll.add(bean);
-
-		    bean = new  OrdonanceReportBean(2,"dsfdf","dfdff","dff","dfdff"
-		    		,Arrays.asList("vc", "wxw"));
-		    coll.add(bean);
-
-		    bean =  new OrdonanceReportBean(3,"fhggfgfh","dfdf","ssdsd","erer"
-		    		,Arrays.asList("rr", "r"));
-		    coll.add(bean);
-
-		    return new JRBeanCollectionDataSource(coll);
-		}
-		public JRDataSource getData(){
-		    return new JRBeanCollectionDataSource(collBean);
-
-		}
-		public void putReportInfo(String nom, String prenom
-				, String age, String date,ArrayList<String> med){
-			//patient info is the first to be written
-			
-			OrdonanceReportBean beanInfo= new OrdonanceReportBean(id, date, nom, prenom
-					, age, med);
-			collBean.add(beanInfo);
-			id++;
-		}
-		public void printReport(){
-			try {
-				 Map<String, Object> params = new HashMap<String, Object>();
-					InputStream stream= new FileInputStream("src/resources/ordonanceReport.jasper");
-			        //JasperReport jasperReport = JasperCompileManager.compileReport(stream);
-			        JasperPrint jasperPrint = JasperFillManager.fillReport(stream
-			        		,params, getData());
-					JasperViewer.viewReport(jasperPrint);
-
-			} catch (Exception e) {
-				
-				e.printStackTrace();
 			}
 		}
-		
 
 	}
+
+	public JRDataSource getData(){
+		return new JRBeanCollectionDataSource(collBean);
+
+	}
+	public void putReportInfo(String nom, String prenom
+			, String age, String date,ArrayList<String> med){
+		//patient info is the first to be written
+
+		OrdonanceReportBean beanInfo= new OrdonanceReportBean(id, date, nom, prenom
+				, age, med);
+		collBean.add(beanInfo);
+		id++;
+	}
+	public void printReport(){
+		try {
+			Map<String, Object> params = new HashMap<String, Object>();
+			InputStream stream= new FileInputStream("src/resources/ordonanceReport.jasper");
+			//JasperReport jasperReport = JasperCompileManager.compileReport(stream);
+			JasperPrint jasperPrint = JasperFillManager.fillReport(stream
+					,params, getData());
+			
+			JRViewer v= new JRViewer(jasperPrint);
+			v.setZoomRatio(0.55f);
+			ordonance.cards.add(v, "Card 2");
+			CardLayout cardLayout = (CardLayout) ordonance.cards.getLayout();
+			cardLayout.show(ordonance.cards, "Card 2");
+
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public void setOrdonanceEmpty(){
+		ordonance.getNomMed().setSelectedIndex(0);
+		ordonance.getSituation().setText("");;
+		ordonance.getMedList().setText("");
+
+	}
+	public void showPatientInfoPanel(){
+		CardLayout cardLayout = (CardLayout) ordonance.cards.getLayout();
+		cardLayout.show(ordonance.cards, "Card 1");
+	}
+	
+	public void readTextArea(){
+		String nom=controllerInfoPatient.getCurrentPatient().getName();
+		String prenom=controllerInfoPatient.getCurrentPatient().getPrenom();
+		String age= controllerInfoPatient.getCurrentPatient().getAge();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		String date=sdf.format(System.currentTimeMillis());
+		
+		String[] parts = ordonance.getMedList().getText().split("->");
+		System.out.println(Arrays.toString(parts));
+        for (int i = 1; i < parts.length; i++) {
+        	ArrayList<String> list= new ArrayList<>();
+        	list.add(parts[i]);
+    		putReportInfo(nom, prenom, age, date, list);
+		}
+			
+	}
+
+}
 
 
 

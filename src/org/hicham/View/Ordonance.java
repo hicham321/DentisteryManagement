@@ -1,5 +1,6 @@
 package org.hicham.View;
 
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -39,6 +40,9 @@ public class Ordonance extends JPanel {
 	JButton ok = new JButton("Genérer");
 	
 	JPanel ordonancePanel;
+	
+	public JPanel cards;
+
     
 	public Ordonance() {
 		this.setLayout( null);
@@ -53,6 +57,13 @@ public class Ordonance extends JPanel {
 		AutoCompleteDecorator.decorate(nomMed);
 		nomMed.setSelectedIndex(0);
 		
+		 cards = new JPanel(new CardLayout());
+			
+		 cards.add(ordonancePanel, "Card 1");
+	   //  cards.add(panelRendezVous, "Card 2");
+			
+		this.add(cards);
+		
 		this.add(nomMedlab);
 		this.add(nomMed);
 		this.add(situationLab);
@@ -62,7 +73,7 @@ public class Ordonance extends JPanel {
 		this.add(medList);
 		this.add(nomEtPrenomLab);
 		this.add(nomEtPrenom);
-		this.add(ordonancePanel);
+		this.add(cards);
 
 		
 		nomEtPrenomLab.setBounds(30, 50,120 ,20 );
@@ -74,7 +85,7 @@ public class Ordonance extends JPanel {
 		add.setBounds(450, 150, 80, 20);
 		medList.setBounds(30, 190, 500, 200);
         ok.setBounds(70,450, 130, 40);
-        ordonancePanel.setBounds(650, 15 ,500 , 600);
+        cards.setBounds(650, 15 ,500 , 600);
 
 		
 
@@ -109,6 +120,14 @@ public class Ordonance extends JPanel {
 
 	public JLabel getNomEtPrenom() {
 		return nomEtPrenom;
+	}
+
+	public JPanel getOrdonancePanel() {
+		return ordonancePanel;
+	}
+
+	public JPanel getCards() {
+		return cards;
 	}
 	
     
