@@ -30,6 +30,7 @@ import org.hicham.View.ChangeMotPassView;
 import org.hicham.View.GestionStockView;
 import org.hicham.View.HomePanel;
 import org.hicham.View.InfoPatient;
+import org.hicham.View.JustificationAbsenceView;
 import org.hicham.View.MainFrame;
 import org.hicham.View.MenuBar;
 import org.hicham.View.OdfPatient;
@@ -82,7 +83,8 @@ public class Main {
 		MenuBar mb= new MenuBar();
 		HomePanel hp= new HomePanel(rv,cmpv);
 		RendezVousView rvv= new RendezVousView();
-		MainFrame mf= new MainFrame(hp,p,gs,rvv,rv,mb);
+		JustificationAbsenceView jav= new JustificationAbsenceView();
+		MainFrame mf= new MainFrame(hp,p,gs,rvv,jav,rv,mb);
 		//controllers
 		ControllerInfoPatient cip= new ControllerInfoPatient(ip, pq,rp,ap,op,o);
 		ControllerAct ca= new ControllerAct(ap, aq, pq,cip);

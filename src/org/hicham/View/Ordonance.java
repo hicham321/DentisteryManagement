@@ -57,11 +57,10 @@ public class Ordonance extends JPanel {
 		AutoCompleteDecorator.decorate(nomMed);
 		nomMed.setSelectedIndex(0);
 		
-		 cards = new JPanel(new CardLayout());
-			
-		 cards.add(ordonancePanel, "Card 1");
-	   //  cards.add(panelRendezVous, "Card 2");
-			
+		cards = new JPanel(new CardLayout());
+
+		cards.add(ordonancePanel, "Card 1");
+
 		this.add(cards);
 		
 		this.add(nomMedlab);
@@ -73,7 +72,6 @@ public class Ordonance extends JPanel {
 		this.add(medList);
 		this.add(nomEtPrenomLab);
 		this.add(nomEtPrenom);
-		this.add(cards);
 
 		
 		nomEtPrenomLab.setBounds(30, 50,120 ,20 );

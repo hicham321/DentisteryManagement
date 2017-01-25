@@ -19,6 +19,7 @@ import org.hicham.View.ChangeMotPassView;
 import org.hicham.View.GestionStockView;
 import org.hicham.View.HomePanel;
 import org.hicham.View.InfoPatient;
+import org.hicham.View.JustificationAbsenceView;
 import org.hicham.View.MainFrame;
 import org.hicham.View.MenuBar;
 import org.hicham.View.OdfPatient;
@@ -55,6 +56,8 @@ public class ControllerMenuBar {
 			ordonance,recherchePatientView);
 	PatientQueries patientQueries= new PatientQueries();
 	RegisterView registerView= new RegisterView ();
+    JustificationAbsenceView justificationAbsenceView= new JustificationAbsenceView();
+
     ChangeMotPassView changeMotPassView= new ChangeMotPassView();
     ActPatientView actPatientView= new ActPatientView();
 
@@ -63,9 +66,9 @@ public class ControllerMenuBar {
 	
 
 	ProduitQueries produitQueries= new ProduitQueries();
-
+   
 	MainFrame mainFrame= new MainFrame(homePanel,patient,gestionStockView,rendezVousView
-			,registerView,menuBar);
+			,justificationAbsenceView,registerView,menuBar);
 
 	public ControllerMenuBar(MainFrame mainFrame,HomePanel homePanel,MenuBar menuBar
 			,PatientView patient,InfoPatient infoPatient,Ordonance ordonance
@@ -113,7 +116,6 @@ public class ControllerMenuBar {
 						try{
 							MedicamentQueries mq= new MedicamentQueries();
 							List<String>med =mq.listOfMedsDb();
-							System.out.println(med);
 							DefaultComboBoxModel dcm=mq.comboBoxModel(med);
 							ordonance.getNomMed().setModel(dcm);
 						}catch(Exception ex){
@@ -166,6 +168,18 @@ public class ControllerMenuBar {
 				//show Jfileschooser card
 
 			}
+			if (e.getSource()== menuBar.getOrdonanceItem()) {
+				//show ordonance card
+
+			}
+			if (e.getSource()== menuBar.getExamenItem()) {
+				//show examen card
+
+			}
+			if (e.getSource()== menuBar.getJustificationItem()) {
+				//show justification card
+				showJustificationCard();
+			}
 		}
 	}
 	class MenuBarMenuListener implements MenuListener{
@@ -204,6 +218,10 @@ public class ControllerMenuBar {
 	public void showHomeCard(){
 		CardLayout cardLayout = (CardLayout) mainFrame.cards.getLayout();
 		cardLayout.show(mainFrame.cards, "Card 1");	
+	}
+	public void showJustificationCard(){
+		CardLayout cardLayout = (CardLayout) mainFrame.cards.getLayout();
+		cardLayout.show(mainFrame.cards, "Card 5");	
 	}
 
 }

@@ -25,6 +25,10 @@ public class MenuBar {
 	JMenuItem rendezVousPatient = new JMenuItem("Rendez Vous ");
 
 	JMenu ordonance = new JMenu("Ordonance");
+	JMenuItem ordonanceItem = new JMenuItem("Ordonnance");
+	JMenuItem examenItem = new JMenuItem("Examen");
+	JMenuItem justificationItem = new JMenuItem("Justification d'absence");
+
 
 	JMenu menuGestionStock = new JMenu("Gestion De Stock");
 	JMenuItem gestionStockItem = new JMenuItem("Gestion De Stock ");
@@ -48,6 +52,10 @@ public class MenuBar {
 		menuouvrir.add(motpasse);
 		menuouvrir.add(quiter);
 		
+		ordonance.add(ordonanceItem);
+		ordonance.add(examenItem);
+		ordonance.add(justificationItem);
+
 		menuGestionStock.add(gestionStockItem);
 		menuGestionStock.add(stat);
         
@@ -81,6 +89,11 @@ public class MenuBar {
 
 		this.gestionStockItem.addActionListener(listener);
 		this.stat.addActionListener(listener);
+		
+		this.ordonanceItem.addActionListener(listener);
+		this.examenItem.addActionListener(listener);
+		this.justificationItem.addActionListener(listener);
+
 
 
 		this.labo.addActionListener(listener);
@@ -154,6 +167,18 @@ public class MenuBar {
 
 	public JMenuItem getRendezVousPatient() {
 		return rendezVousPatient;
+	}
+
+	public JMenuItem getOrdonanceItem() {
+		return ordonanceItem;
+	}
+
+	public JMenuItem getExamenItem() {
+		return examenItem;
+	}
+
+	public JMenuItem getJustificationItem() {
+		return justificationItem;
 	}
 	
 

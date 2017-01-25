@@ -13,7 +13,8 @@ public class OrdonanceReportBean {
 	
 	
 
-	public OrdonanceReportBean(int id,String date, String nomPatient, String prenomPatient, String agePatient,List<String>meds) {
+	public OrdonanceReportBean(int id,String date, String nomPatient, String prenomPatient
+			, String agePatient,List<String>meds) {
 		super();
 		this.id= id;
 		this.date = date;
