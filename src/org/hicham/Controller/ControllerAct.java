@@ -46,7 +46,7 @@ public class ControllerAct {
 	OdfPatient odfPatient= new OdfPatient();
 	Ordonance ordonance= new Ordonance();
 	InfoPatient infoPatient = new InfoPatient();
-	
+
 	RecherchePatientView recherchePatientView = new RecherchePatientView();
 
 	ControllerInfoPatient controllerInfoPatient= new ControllerInfoPatient(infoPatient
@@ -61,13 +61,14 @@ public class ControllerAct {
 
 	BufferedImage bfImage;
 	JLabel picLabel= new JLabel();
-	public ControllerAct(ActPatientView actPatientView,ActQueries actQueries,PatientQueries patientQueries ,ControllerInfoPatient controllerInfoPatient){
+	public ControllerAct(ActPatientView actPatientView,ActQueries actQueries
+			,PatientQueries patientQueries ,ControllerInfoPatient controllerInfoPatient){
 
 		this.actPatientView= actPatientView;
 		this.actQueries= actQueries;
 		this.patientQueries=patientQueries;
 		this.controllerInfoPatient= controllerInfoPatient;
-		this.actPatientView.addActPatientViewActionListener(new ActPatientViewActionListener() );
+		this.actPatientView.addActPatientViewActionListener(new ActPatientViewActionListener());
 
 	}
 	class ActPatientViewActionListener implements ActionListener{
@@ -81,7 +82,8 @@ public class ControllerAct {
 				String actText=actPatientView.getActText().getText();
 				Date actDate=actPatientView.getDatePicker().getDate();
 				String actTemp= actPatientView.getTimePicker().getValue().toString();
-				double actPayement= Double.parseDouble(actPatientView.getPayementCombo().getSelectedItem().toString());
+				double actPayement= Double.parseDouble(actPatientView.getPayementCombo()
+						.getSelectedItem().toString());
 				String dbImagePath=dbPathToFileImage;
 				currentAct= new Act(actText,actPayement,actDate,actTemp,dbImagePath);
 				//setting patient for oneToMany relationship between Patient and Act
@@ -91,8 +93,8 @@ public class ControllerAct {
 			}
 			if (arg0.getSource()==actPatientView.getOuvrir()) {
 
-				FileNameExtensionFilter imageFilter = new FileNameExtensionFilter( "Image files", 
-						ImageIO.getReaderFileSuffixes());
+				FileNameExtensionFilter imageFilter = new FileNameExtensionFilter
+						("Image files", ImageIO.getReaderFileSuffixes());
 				filechooser.addChoosableFileFilter(imageFilter);
 				filechooser.setAcceptAllFileFilterUsed(false);	
 
@@ -120,8 +122,8 @@ public class ControllerAct {
 				//show related act info
 				int selecteditem=actPatientView.getListActCombo().getSelectedIndex();
 				setSelectedActInfo(selecteditem);
-               
-				
+
+
 			}
 			if (arg0.getSource()== actPatientView.getNouveauAct()) {
 				//set act empty  fields
@@ -130,17 +132,17 @@ public class ControllerAct {
 			}
 			if (arg0.getSource()== actPatientView.getModifie()) {
 				modifyFieldsAct();
-				
+
 			}
-            if (arg0.getSource()== actPatientView.getSuppAct()) {
-            	int input = JOptionPane.showOptionDialog(null
+			if (arg0.getSource()== actPatientView.getSuppAct()) {
+				int input = JOptionPane.showOptionDialog(null
 						,"Etes vous sure de vouloir supprimer ce Act?"
 						, "Supprimer l'act courant"
 						, JOptionPane.OK_CANCEL_OPTION
 						, JOptionPane.INFORMATION_MESSAGE, null, null, null);
 
 				if(input == JOptionPane.OK_OPTION){
-					
+
 					actQueries.deleteAct(currentAct);
 				}	
 			}
@@ -181,11 +183,11 @@ public class ControllerAct {
 			}catch(Exception ex){
 				ex.printStackTrace();
 			}
-			Image newimg = bfImage.getScaledInstance( 300, 300,  java.awt.Image.SCALE_SMOOTH ) ;  
+			Image newimg = bfImage.getScaledInstance( 300, 300,  java.awt.Image.SCALE_SMOOTH );  
 			//picLabel= new JLabel(new ImageIcon(newimg));
 			picLabel.setIcon(new ImageIcon(newimg));
 			actPatientView.getPanelImageAct().add(picLabel);
-             
+
 			actPatientView.getPanelImageAct().revalidate();
 			actPatientView.getPanelImageAct().repaint();
 
@@ -194,7 +196,7 @@ public class ControllerAct {
 		}
 		public void setSelectedActInfo(int selectedAct ){
 			Act act=controllerInfoPatient.getCurrentPatient().getActList().get(selectedAct);
-			
+
 			actPatientView.getActText().setText(act.getAct());
 			/*DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
             String time= act.getTempRendezVous();
@@ -230,11 +232,12 @@ public class ControllerAct {
 			currentAct.setAct(actPatientView.getActText().getText());     
 			currentAct.setDateRendezVous(actPatientView.getDatePicker().getDate());
 			currentAct.setTempRendezVous(actPatientView.getTimePicker().getValue().toString());
-			currentAct.setPayement(Double.parseDouble(actPatientView.getPayementCombo().getSelectedItem().toString()));
+			currentAct.setPayement(Double.parseDouble(actPatientView.getPayementCombo()
+					.getSelectedItem().toString()));
 			currentAct.setAct(dbPathToFileImage);
 		}
 
-		
+
 
 
 

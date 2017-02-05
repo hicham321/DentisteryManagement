@@ -6,6 +6,7 @@ import org.hicham.Model.PatientQueries;
 import org.hicham.Model.RegisterQueries;
 import org.hicham.View.ActPatientView;
 import org.hicham.View.ChangeMotPassView;
+import org.hicham.View.ExamenComplimentaireView;
 import org.hicham.View.GestionStockView;
 import org.hicham.View.HomePanel;
 import org.hicham.View.InfoPatient;
@@ -14,6 +15,7 @@ import org.hicham.View.MainFrame;
 import org.hicham.View.MenuBar;
 import org.hicham.View.OdfPatient;
 import org.hicham.View.Ordonance;
+import org.hicham.View.OrdonanceMenuView;
 import org.hicham.View.PatientView;
 import org.hicham.View.ProtheseFixeView;
 import org.hicham.View.ProthesePartielleView;
@@ -48,10 +50,12 @@ public class ControllerRegister {
 	PatientQueries patientQueries= new PatientQueries();
 	public HomePanel homePanel= new HomePanel(registerView,changeMotPassView);
 	JustificationAbsenceView justificationAbsenceView= new JustificationAbsenceView();
-
+    public OrdonanceMenuView ordonanceMenuView= new OrdonanceMenuView();
+    ExamenComplimentaireView examenComplimentaireView= new ExamenComplimentaireView();
 
 	MainFrame mainFrame= new MainFrame(homePanel,patient,gestionStockView,rendezVousView
-			,justificationAbsenceView,registerView,menuBar);
+			,justificationAbsenceView,registerView,ordonanceMenuView
+			,examenComplimentaireView,menuBar);
 
 	public ControllerRegister(RegisterQueries registerModel,RegisterView registerView, MainFrame mainFrame ){
 

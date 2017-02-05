@@ -20,6 +20,7 @@ import org.hicham.Model.OrdonanceReportBean;
 import org.hicham.Model.PatientQueries;
 import org.hicham.View.ActPatientView;
 import org.hicham.View.ChangeMotPassView;
+import org.hicham.View.ExamenComplimentaireView;
 import org.hicham.View.GestionStockView;
 import org.hicham.View.HomePanel;
 import org.hicham.View.InfoPatient;
@@ -28,6 +29,7 @@ import org.hicham.View.MainFrame;
 import org.hicham.View.MenuBar;
 import org.hicham.View.OdfPatient;
 import org.hicham.View.Ordonance;
+import org.hicham.View.OrdonanceMenuView;
 import org.hicham.View.PatientView;
 import org.hicham.View.ProtheseFixeView;
 import org.hicham.View.ProthesePartielleView;
@@ -73,8 +75,12 @@ public class ControllerOrdonance {
 	HomePanel homePanel= new HomePanel(registerView,changeMotPassView);
 	RendezVousView rendezVousView= new RendezVousView();
     JustificationAbsenceView justificationAbsenceView= new JustificationAbsenceView();
+    public OrdonanceMenuView ordonanceMenuView= new OrdonanceMenuView();
+    public ExamenComplimentaireView examenComplimentaireView= new ExamenComplimentaireView();
+
 	MainFrame mainFrame= new MainFrame( homePanel,patient,gestionStockView
-			,rendezVousView,justificationAbsenceView,registerView,menuBar);
+			,rendezVousView,justificationAbsenceView,registerView
+			,ordonanceMenuView,examenComplimentaireView,menuBar);
 	PatientQueries patientQueries= new PatientQueries();
 	ActPatientView actPatientView= new ActPatientView();
 	ControllerInfoPatient controllerInfoPatient= new ControllerInfoPatient(infoPatient
@@ -114,22 +120,13 @@ public class ControllerOrdonance {
 				}
 			}
 			if(e.getSource()== ordonance.getAdd()){
-				/*String nom=controllerInfoPatient.getCurrentPatient().getName();
-				String prenom=controllerInfoPatient.getCurrentPatient().getPrenom();
-				String age= controllerInfoPatient.getCurrentPatient().getAge();
-				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-				String date=sdf.format(System.currentTimeMillis());
-
-				ArrayList<String> med= new ArrayList<>();*/
 				String medAndSituation= ordonance.getNomMed().getSelectedItem().toString()+" "
 						+ ordonance.getSituation().getText();
-				//med.add(medAndSituation);
-			    //putReportInfo(nom, prenom, age, date, med);
-				
-                //textArea
+
+				//textArea
 				String medLine= "->"+medAndSituation; 
 				ordonance.getMedList().append(medLine + "\n");
-                ordonance.getSituation().setText("");
+				ordonance.getSituation().setText("");
 
 
 			}
@@ -187,7 +184,6 @@ public class ControllerOrdonance {
 		String date=sdf.format(System.currentTimeMillis());
 		
 		String[] parts = ordonance.getMedList().getText().split("->");
-		System.out.println(Arrays.toString(parts));
         for (int i = 1; i < parts.length; i++) {
         	ArrayList<String> list= new ArrayList<>();
         	list.add(parts[i]);

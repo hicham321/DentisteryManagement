@@ -8,13 +8,17 @@ import javax.swing.UIManager;
 
 import org.hicham.Controller.ControllerAct;
 import org.hicham.Controller.ControllerChangePass;
+import org.hicham.Controller.ControllerExamenComplimentaire;
 import org.hicham.Controller.ControllerGestionStock;
 import org.hicham.Controller.ControllerInfoPatient;
+import org.hicham.Controller.ControllerJustification;
 import org.hicham.Controller.ControllerMenuBar;
 import org.hicham.Controller.ControllerOdf;
 import org.hicham.Controller.ControllerOrdonance;
+import org.hicham.Controller.ControllerOrdonanceMenu;
 import org.hicham.Controller.ControllerPatient;
 import org.hicham.Controller.ControllerProthese;
+import org.hicham.Controller.ControllerProtheseFixe;
 import org.hicham.Controller.ControllerRegister;
 import org.hicham.Controller.ControllerRendezVous;
 import org.hicham.Model.ActQueries;
@@ -22,11 +26,13 @@ import org.hicham.Model.MedicamentQueries;
 import org.hicham.Model.OdfQueries;
 import org.hicham.Model.PatientQueries;
 import org.hicham.Model.ProduitQueries;
+import org.hicham.Model.ProtheseFixeQueries;
 import org.hicham.Model.RegisterQueries;
 import org.hicham.Model.RendezVousQueries;
 import org.hicham.Model.SessionsDB;
 import org.hicham.View.ActPatientView;
 import org.hicham.View.ChangeMotPassView;
+import org.hicham.View.ExamenComplimentaireView;
 import org.hicham.View.GestionStockView;
 import org.hicham.View.HomePanel;
 import org.hicham.View.InfoPatient;
@@ -35,6 +41,7 @@ import org.hicham.View.MainFrame;
 import org.hicham.View.MenuBar;
 import org.hicham.View.OdfPatient;
 import org.hicham.View.Ordonance;
+import org.hicham.View.OrdonanceMenuView;
 import org.hicham.View.OrdonnanceReport;
 import org.hicham.View.PatientView;
 import org.hicham.View.ProtheseFixeView;
@@ -66,6 +73,7 @@ public class Main {
 		RendezVousQueries rvq= new RendezVousQueries();
 		RegisterQueries rq= new RegisterQueries();
 		OdfQueries oq= new OdfQueries();
+		ProtheseFixeQueries prfq= new ProtheseFixeQueries();
 		//views
 		RegisterView rv= new RegisterView();
 		ChangeMotPassView cmpv= new ChangeMotPassView();
@@ -84,7 +92,9 @@ public class Main {
 		HomePanel hp= new HomePanel(rv,cmpv);
 		RendezVousView rvv= new RendezVousView();
 		JustificationAbsenceView jav= new JustificationAbsenceView();
-		MainFrame mf= new MainFrame(hp,p,gs,rvv,jav,rv,mb);
+		OrdonanceMenuView ormv= new OrdonanceMenuView();
+		ExamenComplimentaireView excv= new ExamenComplimentaireView();
+		MainFrame mf= new MainFrame(hp,p,gs,rvv,jav,rv,ormv,excv,mb);
 		//controllers
 		ControllerInfoPatient cip= new ControllerInfoPatient(ip, pq,rp,ap,op,o);
 		ControllerAct ca= new ControllerAct(ap, aq, pq,cip);
@@ -92,13 +102,16 @@ public class Main {
 		ControllerPatient cp= new ControllerPatient(mf, p,o);
 		ControllerOrdonance co= new ControllerOrdonance(mf,hp, p, o,mq,cip);
 		ControllerMenuBar cmb= new ControllerMenuBar(mf,hp,mb, p,ip, o,gs,rvv
-				,rp,prq,pq,cmpv);
+				,rp,prq,pq,cmpv,jav,ormv,excv);
 		ControllerGestionStock cgs= new ControllerGestionStock(gs, prq);
 		ControllerRendezVous crv= new ControllerRendezVous(rvv,rvq);
 		ControllerRegister cr= new ControllerRegister(rq, rv, mf);
 		ControllerChangePass ccmp= new ControllerChangePass(cmpv, rq);
 		ControllerProthese crpr= new ControllerProthese(prv, prtv, prpv, prfv);
-		
+		ControllerProtheseFixe crprf= new ControllerProtheseFixe(prfv, prfq);
+		ControllerJustification cj= new ControllerJustification(jav);
+		ControllerOrdonanceMenu corm= new ControllerOrdonanceMenu(ormv, pq);
+		ControllerExamenComplimentaire cexc= new ControllerExamenComplimentaire(excv, pq);
 		mf.setVisible(true);
 	}
 

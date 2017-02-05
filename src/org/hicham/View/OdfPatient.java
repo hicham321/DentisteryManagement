@@ -81,7 +81,8 @@ public class OdfPatient extends JPanel {
 		panelOdf.setBorder(BorderFactory.createTitledBorder("Info Act: "));
 
 		Border border = BorderFactory.createLineBorder(Color.BLACK);
-		actText.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(0, 0, 10, 10)));
+		actText.setBorder(BorderFactory.createCompoundBorder(border,
+				BorderFactory.createEmptyBorder(0, 0, 10, 10)));
 
 		actText.setLineWrap(true);
 		actText.setWrapStyleWord(true);

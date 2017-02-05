@@ -39,6 +39,8 @@ public class ControllerProthese {
  				System.out.println(selectedItem);
  				if ("Prothese Totale".equals(selectedItem)) {
  					showProtheseTotale();
+ 					//thread to make processing images faster
+ 					
  				}
  				if ("Prothese Partielle".equals(selectedItem)) {
  					showProthesePartielle();

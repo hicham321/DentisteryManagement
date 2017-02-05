@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
 
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
@@ -33,7 +34,8 @@ public class JustificationAbsenceView extends JPanel{
 	
 	
 	JLabel sujetLab= new JLabel("Le Sujet: ");
-	JTextArea sujet= new JTextArea();
+	JTextArea sujet;
+	private JScrollPane sujetScrol;
 	
     JPanel justificationPanel;
 	
@@ -60,6 +62,16 @@ public class JustificationAbsenceView extends JPanel{
 		this.sexModel.addElement("Femele");
 		nomPatient.setSelectedIndex(0);
 		
+		sujet= new JTextArea(5, 20);
+		Border border = BorderFactory.createLineBorder(Color.BLACK);
+		sujet.setBorder(BorderFactory.createCompoundBorder(border,
+				BorderFactory.createEmptyBorder(0, 0, 10, 10)));
+
+		sujet.setLineWrap(true);
+		sujet.setWrapStyleWord(true);
+		sujetScrol= new JScrollPane(sujet);
+
+		
 		cards = new JPanel(new CardLayout());
 
 		cards.add(justificationPanel, "Card 1");
@@ -73,7 +85,7 @@ public class JustificationAbsenceView extends JPanel{
 		this.add(nomText);
 		this.add(sexLab);
 		this.add(sujetLab);
-		this.add(sujet);
+		this.add(sujetScrol);//
 		this.add(generer);
 
 
@@ -84,7 +96,7 @@ public class JustificationAbsenceView extends JPanel{
 		nomText.setBounds(170, 70, 400, 20);
 		sexLab.setBounds(30, 110, 120, 20);
 		sujetLab.setBounds(30, 150, 120, 20);
-		sujet.setBounds(170, 150, 400, 200);
+		sujetScrol.setBounds(170, 150, 400, 200);//
         cards.setBounds(650, 15,500 , 600);
         generer.setBounds(170,400 , 110, 40);
 	}

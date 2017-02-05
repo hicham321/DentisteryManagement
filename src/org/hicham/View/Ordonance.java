@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
 
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
@@ -56,6 +57,13 @@ public class Ordonance extends JPanel {
 		this.nomMedModel.addElement("");
 		AutoCompleteDecorator.decorate(nomMed);
 		nomMed.setSelectedIndex(0);
+		
+		Border border = BorderFactory.createLineBorder(Color.BLACK);
+		medList.setBorder(BorderFactory.createCompoundBorder(border,
+				BorderFactory.createEmptyBorder(0, 0, 10, 10)));
+
+		medList.setLineWrap(true);
+		medList.setWrapStyleWord(true);
 		
 		cards = new JPanel(new CardLayout());
 

@@ -51,6 +51,10 @@ public class Patient {
 	@OneToMany(targetEntity=Odf.class, mappedBy="patient"
 			,cascade=CascadeType.ALL,fetch= FetchType.EAGER)
 	private List<Odf> odfList;
+	@OneToMany(targetEntity=ProtheseFixe.class, mappedBy="patient"
+			,cascade=CascadeType.ALL,fetch= FetchType.EAGER)
+	private List<ProtheseFixe> protheseFixes;
+
 
 
 	
@@ -149,6 +153,12 @@ public class Patient {
 	}
 	public void setOdfList(List<Odf> odfList) {
 		this.odfList = odfList;
+	}
+	public List<ProtheseFixe> getProtheseFixes() {
+		return protheseFixes;
+	}
+	public void setProtheseFixes(List<ProtheseFixe> protheseFixes) {
+		this.protheseFixes = protheseFixes;
 	}
 	
 	

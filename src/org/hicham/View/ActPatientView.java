@@ -169,7 +169,6 @@ public class ActPatientView extends JPanel {
 		this.modifie.addActionListener(listener);
 		this.suppAct.addActionListener(listener);
 
-
 	}
 
 	public JTextArea getActText() {

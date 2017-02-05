@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 
 import org.hicham.View.ActPatientView;
 import org.hicham.View.ChangeMotPassView;
+import org.hicham.View.ExamenComplimentaireView;
 import org.hicham.View.GestionStockView;
 import org.hicham.View.HomePanel;
 import org.hicham.View.InfoPatient;
@@ -14,6 +15,7 @@ import org.hicham.View.MainFrame;
 import org.hicham.View.MenuBar;
 import org.hicham.View.OdfPatient;
 import org.hicham.View.Ordonance;
+import org.hicham.View.OrdonanceMenuView;
 import org.hicham.View.PatientView;
 import org.hicham.View.ProtheseFixeView;
 import org.hicham.View.ProthesePartielleView;
@@ -46,8 +48,11 @@ public class ControllerPatient {
     RendezVousView rendezVousView= new RendezVousView();
 	MenuBar menuBar= new MenuBar();
 	JustificationAbsenceView justificationAbsenceView= new JustificationAbsenceView();
+    public OrdonanceMenuView ordonanceMenuView= new OrdonanceMenuView();
+    ExamenComplimentaireView examenComplimentaireView= new ExamenComplimentaireView();
 	MainFrame mainFrame= new MainFrame(homePanel,patient,gestionStockView,rendezVousView
-			,justificationAbsenceView,registerView,menuBar);
+			,justificationAbsenceView,registerView,ordonanceMenuView
+			,examenComplimentaireView,menuBar);
 
 	public ControllerPatient(MainFrame mainFrame, PatientView patient ,Ordonance ordonance){
 		

@@ -12,10 +12,9 @@ import javax.swing.event.MenuListener;
 import org.hicham.Model.MedicamentQueries;
 import org.hicham.Model.PatientQueries;
 import org.hicham.Model.ProduitQueries;
-import org.hicham.Model.RegisterQueries;
-import org.hicham.Model.SessionsDB;
 import org.hicham.View.ActPatientView;
 import org.hicham.View.ChangeMotPassView;
+import org.hicham.View.ExamenComplimentaireView;
 import org.hicham.View.GestionStockView;
 import org.hicham.View.HomePanel;
 import org.hicham.View.InfoPatient;
@@ -24,6 +23,7 @@ import org.hicham.View.MainFrame;
 import org.hicham.View.MenuBar;
 import org.hicham.View.OdfPatient;
 import org.hicham.View.Ordonance;
+import org.hicham.View.OrdonanceMenuView;
 import org.hicham.View.PatientView;
 import org.hicham.View.ProtheseFixeView;
 import org.hicham.View.ProthesePartielleView;
@@ -32,8 +32,6 @@ import org.hicham.View.ProtheseView;
 import org.hicham.View.RecherchePatientView;
 import org.hicham.View.RegisterView;
 import org.hicham.View.RendezVousView;
-
-import jdk.internal.org.objectweb.asm.tree.TryCatchBlockNode;
 
 public class ControllerMenuBar {
 
@@ -57,6 +55,8 @@ public class ControllerMenuBar {
 	PatientQueries patientQueries= new PatientQueries();
 	RegisterView registerView= new RegisterView ();
     JustificationAbsenceView justificationAbsenceView= new JustificationAbsenceView();
+    public OrdonanceMenuView ordonanceMenuView= new OrdonanceMenuView();
+	ExamenComplimentaireView examenComplimentaireView= new ExamenComplimentaireView();
 
     ChangeMotPassView changeMotPassView= new ChangeMotPassView();
     ActPatientView actPatientView= new ActPatientView();
@@ -68,13 +68,16 @@ public class ControllerMenuBar {
 	ProduitQueries produitQueries= new ProduitQueries();
    
 	MainFrame mainFrame= new MainFrame(homePanel,patient,gestionStockView,rendezVousView
-			,justificationAbsenceView,registerView,menuBar);
+			,justificationAbsenceView,registerView,ordonanceMenuView,examenComplimentaireView
+			,menuBar);
 
 	public ControllerMenuBar(MainFrame mainFrame,HomePanel homePanel,MenuBar menuBar
 			,PatientView patient,InfoPatient infoPatient,Ordonance ordonance
 			,GestionStockView gestionStockView,RendezVousView rendezVousView
 			,RecherchePatientView recherchePatientView,ProduitQueries produitQueries
-			,PatientQueries patientQueries,ChangeMotPassView changeMotPassView){
+			,PatientQueries patientQueries,ChangeMotPassView changeMotPassView
+			,JustificationAbsenceView justificationAbsenceView
+			,OrdonanceMenuView ordonanceMenuView,ExamenComplimentaireView examenComplimentaireView){
 
 		this.patient= patient;
 		this.infoPatient= infoPatient;
@@ -87,7 +90,10 @@ public class ControllerMenuBar {
 		this.patientQueries= patientQueries;
 		this.rendezVousView= rendezVousView;
 		this.recherchePatientView= recherchePatientView;
+		this.justificationAbsenceView =justificationAbsenceView;
 		this.changeMotPassView= changeMotPassView;
+		this.ordonanceMenuView= ordonanceMenuView;
+		this.examenComplimentaireView=examenComplimentaireView;
 		this.menuBar.addMenuBarActionListener(new MenuBarActionListener() );
 		this.menuBar.addMenuBarMenuListener(new MenuBarMenuListener() );
 
@@ -108,9 +114,20 @@ public class ControllerMenuBar {
 			if (e.getSource()== menuBar.getInfoPatientItem()) {
 				//show info patient card
 				showInfoPatientCard();
-				DefaultComboBoxModel dftb=patientQueries.getComboModel();
-				recherchePatientView.getRech().setModel(dftb);
-				infoPatient.getRechCombo().setModel(dftb);
+				
+				new Thread(new Runnable() {
+					public void run() {
+						try{
+							DefaultComboBoxModel dftb=patientQueries.getComboModel();
+							recherchePatientView.getRech().setModel(dftb);
+							infoPatient.getRechCombo().setModel(dftb);
+						}catch(Exception ex){
+							ex.printStackTrace();
+						}
+
+					}	
+
+				}).start();
 				new Thread(new Runnable() {
 					public void run() {
 						try{
@@ -140,7 +157,6 @@ public class ControllerMenuBar {
 				//prepare gestionStockViiew Combobox with data
 				DefaultComboBoxModel dftb=produitQueries.getComboModel();
 				gestionStockView.getProduitCombo().setModel(dftb);	
-
 				//show gestionStock card
 				showGestionStockCard();
 			}
@@ -168,16 +184,81 @@ public class ControllerMenuBar {
 				//show Jfileschooser card
 
 			}
-			if (e.getSource()== menuBar.getOrdonanceItem()) {
+			if (e.getSource()== menuBar.getOrdonanceItem()){
 				//show ordonance card
+				showOrdonanceMenuViewCard();
+				new Thread(new Runnable() {
+					public void run() {
+						try{
+							MedicamentQueries mq= new MedicamentQueries();
+							List<String>med =mq.listOfMedsDb();
+							DefaultComboBoxModel dcm=mq.comboBoxModel(med);
+							ordonanceMenuView.getNomMed().setModel(dcm);
+						}catch(Exception ex){
+							ex.printStackTrace();
+						}
+
+					}	
+
+				}).start();
+				new Thread(new Runnable() {
+					public void run() {
+						try{
+							DefaultComboBoxModel dftb=patientQueries.getComboModel();
+							ordonanceMenuView.getNomPrenomCombo().setModel(dftb);
+						}catch(Exception ex){
+							ex.printStackTrace();
+						}
+
+					}	
+
+				}).start();
+
 
 			}
 			if (e.getSource()== menuBar.getExamenItem()) {
 				//show examen card
+				showExamenComplimentaireCard();
+				new Thread(new Runnable() {
+					public void run() {
+						try{
+							MedicamentQueries mq= new MedicamentQueries();
+							List<String>med =mq.listOfMedsDb();
+							DefaultComboBoxModel dcm=mq.comboBoxModel(med);
+							examenComplimentaireView.getNomMed().setModel(dcm);
+						}catch(Exception ex){
+							ex.printStackTrace();
+						}
+
+					}	
+
+				}).start();
+				new Thread(new Runnable() {
+					public void run() {
+						try{
+							DefaultComboBoxModel dftb=patientQueries.getComboModel();
+							examenComplimentaireView.getNomPrenomCombo().setModel(dftb);
+						}catch(Exception ex){
+							ex.printStackTrace();
+						}
+
+					}	
+
+				}).start();
 
 			}
 			if (e.getSource()== menuBar.getJustificationItem()) {
 				//show justification card
+				new Thread(new Runnable() {
+					public void run() {
+						try{
+							DefaultComboBoxModel dftb=patientQueries.getComboModel();
+							justificationAbsenceView.getNomPatient().setModel(dftb);						
+						}catch(Exception ex){
+							ex.printStackTrace();
+						}
+					}	
+				}).start();
 				showJustificationCard();
 			}
 		}
@@ -222,6 +303,14 @@ public class ControllerMenuBar {
 	public void showJustificationCard(){
 		CardLayout cardLayout = (CardLayout) mainFrame.cards.getLayout();
 		cardLayout.show(mainFrame.cards, "Card 5");	
+	}
+	public void showOrdonanceMenuViewCard(){
+		CardLayout cardLayout = (CardLayout) mainFrame.cards.getLayout();
+		cardLayout.show(mainFrame.cards, "Card 6");	
+	}
+	public void showExamenComplimentaireCard(){
+		CardLayout cardLayout = (CardLayout) mainFrame.cards.getLayout();
+		cardLayout.show(mainFrame.cards, "Card 7");	
 	}
 
 }

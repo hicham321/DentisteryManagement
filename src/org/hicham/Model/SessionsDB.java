@@ -25,7 +25,9 @@ public class SessionsDB {
     				.addAnnotatedClass(Medicament.class)
     				.addAnnotatedClass(Act.class)
     				.addAnnotatedClass(Register.class)
-    				.addAnnotatedClass(Odf.class);
+    				.addAnnotatedClass(Odf.class)
+    				.addAnnotatedClass(ProtheseFixe.class)
+    				.addAnnotatedClass(ImageProtheseFixe.class);
     		 StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
     		 factory = configuration.buildSessionFactory(builder.build());
      		 System.out.println("Creating a new Factory");
