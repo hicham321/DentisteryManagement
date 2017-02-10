@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -26,6 +28,8 @@ import org.jdesktop.swingx.JXDatePicker;
 
 public class ProtheseFixeView extends JPanel{
 	
+	JLabel  titre= new JLabel("Prothese Fixe ");
+
 	JLabel  protheseRvLab= new JLabel("rendez Vous: ");
     final DefaultComboBoxModel protheseRvModel = new DefaultComboBoxModel();
     private JComboBox listRVCombo= new JComboBox(protheseRvModel);
@@ -80,6 +84,11 @@ public class ProtheseFixeView extends JPanel{
 		JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(timePicker, "HH:mm");
         timePicker.setEditor(timeEditor);
         timePicker.setValue(new Date()); // will only show the current time
+        datePicker.setDate(Calendar.getInstance().getTime());
+        datePicker.setFormats(new SimpleDateFormat("dd.MM.yyyy"));
+        
+    	titre.setFont(titre.getFont().deriveFont(64.0f));
+
 
 		this.add(numLabel);
 		this.add(numero);
@@ -99,9 +108,10 @@ public class ProtheseFixeView extends JPanel{
 		this.add(nouveau);
 		this.add(listRVCombo);
 		this.add(protheseRvLab);
+		this.add(titre);
 
 		
-
+        titre.setBounds(300,20, 250, 40);
 		protheseRvLab.setBounds(30, 40, 1200, 20);
 		listRVCombo.setBounds(170, 40, 200, 20);
 		numLabel.setBounds(30, 140, 120, 20);
@@ -130,6 +140,7 @@ public class ProtheseFixeView extends JPanel{
     	this.supp.addActionListener(listener);
     	this.ajouteImage.addActionListener(listener);
     	this.nouveau.addActionListener(listener);
+    	this.listRVCombo.addActionListener(listener);
 
     }
 
@@ -181,6 +192,10 @@ public class ProtheseFixeView extends JPanel{
 
 	public JButton getNouveau() {
 		return nouveau;
+	}
+
+	public JComboBox getListRVCombo() {
+		return listRVCombo;
 	}
 	
 	

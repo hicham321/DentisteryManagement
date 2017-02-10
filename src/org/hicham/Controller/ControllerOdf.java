@@ -18,6 +18,7 @@ import org.hicham.View.ActPatientView;
 import org.hicham.View.InfoPatient;
 import org.hicham.View.OdfPatient;
 import org.hicham.View.Ordonance;
+import org.hicham.View.ProtheseFixeView;
 import org.hicham.View.RecherchePatientView;
 
 public class ControllerOdf {
@@ -30,9 +31,12 @@ public class ControllerOdf {
 	PatientQueries patientQueries= new PatientQueries();
 	InfoPatient infoPatient = new InfoPatient();
 	RecherchePatientView recherchePatientView = new RecherchePatientView();
+	ProtheseFixeView protheseFixeView= new ProtheseFixeView();
+
     Ordonance ordonance= new Ordonance();
     ControllerInfoPatient controllerInfoPatient= new ControllerInfoPatient(infoPatient
-    		,patientQueries,recherchePatientView, actPatientView,odfPatient,ordonance);
+    		,patientQueries,recherchePatientView
+    		, actPatientView,odfPatient,protheseFixeView,ordonance);
     
 	public ControllerOdf(OdfPatient odfPatient,OdfQueries odfQueries
 			,PatientQueries patientQueries,ControllerInfoPatient controllerInfoPatient) {

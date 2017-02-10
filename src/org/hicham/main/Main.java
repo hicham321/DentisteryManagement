@@ -96,7 +96,7 @@ public class Main {
 		ExamenComplimentaireView excv= new ExamenComplimentaireView();
 		MainFrame mf= new MainFrame(hp,p,gs,rvv,jav,rv,ormv,excv,mb);
 		//controllers
-		ControllerInfoPatient cip= new ControllerInfoPatient(ip, pq,rp,ap,op,o);
+		ControllerInfoPatient cip= new ControllerInfoPatient(ip, pq,rp,ap,op,prfv,o);
 		ControllerAct ca= new ControllerAct(ap, aq, pq,cip);
 		ControllerOdf codf= new ControllerOdf(op, oq,pq,cip);
 		ControllerPatient cp= new ControllerPatient(mf, p,o);
@@ -108,7 +108,7 @@ public class Main {
 		ControllerRegister cr= new ControllerRegister(rq, rv, mf);
 		ControllerChangePass ccmp= new ControllerChangePass(cmpv, rq);
 		ControllerProthese crpr= new ControllerProthese(prv, prtv, prpv, prfv);
-		ControllerProtheseFixe crprf= new ControllerProtheseFixe(prfv, prfq);
+		ControllerProtheseFixe crprf= new ControllerProtheseFixe(prfv, prfq, cip);
 		ControllerJustification cj= new ControllerJustification(jav);
 		ControllerOrdonanceMenu corm= new ControllerOrdonanceMenu(ormv, pq);
 		ControllerExamenComplimentaire cexc= new ControllerExamenComplimentaire(excv, pq);

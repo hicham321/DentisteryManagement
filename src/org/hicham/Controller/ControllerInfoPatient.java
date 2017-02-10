@@ -16,10 +16,12 @@ import org.hicham.Model.Act;
 import org.hicham.Model.Odf;
 import org.hicham.Model.Patient;
 import org.hicham.Model.PatientQueries;
+import org.hicham.Model.ProtheseFixe;
 import org.hicham.View.ActPatientView;
 import org.hicham.View.InfoPatient;
 import org.hicham.View.OdfPatient;
 import org.hicham.View.Ordonance;
+import org.hicham.View.ProtheseFixeView;
 import org.hicham.View.RecherchePatientView;
 
 public class ControllerInfoPatient {
@@ -29,6 +31,7 @@ public class ControllerInfoPatient {
 	RecherchePatientView recherchePatientView= new RecherchePatientView();
 	ActPatientView actPatientView= new ActPatientView();
 	OdfPatient odfPatient= new OdfPatient();
+	ProtheseFixeView protheseFixeView= new ProtheseFixeView();
 	Ordonance ordonance= new Ordonance();
 	//this field needs to be updated when adding a new patient or when selecting a new patient
 	Patient currentPatient= new Patient();
@@ -39,13 +42,14 @@ public class ControllerInfoPatient {
 	public ControllerInfoPatient(InfoPatient infoPatient, PatientQueries patientQueries 
 			,RecherchePatientView recherchePatientView
 			,ActPatientView actPatientView,OdfPatient odfPatient
-			,	Ordonance ordonance){
+			,ProtheseFixeView protheseFixeView,	Ordonance ordonance){
 
 		this.infoPatient= infoPatient;
 		this.patientQueries=patientQueries;
 		this.recherchePatientView=recherchePatientView;
 		this.actPatientView= actPatientView;
 		this.odfPatient= odfPatient;
+		this.protheseFixeView= protheseFixeView;
 		this.ordonance= ordonance;
 		this.infoPatient.addInfoPatientActionListener(new InfoPatientActionListener());
 	}
@@ -93,6 +97,9 @@ public class ControllerInfoPatient {
 						selectedPatient.getSex(),selectedPatient.getAnticident(),
 						selectedPatient.getFonction());
 				
+				
+				//this part can be multithreaded
+
 				//show related patient acts
 				setFieldsActInfo();
 				//set info in act for the selected patient
@@ -113,14 +120,24 @@ public class ControllerInfoPatient {
 				}
 				DefaultComboBoxModel dfcmOdf=patientQueries.comboBoxModel(odfsDates);
 				odfPatient.getListActCombo().setModel(dfcmOdf);
-                //ordonance
-				
+				//protheses
+				List<ProtheseFixe>prothesesFixe=currentPatient.getProtheseFixes();
+				List<String> protheseFixeDates= new ArrayList<>();
+				for (int i = 0; i < prothesesFixe.size(); i++) {
+					String date= prothesesFixe.get(i).getDate();
+					protheseFixeDates.add(date);
+				}
+				DefaultComboBoxModel dfcmProthFixe=patientQueries
+						.comboBoxModel(protheseFixeDates);
+				protheseFixeView.getListRVCombo().setModel(dfcmProthFixe);
+
+
 				showOrdonanceInfo();
 
 			}
 			if (e.getSource()== infoPatient.getNouveauPatient()) {
 				//set all fields empty and enable ok button 
-                setfieldPatientenabled();
+				setfieldPatientenabled();
 				setFieldsActDisabled();
 				setFieldsEmpty();
 				infoPatient.getOk().setEnabled(true);
@@ -196,11 +213,11 @@ public class ControllerInfoPatient {
 			infoPatient.getAnticident().setEnabled(true);
 			infoPatient.getFonction().setEnabled(true);
 		}
-		
-		
+
+
 		public void setFieldsPatientInfo(String nom,String prenom, String age,String address
 				,String tel,String teinte,String sex,String anticident, String fonction){
-			
+
 			infoPatient.getNom().setText(nom);
 			infoPatient.getPrenom().setText(prenom);
 			infoPatient.getAge().setText(age);
@@ -246,11 +263,11 @@ public class ControllerInfoPatient {
 			actPatientView.getOk().setEnabled(false);
 			actPatientView.getModifie().setEnabled(true);
 		}
-		
+
 		public void modifyPatientFields(String name, String prenom,String nomEtPrenom
 				,String age, String teinte, String fonction,String tel, String anticident
 				,String address ,String sex ){
-			
+
 			currentPatient.setAge(age);
 			currentPatient.setAddress(address);
 			currentPatient.setAnticident(anticident);
@@ -261,13 +278,13 @@ public class ControllerInfoPatient {
 			currentPatient.setSex(sex);
 			currentPatient.setTel(tel);
 			currentPatient.setTeinte(teinte);
-			
+
 		}
-		
+
 		public void showOrdonanceInfo(){
 			String nomEtPrenom=currentPatient.getNomEtPrenom();
 			ordonance.getNomEtPrenom().setText(nomEtPrenom);
-			
+
 		}
 
 

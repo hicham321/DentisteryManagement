@@ -24,6 +24,8 @@ public class ProtheseFixe {
 	String numero ;
 	@Column (name="typeProthese" ,nullable=false)
 	String typeProthese ;
+	@Column (name="entante" ,nullable=false)
+	String entante;
 	@Column (name="temp" ,nullable=false)
 	String temp ;
 	@Column (name="date" ,nullable=false)
@@ -35,11 +37,13 @@ public class ProtheseFixe {
 			,cascade=CascadeType.ALL,fetch= FetchType.EAGER)
 	private List<ImageProtheseFixe> imageProtheseFixe;
 	
-    public ProtheseFixe(String numero, String typeProthese, String temp, String date) {
+    public ProtheseFixe(String numero,String entante, String typeProthese
+    		,String temp, String date) {
 		this.numero = numero;
 		this.typeProthese = typeProthese;
 		this.temp = temp;
 		this.date = date;
+		this.entante= entante;
 	}
 
 	public ProtheseFixe(){
@@ -100,6 +104,14 @@ public class ProtheseFixe {
 
 	public void setImageProtheseFixe(List<ImageProtheseFixe> imageProtheseFixe) {
 		this.imageProtheseFixe = imageProtheseFixe;
+	}
+
+	public String getEntante() {
+		return entante;
+	}
+
+	public void setEntante(String entante) {
+		this.entante = entante;
 	}
 	
 
