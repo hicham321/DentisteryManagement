@@ -1,5 +1,6 @@
 package org.hicham.Model;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -13,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 @Entity
 @Table(name="ProtheseFixe")
 public class ProtheseFixe {
@@ -29,7 +32,8 @@ public class ProtheseFixe {
 	@Column (name="temp" ,nullable=false)
 	String temp ;
 	@Column (name="date" ,nullable=false)
-	String date ;
+	@Temporal(value=TemporalType.DATE)
+	Date date ;
 	@ManyToOne
     @JoinColumn(name="id_Patient")
     private Patient patient;
@@ -38,7 +42,7 @@ public class ProtheseFixe {
 	private List<ImageProtheseFixe> imageProtheseFixe;
 	
     public ProtheseFixe(String numero,String entante, String typeProthese
-    		,String temp, String date) {
+    		,String temp, Date date) {
 		this.numero = numero;
 		this.typeProthese = typeProthese;
 		this.temp = temp;
@@ -82,11 +86,11 @@ public class ProtheseFixe {
 		this.temp = temp;
 	}
 
-	public String getDate() {
+	public Date getDate() {
 		return date;
 	}
 
-	public void setDate(String date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 

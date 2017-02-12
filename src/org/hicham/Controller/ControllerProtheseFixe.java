@@ -3,6 +3,9 @@ package org.hicham.Controller;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.text.DateFormat;
@@ -58,6 +61,9 @@ public class ControllerProtheseFixe {
 	BufferedImage bfImage;
 	List<String>imagePaths= new ArrayList<>();
 	ProtheseFixe currentProtheseFixe= new ProtheseFixe();
+	
+	List<JLabel> imageOrder= new ArrayList<>();
+	
 	public ControllerProtheseFixe(ProtheseFixeView protheseFixeView
 			,ProtheseFixeQueries protheseFixeQueries
 			,ControllerInfoPatient controllerInfoPatient){
@@ -82,7 +88,7 @@ public class ControllerProtheseFixe {
 				if(input == JOptionPane.OK_OPTION){
 
 					//insert images in protheseImages table
-					String date= protheseFixeView.getDatePicker().getDate().toString();
+					Date date= protheseFixeView.getDatePicker().getDate();
 					String time= protheseFixeView.getTimePicker().getValue().toString();
 					String num= protheseFixeView.getNumero().getText();
 					String typeProthese= protheseFixeView.getTypeProthese().getText();
@@ -99,12 +105,8 @@ public class ControllerProtheseFixe {
 					}
 					//clear image panel and set fields empty
 					//set images empty
-					for (java.awt.Component label:protheseFixeView.getImagePanel().getComponents()){
-						((JLabel) label).setIcon( null );    
-					}
-					imagePaths.clear();	
+					clearImages();
 					setEmptyFields();
-					
 					}	
 
 			}
@@ -116,8 +118,8 @@ public class ControllerProtheseFixe {
 			if (e.getSource()==protheseFixeView.getSupp()) {
 				//delete query
 				int input = JOptionPane.showOptionDialog(null
-						,"Etes vous sure de vouloir supprimer la prothese?"
-						, "Supprime Prothese"
+						, "Supprime Prothese"						,"Etes vous sure de vouloir supprimer la prothese?"
+
 						, JOptionPane.OK_CANCEL_OPTION
 						, JOptionPane.INFORMATION_MESSAGE, null, null, null);
 
@@ -151,20 +153,32 @@ public class ControllerProtheseFixe {
 				//show image in panel
 			}
 			if (e.getSource()==protheseFixeView.getNouveau()) {
-				for (java.awt.Component label:protheseFixeView.getImagePanel().getComponents()){
-					((JLabel) label).setIcon( null );    
-				}
-				setEmptyFields();
-				
+				clearImages();
+				setEmptyFields();	
 			}
 			if (e.getSource()== protheseFixeView.getListRVCombo()) {
 				int selectedDate= protheseFixeView.getListRVCombo().getSelectedIndex();
 				setSelectedProtheseFixeInfo(selectedDate);
+				clearImages();
 			}
 		}
 
 	}
-	public JLabel setImageInLabel(File imageFile){
+	public class ProtheseFixeMouseListener extends MouseAdapter{
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+            System.out.println("Yay you clicked me generated label");
+            JLabel label = (JLabel)e.getSource();
+            //show the label in internal frame
+            protheseFixeView.getPanelShowImage().add(label);
+            protheseFixeView.getPanelShowImage().revalidate();
+            protheseFixeView.getShowImage().setVisible(true);
+		}
+	
+		
+	}
+	public synchronized JLabel setImageInLabel(File imageFile){
 
 		try{
 			bfImage = ImageIO.read(imageFile);
@@ -174,7 +188,10 @@ public class ControllerProtheseFixe {
 		Image newimg = bfImage.getScaledInstance( 300, 300,  java.awt.Image.SCALE_SMOOTH ) ;
 		JLabel picLabel=new JLabel();
 		picLabel.setIcon(new ImageIcon(newimg));
-
+		
+		
+		protheseFixeView.addProtheseFixeMouseListener(new ProtheseFixeMouseListener(), picLabel);
+		
 		return picLabel;
 	}
 	public void makingImageLabels(List<String> liens){
@@ -210,11 +227,21 @@ public class ControllerProtheseFixe {
 	}
 	public void modifyFieldProtheseFixe(){
 		
-		currentProtheseFixe.setDate(protheseFixeView.getDatePicker().getDate().toString());     
+		currentProtheseFixe.setDate(protheseFixeView.getDatePicker().getDate());     
 		currentProtheseFixe.setTemp(protheseFixeView.getTimePicker().getValue().toString());
 		currentProtheseFixe.setEntante(protheseFixeView.getEntente().getText());
 		currentProtheseFixe.setTypeProthese(protheseFixeView.getTypeProthese().getText());
 		currentProtheseFixe.setNumero(protheseFixeView.getNumero().getText());
+	}
+	public void clearImages(){
+		for (java.awt.Component label:protheseFixeView.getImagePanel().getComponents()){
+			((JLabel) label).setIcon( null ); 
+		}
+		protheseFixeView.getImagePanel().revalidate();
+		for (java.awt.Component label:protheseFixeView.getImagePanel().getComponents()){
+			protheseFixeView.getImagePanel().remove(label);
+		}
+		imagePaths.clear();	
 	}
 	public void setSelectedProtheseFixeInfo(int selectedProtheseFixe){
 		ProtheseFixe protheseFixe= controllerInfoPatient.getCurrentPatient()
@@ -224,18 +251,18 @@ public class ControllerProtheseFixe {
 		protheseFixeView.getTypeProthese().setText(protheseFixe.getTypeProthese());
 		DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
 		Date date= new Date();
-		try {
+		/*try {
 			 date = format.parse(protheseFixe.getDate());
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 		protheseFixeView.getDatePicker().setDate(date);
 		
 		for (ImageProtheseFixe image : protheseFixe.getImageProtheseFixe() ) {
 
 			//put a different thread for every Image
-			new Thread(new Runnable() {
+			Thread t=new Thread(new Runnable() {
 				public void run() {
 					try{
 
@@ -245,14 +272,23 @@ public class ControllerProtheseFixe {
 						label= setImageInLabel(imageFile);
 						protheseFixeView.getImagePanel().add(label);
 						protheseFixeView.getImagePanel().revalidate();
-
+						//addImageOrder(label);
 					}catch(Exception ex){
 						ex.printStackTrace();
 					}
 				}	
-			}).start();
+			});
+			t.start();
 		}
 	}
-
-
+	public synchronized void addImageOrder(JLabel imageLabel){
+		imageOrder.add(imageLabel);
+	}
+	public void showImageFromPanel(){
+		//get the label from image 
+		
+		//show image on internal jframePanel
+		
+	}
+	
 }

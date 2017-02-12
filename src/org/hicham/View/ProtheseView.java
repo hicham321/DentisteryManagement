@@ -19,6 +19,8 @@ public class ProtheseView extends JPanel{
 	JComboBox<String> listProtheseCombo= new JComboBox(protheseModel);
 	private JScrollPane scroll = new JScrollPane(listProtheseCombo);
 	
+	JLabel titreProthese= new JLabel("");
+	
 	ProthesePartielleView prothesePartielleView= new ProthesePartielleView();
 	ProtheseFixeView protheseFixeView= new ProtheseFixeView();
 	ProtheseTotaleView protheseTotaleView= new ProtheseTotaleView();
@@ -45,11 +47,14 @@ public class ProtheseView extends JPanel{
 		this.add(cards);
 		this.add(listProtheseComboLab);
 		this.add(listProtheseCombo);
-   
-		cards.setBounds(0, 50, 1500, 800);
-        listProtheseComboLab.setBounds(10,10 , 150, 20);
-        listProtheseCombo.setBounds(180, 10, 150, 20);
+		this.add(titreProthese);
+		titreProthese.setFont(titreProthese.getFont().deriveFont(36.0f));
 
+   
+		cards.setBounds(0, 50, 1500, 600);
+        listProtheseComboLab.setBounds(40,25 , 120, 20);
+        listProtheseCombo.setBounds(180, 25, 150, 20);
+        titreProthese.setBounds(400,10 ,400 ,40 );
 
 	}
 	public void addProtheseActionListener(ActionListener listener){
@@ -58,6 +63,9 @@ public class ProtheseView extends JPanel{
 	}
 	public JComboBox<String> getListProtheseCombo() {
 		return listProtheseCombo;
+	}
+	public JLabel getTitreProthese() {
+		return titreProthese;
 	}
 	
 }

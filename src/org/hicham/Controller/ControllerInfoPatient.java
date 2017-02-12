@@ -85,11 +85,13 @@ public class ControllerInfoPatient {
 				setFieldsActEnabled();
 				infoPatient.getOk().setEnabled(false);
 				infoPatient.getModifie().setEnabled(true);
+				
 
 				int selecteditem=infoPatient.getRechCombo().getSelectedIndex();
 				List<Patient>patients=patientQueries.findAllPatients();
 				Patient selectedPatient=patients.get(selecteditem);
 				currentPatient=selectedPatient;
+				protheseFixeView.getNomPrenom().setText(currentPatient.getNomEtPrenom());
 				//show selected patient info in text fields
 				setFieldsPatientInfo(selectedPatient.getName(), selectedPatient.getPrenom(), 
 						selectedPatient.getAge(), selectedPatient.getAddress(),
@@ -124,16 +126,14 @@ public class ControllerInfoPatient {
 				List<ProtheseFixe>prothesesFixe=currentPatient.getProtheseFixes();
 				List<String> protheseFixeDates= new ArrayList<>();
 				for (int i = 0; i < prothesesFixe.size(); i++) {
-					String date= prothesesFixe.get(i).getDate();
-					protheseFixeDates.add(date);
+					Date date= prothesesFixe.get(i).getDate();
+					protheseFixeDates.add(date.toString());
 				}
 				DefaultComboBoxModel dfcmProthFixe=patientQueries
 						.comboBoxModel(protheseFixeDates);
 				protheseFixeView.getListRVCombo().setModel(dfcmProthFixe);
 
-
 				showOrdonanceInfo();
-
 			}
 			if (e.getSource()== infoPatient.getNouveauPatient()) {
 				//set all fields empty and enable ok button 

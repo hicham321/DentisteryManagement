@@ -36,16 +36,18 @@ public class ControllerProthese {
              if (e.getSource()== protheseView.getListProtheseCombo()) {
          		JComboBox<String> comboBox = (JComboBox) e.getSource();
  				String selectedItem= comboBox.getSelectedItem().toString();
- 				System.out.println(selectedItem);
  				if ("Prothese Totale".equals(selectedItem)) {
+ 					protheseView.getTitreProthese().setText("Prothese Totale");
  					showProtheseTotale();
  					//thread to make processing images faster
  					
  				}
  				if ("Prothese Partielle".equals(selectedItem)) {
+ 					protheseView.getTitreProthese().setText("Prothese Partielle");
  					showProthesePartielle();
  				}
  				if ("Prothese Fixe".equals(selectedItem)) {
+ 					protheseView.getTitreProthese().setText("Prothese Fixe");
  					showProtheseFixe();
  				}
 			}			

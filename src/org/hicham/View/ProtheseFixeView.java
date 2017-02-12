@@ -5,6 +5,9 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseListener;
+import java.beans.PropertyVetoException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -16,6 +19,7 @@ import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -28,9 +32,8 @@ import org.jdesktop.swingx.JXDatePicker;
 
 public class ProtheseFixeView extends JPanel{
 	
-	JLabel  titre= new JLabel("Prothese Fixe ");
 
-	JLabel  protheseRvLab= new JLabel("rendez Vous: ");
+	JLabel  protheseRvLab= new JLabel("Rendez Vous Precedent: ");
     final DefaultComboBoxModel protheseRvModel = new DefaultComboBoxModel();
     private JComboBox listRVCombo= new JComboBox(protheseRvModel);
 	private JScrollPane rvListScrol = new JScrollPane(listRVCombo);
@@ -62,12 +65,10 @@ public class ProtheseFixeView extends JPanel{
 
 	
 	JButton ajouteImage= new JButton("Image");
-
-
 	
+	JInternalFrame showImage= new JInternalFrame();
+    JPanel panelShowImage=new JPanel();
 
-	
-	
 	public ProtheseFixeView(){
 		
 		this.setLayout(null);
@@ -79,7 +80,7 @@ public class ProtheseFixeView extends JPanel{
 		imagePanel.setBorder(BorderFactory.createTitledBorder("Images:"));
 		
 		this.add(imagePanel);
-		imagePanel.setBounds(650, 15 ,500 , 600);
+		imagePanel.setBounds(650, 15 ,500 , 500);
 		
 		JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(timePicker, "HH:mm");
         timePicker.setEditor(timeEditor);
@@ -87,7 +88,18 @@ public class ProtheseFixeView extends JPanel{
         datePicker.setDate(Calendar.getInstance().getTime());
         datePicker.setFormats(new SimpleDateFormat("dd.MM.yyyy"));
         
-    	titre.setFont(titre.getFont().deriveFont(64.0f));
+        panelShowImage.setLayout(null);
+        showImage.add(panelShowImage);
+        showImage.setTitle("Image Selectioné");
+        showImage.setSize(500, 500);
+        showImage.toFront();
+		try {
+			showImage.setSelected(true);
+		} catch (PropertyVetoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		showImage.setVisible(false);	
 
 
 		this.add(numLabel);
@@ -108,10 +120,9 @@ public class ProtheseFixeView extends JPanel{
 		this.add(nouveau);
 		this.add(listRVCombo);
 		this.add(protheseRvLab);
-		this.add(titre);
+		this.add(showImage);
 
 		
-        titre.setBounds(300,20, 250, 40);
 		protheseRvLab.setBounds(30, 40, 1200, 20);
 		listRVCombo.setBounds(170, 40, 200, 20);
 		numLabel.setBounds(30, 140, 120, 20);
@@ -130,7 +141,6 @@ public class ProtheseFixeView extends JPanel{
 		supp.setBounds(330, 500, 100, 40);
 		ajouteImage.setBounds(450, 500, 100, 40);
 		nouveau.setBounds(400, 30, 100, 40);
-
 	}
 
     public void addProtheseFixActionListener(ActionListener listener){
@@ -142,6 +152,10 @@ public class ProtheseFixeView extends JPanel{
     	this.nouveau.addActionListener(listener);
     	this.listRVCombo.addActionListener(listener);
 
+    }
+    public void addProtheseFixeMouseListener(MouseAdapter mouseAdapter,JLabel label){
+    	label.addMouseListener(mouseAdapter);
+		
     }
 
 
@@ -197,6 +211,15 @@ public class ProtheseFixeView extends JPanel{
 	public JComboBox getListRVCombo() {
 		return listRVCombo;
 	}
+
+	public JPanel getPanelShowImage() {
+		return panelShowImage;
+	}
+
+	public JInternalFrame getShowImage() {
+		return showImage;
+	}
+
 	
 	
 }
