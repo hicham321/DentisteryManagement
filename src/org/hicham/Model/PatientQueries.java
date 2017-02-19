@@ -32,10 +32,8 @@ public class PatientQueries {
 	public void  deletePatient(Patient patient){
 		SessionsDB FactoryObject= new SessionsDB();
 		Session session= FactoryObject.getFactory().openSession();
-		//Session session = SessionsDB.getFactory().openSession();
 		try {
 
-			//save patient object
 			session.beginTransaction();
 			session.delete(patient);
 			session.getTransaction().commit();

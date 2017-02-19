@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.imageio.ImageIO;
+import javax.swing.JButton;
 import javax.swing.JDesktopPane;
 
 
@@ -13,7 +14,8 @@ public class HomePanel  extends JDesktopPane{
 	private Image image;
     RegisterView registerView= new RegisterView();
     ChangeMotPassView changeMotPassView= new ChangeMotPassView();
-
+    
+    
 	public HomePanel(RegisterView registerView,ChangeMotPassView changeMotPassView ) {
 		
 		try{
@@ -24,8 +26,7 @@ public class HomePanel  extends JDesktopPane{
 			
 			Image image = ImageIO.read(this.getClass().getResource("/resources/Tooth-Background.jpg"));
 			//Image newimg = image.getScaledInstance( 1400, 750,  java.awt.Image.SCALE_SMOOTH ) ;  
-			 this.image =  image.getScaledInstance( 1400, 750,  java.awt.Image.SCALE_SMOOTH ) ;  
-            
+			this.image =  image.getScaledInstance( 1400, 750,  java.awt.Image.SCALE_SMOOTH ) ;  
 			//
 			this.registerView.setVisible(true);
 			this.registerView.toFront();

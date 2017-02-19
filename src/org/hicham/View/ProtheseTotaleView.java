@@ -2,11 +2,12 @@ package org.hicham.View;
 
 import java.awt.Color;
 
+import javax.swing.JDesktopPane;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class ProtheseTotaleView extends JPanel {
+public class ProtheseTotaleView extends JDesktopPane {
 	
 	  JLabel numLab= new JLabel("Numero de prothese: ");
 	  JTextField NumProthese= new JTextField();

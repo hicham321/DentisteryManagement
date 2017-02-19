@@ -6,11 +6,12 @@ import java.awt.event.ActionListener;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JDesktopPane;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-public class ProtheseView extends JPanel{
+public class ProtheseView extends JDesktopPane{
     
 	
 	

@@ -16,7 +16,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.transaction.Transactional;
 @Entity
+@Transactional
 @Table(name="ProtheseFixe")
 public class ProtheseFixe {
 	@Id
@@ -37,8 +39,8 @@ public class ProtheseFixe {
 	@ManyToOne
     @JoinColumn(name="id_Patient")
     private Patient patient;
-	@OneToMany(targetEntity=ImageProtheseFixe.class, mappedBy="protheseFixe"
-			,cascade=CascadeType.ALL,fetch= FetchType.EAGER)
+	@OneToMany(targetEntity=ImageProtheseFixe.class,orphanRemoval = true, mappedBy="protheseFixe"
+			,cascade=CascadeType.DETACH,fetch= FetchType.EAGER)
 	private List<ImageProtheseFixe> imageProtheseFixe;
 	
     public ProtheseFixe(String numero,String entante, String typeProthese

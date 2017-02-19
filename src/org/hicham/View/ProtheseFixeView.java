@@ -2,7 +2,10 @@ package org.hicham.View;
 
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -19,6 +22,7 @@ import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -30,7 +34,7 @@ import javax.swing.border.Border;
 
 import org.jdesktop.swingx.JXDatePicker;
 
-public class ProtheseFixeView extends JPanel{
+public class ProtheseFixeView extends JDesktopPane{
 	
 
 	JLabel  protheseRvLab= new JLabel("Rendez Vous Precedent: ");
@@ -65,12 +69,16 @@ public class ProtheseFixeView extends JPanel{
 
 	
 	JButton ajouteImage= new JButton("Image");
-	
+	JButton deleteImage= new JButton("Supprimé");
+	JButton annuleImage= new JButton("Annulé");
+	JLabel imageLabel= new JLabel();
+
 	JInternalFrame showImage= new JInternalFrame();
+	
     JPanel panelShowImage=new JPanel();
 
 	public ProtheseFixeView(){
-		
+
 		this.setLayout(null);
 		this.setBackground(Color.gray);
 		
@@ -89,19 +97,34 @@ public class ProtheseFixeView extends JPanel{
         datePicker.setFormats(new SimpleDateFormat("dd.MM.yyyy"));
         
         panelShowImage.setLayout(null);
+        panelShowImage.setBackground(Color.WHITE);
+      
         showImage.add(panelShowImage);
         showImage.setTitle("Image Selectioné");
-        showImage.setSize(500, 500);
+        showImage.setSize(1100, 600);
         showImage.toFront();
 		try {
 			showImage.setSelected(true);
 		} catch (PropertyVetoException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		Dimension jInternalFrameSiz = this.showImage.getSize();
+		
+		this.showImage.setLocation((1400 - jInternalFrameSiz.width)/2,
+		    (750- jInternalFrameSiz.height)/2);
 		showImage.setVisible(false);	
+		
+		panelShowImage.add(deleteImage);
+		panelShowImage.add(annuleImage);
+		panelShowImage.add(imageLabel);
 
+		deleteImage.setFont(new Font("Arial", Font.PLAIN, 20));
+		annuleImage.setFont(new Font("Arial", Font.PLAIN, 20));
 
+		deleteImage.setBounds(0, 500, 500, 70);
+		annuleImage.setBounds(500, 500,500, 70);
+		imageLabel.setBounds(0, 0, 1000, 500);
+		
 		this.add(numLabel);
 		this.add(numero);
 		this.add(nomPrenomLab);
@@ -151,6 +174,8 @@ public class ProtheseFixeView extends JPanel{
     	this.ajouteImage.addActionListener(listener);
     	this.nouveau.addActionListener(listener);
     	this.listRVCombo.addActionListener(listener);
+    	this.deleteImage.addActionListener(listener);
+    	this.annuleImage.addActionListener(listener);
 
     }
     public void addProtheseFixeMouseListener(MouseAdapter mouseAdapter,JLabel label){
@@ -218,6 +243,18 @@ public class ProtheseFixeView extends JPanel{
 
 	public JInternalFrame getShowImage() {
 		return showImage;
+	}
+
+	public JButton getDeleteImage() {
+		return deleteImage;
+	}
+
+	public JButton getAnnuleImage() {
+		return annuleImage;
+	}
+
+	public JLabel getImageLabel() {
+		return imageLabel;
 	}
 
 	
