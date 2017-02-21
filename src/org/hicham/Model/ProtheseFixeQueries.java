@@ -70,7 +70,8 @@ public class ProtheseFixeQueries {
 			session.close();
 		}
 	}
-	public void comparePathLists(List<String>newList,List<String>oldList,ProtheseFixe currentProtheseFixe){
+	
+	public void addNewImages(List<String>newList,List<String>oldList,ProtheseFixe currentProtheseFixe){
 		//compare and insert the new image in prothese
 		boolean found= false;
 		for (int i = 0; i < newList.size(); i++) {

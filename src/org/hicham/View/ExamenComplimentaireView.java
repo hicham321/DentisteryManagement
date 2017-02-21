@@ -132,6 +132,16 @@ public class ExamenComplimentaireView extends JPanel{
 		this.add.addActionListener(listener);
 		this.nomPrenomCombo.addActionListener(listener);
 	}
+	public void setOrdonanceEmpty(){
+		
+		this.nomMed.setSelectedIndex(0);
+		this.situation.setText("");
+		this.medList.setText("");
+		this.ageText.setText("");
+		this.prenomText.setText("");
+		this.nomText.setText("");
+
+	}
 
 	public JComboBox getNomMed() {
 		return nomMed;

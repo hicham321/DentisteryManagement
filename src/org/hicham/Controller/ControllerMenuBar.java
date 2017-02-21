@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.SwingWorker;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
@@ -114,9 +115,10 @@ public class ControllerMenuBar {
 			if (e.getSource()== menuBar.getInfoPatientItem()) {
 				//show info patient card
 				showInfoPatientCard();
-				
-				new Thread(new Runnable() {
-					public void run() {
+				new SwingWorker() {
+
+					@Override
+					protected Object doInBackground() throws Exception {
 						try{
 							DefaultComboBoxModel dftb=patientQueries.getComboModel();
 							recherchePatientView.getRech().setModel(dftb);
@@ -124,12 +126,14 @@ public class ControllerMenuBar {
 						}catch(Exception ex){
 							ex.printStackTrace();
 						}
+						return null;
+					}
+				}.execute();
+				
+				new SwingWorker() {
 
-					}	
-
-				}).start();
-				new Thread(new Runnable() {
-					public void run() {
+					@Override
+					protected Object doInBackground() throws Exception {
 						try{
 							MedicamentQueries mq= new MedicamentQueries();
 							List<String>med =mq.listOfMedsDb();
@@ -137,11 +141,10 @@ public class ControllerMenuBar {
 							ordonance.getNomMed().setModel(dcm);
 						}catch(Exception ex){
 							ex.printStackTrace();
-						}
-
-					}	
-
-				}).start();
+						}						return null;
+					}
+				}.execute();
+				
 			}
 			if (e.getSource()== menuBar.getRendezVousPatient()) {
 				//show rendez vous card
@@ -187,8 +190,10 @@ public class ControllerMenuBar {
 			if (e.getSource()== menuBar.getOrdonanceItem()){
 				//show ordonance card
 				showOrdonanceMenuViewCard();
-				new Thread(new Runnable() {
-					public void run() {
+				new SwingWorker() {
+
+					@Override
+					protected Object doInBackground() throws Exception {
 						try{
 							MedicamentQueries mq= new MedicamentQueries();
 							List<String>med =mq.listOfMedsDb();
@@ -196,31 +201,45 @@ public class ControllerMenuBar {
 							ordonanceMenuView.getNomMed().setModel(dcm);
 						}catch(Exception ex){
 							ex.printStackTrace();
-						}
+						}						return null;
+					}
+				}.execute();
+				new SwingWorker() {
 
-					}	
-
-				}).start();
-				new Thread(new Runnable() {
-					public void run() {
+					@Override
+					protected Object doInBackground() throws Exception {
 						try{
 							DefaultComboBoxModel dftb=patientQueries.getComboModel();
 							ordonanceMenuView.getNomPrenomCombo().setModel(dftb);
 						}catch(Exception ex){
 							ex.printStackTrace();
-						}
-
-					}	
-
-				}).start();
+						}						return null;
+					}
+				}.execute();
+				
 
 
 			}
 			if (e.getSource()== menuBar.getExamenItem()) {
 				//show examen card
 				showExamenComplimentaireCard();
-				new Thread(new Runnable() {
-					public void run() {
+				new SwingWorker() {
+
+					@Override
+					protected Object doInBackground() throws Exception {
+						try{
+							DefaultComboBoxModel dftb=patientQueries.getComboModel();
+							examenComplimentaireView.getNomPrenomCombo().setModel(dftb);
+						}catch(Exception ex){
+							ex.printStackTrace();
+						}						
+						return null;
+					}
+				}.execute();
+				new SwingWorker() {
+
+					@Override
+					protected Object doInBackground() throws Exception {
 						try{
 							MedicamentQueries mq= new MedicamentQueries();
 							List<String>med =mq.listOfMedsDb();
@@ -228,37 +247,29 @@ public class ControllerMenuBar {
 							examenComplimentaireView.getNomMed().setModel(dcm);
 						}catch(Exception ex){
 							ex.printStackTrace();
-						}
-
-					}	
-
-				}).start();
-				new Thread(new Runnable() {
-					public void run() {
-						try{
-							DefaultComboBoxModel dftb=patientQueries.getComboModel();
-							examenComplimentaireView.getNomPrenomCombo().setModel(dftb);
-						}catch(Exception ex){
-							ex.printStackTrace();
-						}
-
-					}	
-
-				}).start();
+						}						
+						return null;
+					}
+				}.execute();
+				
+				
 
 			}
 			if (e.getSource()== menuBar.getJustificationItem()) {
 				//show justification card
-				new Thread(new Runnable() {
-					public void run() {
+				new SwingWorker() {
+
+					@Override
+					protected Object doInBackground() throws Exception {
 						try{
 							DefaultComboBoxModel dftb=patientQueries.getComboModel();
 							justificationAbsenceView.getNomPatient().setModel(dftb);						
 						}catch(Exception ex){
 							ex.printStackTrace();
-						}
-					}	
-				}).start();
+						}						return null;
+					}
+				}.execute();;
+				
 				showJustificationCard();
 			}
 		}

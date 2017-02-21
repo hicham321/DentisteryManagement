@@ -52,7 +52,7 @@ public class ControllerExamenComplimentaire {
 					//print ordonance rows into textArea
 					readTextArea();
 					printReport();
-					setOrdonanceEmpty();
+					examenComplimentaireView.setOrdonanceEmpty();
 					id=1;
 					collBean.clear();
 				}catch(Exception ex){
@@ -119,14 +119,7 @@ public class ControllerExamenComplimentaire {
 			e.printStackTrace();
 		}
 	}
-	public void setOrdonanceEmpty(){
-		examenComplimentaireView.getNomMed().setSelectedIndex(0);
-		examenComplimentaireView.getSituation().setText("");
-		examenComplimentaireView.getMedList().setText("");
-		examenComplimentaireView.getAgeText().setText("");
-		examenComplimentaireView.getNomPrenomCombo().setSelectedIndex(0);
-
-	}
+	
 	public void showPatientInfoPanel(){
 		CardLayout cardLayout = (CardLayout) examenComplimentaireView.cards.getLayout();
 		cardLayout.show(examenComplimentaireView.cards, "Card 1");

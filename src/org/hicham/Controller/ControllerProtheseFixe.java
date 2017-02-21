@@ -27,6 +27,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import org.hicham.Controller.ControllerProtheseFixe.ProtheseFixeMouseListener;
 import org.hicham.Model.ActQueries;
 import org.hicham.Model.ImageProtheseFixe;
 import org.hicham.Model.MedicamentQueries;
@@ -62,7 +63,9 @@ public class ControllerProtheseFixe {
 
 	int returnVal;
 	JFileChooser filechooser= new JFileChooser();
-	BufferedImage bfImage;
+	
+	
+	//BufferedImage bfImage;
 	List<String>imagePaths= new ArrayList<>();
 	ProtheseFixe currentProtheseFixe= new ProtheseFixe();
 	
@@ -113,7 +116,7 @@ public class ControllerProtheseFixe {
 				//update query
 
 				int input = JOptionPane.showOptionDialog(null
-						, "Modifie Prothese"						,"Enrigestré les modification?"
+						, "Enrigestré les modification?"						,"Modifie Prothese"
 
 						, JOptionPane.OK_CANCEL_OPTION
 						, JOptionPane.INFORMATION_MESSAGE, null, null, null);
@@ -125,19 +128,19 @@ public class ControllerProtheseFixe {
 					for (int i = 0; i < currentProtheseFixe.getImageProtheseFixe().size(); i++) {
 						oldImageLien.add(currentProtheseFixe.getImageProtheseFixe().get(i).getLien());
 					}
-					protheseFixeQueries.comparePathLists(imagePaths, oldImageLien,currentProtheseFixe);
-					//clearImages();
+					protheseFixeQueries.addNewImages(imagePaths, oldImageLien,currentProtheseFixe);
                     for (int i = 0; i < deletedImages.size(); i++) {
+                    	System.out.println(deletedImages.toString());
 						protheseFixeQueries.deleteProtheseImages(deletedImages.get(i));
-						System.out.println(deletedImages.get(i)+ "to be deleted");
 					}
+                    clearImageList();
 					//protheseFixeQueries.deleteFoundImageProtheseFixe(imageOrder.get(selectedImage));
 				}	
 			}
 			if (e.getSource()==protheseFixeView.getSupp()) {
 				//delete query
 				int input = JOptionPane.showOptionDialog(null
-						, "Supprime Prothese"						,"Etes vous sure de vouloir supprimer la prothese?"
+						, "Etes vous sure de vouloir supprimer la prothese?"						,"Supprime Prothese"
 
 						, JOptionPane.OK_CANCEL_OPTION
 						, JOptionPane.INFORMATION_MESSAGE, null, null, null);
@@ -146,7 +149,8 @@ public class ControllerProtheseFixe {
 					
 
 					protheseFixeQueries.deleteProtheseFixe(currentProtheseFixe);
-					clearImages();
+					protheseFixeView.clearImages();
+					clearImageList();
 					//refresh combo code
 
 				}	
@@ -166,6 +170,7 @@ public class ControllerProtheseFixe {
 						lienImage=filechooser.getSelectedFile().getPath();
 						showNewImage(lienImage);
 						imagePaths.add(lienImage);
+						imageOrder.add(lienImage);
 						
 					}catch(Exception ex){
 						ex.printStackTrace();
@@ -176,14 +181,18 @@ public class ControllerProtheseFixe {
 				//show image in panel
 			}
 			if (e.getSource()==protheseFixeView.getNouveau()) {
-				clearImages();
-				setEmptyFields();	
+				protheseFixeView.getAjoute().setEnabled(true);
+				protheseFixeView.clearImages();
+				clearImageList();
+				protheseFixeView.setEmptyFields();	
 			}
 			if (e.getSource()== protheseFixeView.getListRVCombo()) {
 				//set current prothese
+				protheseFixeView.getAjoute().setEnabled(false);
 				int selectedDate= protheseFixeView.getListRVCombo().getSelectedIndex();
 				setSelectedProtheseFixeInfo(selectedDate);
-				clearImages();
+				protheseFixeView.clearImages();
+				clearImageList();
 			}
 			if (e.getSource()== protheseFixeView.getDeleteImage()) {
 				//code to delete the shown image 
@@ -207,6 +216,7 @@ public class ControllerProtheseFixe {
 							((JLabel) labeliterator).setIcon( null );
 							protheseFixeView.getImagePanel().remove(labeliterator);
 							//remove from image order
+							deletedImages.add(imageOrder.get(selectedImage));
 							imageOrder.remove(selectedImage);
 							protheseFixeView.getImagePanel().revalidate();
 							protheseFixeView.getImagePanel().repaint();
@@ -215,8 +225,7 @@ public class ControllerProtheseFixe {
 
 						}
                     
-					//protheseFixeQueries.deleteProtheseFixe(currentProtheseFixe);
-					deletedImages.add(imageOrder.get(selectedImage));
+	            	protheseFixeView.getShowImage().setVisible(false);				
 				}	
 				
 			}
@@ -258,6 +267,8 @@ public class ControllerProtheseFixe {
     		}
     		Image newimg = bfImageLabel.getScaledInstance( protheseFixeView.getImageLabel().getWidth(), 
     				protheseFixeView.getImageLabel().getHeight(),  java.awt.Image.SCALE_SMOOTH ) ;
+    		bfImageLabel.flush();
+    		bfImageLabel = null;
     		protheseFixeView.getImageLabel().setIcon(new ImageIcon(newimg));
             protheseFixeView.getPanelShowImage().revalidate();
             protheseFixeView.getShowImage().setVisible(true);                       
@@ -266,7 +277,7 @@ public class ControllerProtheseFixe {
 		
 	}
 	public synchronized JLabel setImageInLabel(File imageFile){
-
+		BufferedImage bfImage=null;
 		try{
 			bfImage = ImageIO.read(imageFile);
 		}catch(Exception ex){
@@ -276,7 +287,8 @@ public class ControllerProtheseFixe {
 		JLabel picLabel=new JLabel();
 		picLabel.setIcon(new ImageIcon(newimg));
 		
-		
+		bfImage.flush();
+		bfImage = null;
 		protheseFixeView.addProtheseFixeMouseListener(new ProtheseFixeMouseListener(), picLabel);
 		
 		return picLabel;
@@ -307,27 +319,15 @@ public class ControllerProtheseFixe {
 		this.protheseFixeView.getImagePanel().add(label);
 		this.protheseFixeView.getImagePanel().revalidate();
 	}
-	public void setEmptyFields(){
-		protheseFixeView.getTimePicker().setValue(new Date());
-		protheseFixeView.getEntente().setText("");
-		protheseFixeView.getTypeProthese().setText("");
-		protheseFixeView.getNumero().setText("");
-		protheseFixeView.getDatePicker().setDate(new Date());
-	}
 	public void modifyFieldProtheseFixe(){
-		
+
 		currentProtheseFixe.setDate(protheseFixeView.getDatePicker().getDate());     
 		currentProtheseFixe.setTemp(protheseFixeView.getTimePicker().getValue().toString());
 		currentProtheseFixe.setEntante(protheseFixeView.getEntente().getText());
 		currentProtheseFixe.setTypeProthese(protheseFixeView.getTypeProthese().getText());
 		currentProtheseFixe.setNumero(protheseFixeView.getNumero().getText());
 	}
-	public void clearImages(){
-	    for (java.awt.Component label:protheseFixeView.getImagePanel().getComponents()){
-			protheseFixeView.getImagePanel().remove(label);
-		}
-		protheseFixeView.getImagePanel().revalidate();
-		protheseFixeView.getImagePanel().repaint();
+	public void clearImageList(){
 		imagePaths.clear();	
 		imageOrder.clear();
 		deletedImages.clear();
@@ -390,8 +390,9 @@ public class ControllerProtheseFixe {
 		}
 		//clear image panel and set fields empty
 		//set images empty
-		clearImages();
-		setEmptyFields();
+		protheseFixeView.clearImages();
+		clearImageList();
+		protheseFixeView.setEmptyFields();
 	}
 	public  void addImageOrder(String lien){
 		imageOrder.add(lien);

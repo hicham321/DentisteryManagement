@@ -103,7 +103,15 @@ public class JustificationAbsenceView extends JPanel{
 	public void addJustificationActionListener(ActionListener listener){
 
 		this.generer.addActionListener(listener);
+		this.nomPatient.addActionListener(listener);
 	}
+	public void setFieldsEmpty(){
+		this.sex.setSelectedIndex(0);
+		this.nomText.setText("");
+		this.sujet.setText("");
+	}
+	
+	
 	public JComboBox getNomPatient() {
 		return nomPatient;
 	}

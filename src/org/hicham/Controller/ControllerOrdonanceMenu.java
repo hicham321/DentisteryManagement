@@ -51,7 +51,7 @@ public class ControllerOrdonanceMenu {
 					//print ordonance rows into textArea
 					readTextArea();
 					printReport();
-					setOrdonanceEmpty();
+					ordonanceMenuView.setFieldsEmpty();
 					id=1;
 					collBean.clear();
 				}catch(Exception ex){
@@ -118,14 +118,7 @@ public class ControllerOrdonanceMenu {
 			e.printStackTrace();
 		}
 	}
-	public void setOrdonanceEmpty(){
-		ordonanceMenuView.getNomMed().setSelectedIndex(0);
-		ordonanceMenuView.getSituation().setText("");
-		ordonanceMenuView.getMedList().setText("");
-		ordonanceMenuView.getAgeText().setText("");
-		ordonanceMenuView.getNomPrenomCombo().setSelectedIndex(0);
-
-	}
+	
 	public void showPatientInfoPanel(){
 		CardLayout cardLayout = (CardLayout) ordonanceMenuView.cards.getLayout();
 		cardLayout.show(ordonanceMenuView.cards, "Card 1");

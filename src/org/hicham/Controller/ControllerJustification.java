@@ -79,7 +79,7 @@ public class ControllerJustification {
                 //use the data in the bean
 				putInfoReport(nom, date, sujet, sexLabel, timeLabel);
 				printReport();
-				setJustificationEmpty();
+				justificationAbsenceView.setFieldsEmpty();
 				id=1;
 				collBean.clear();
 			}
@@ -87,6 +87,13 @@ public class ControllerJustification {
 				int selecteditem=justificationAbsenceView.getNomPatient().getSelectedIndex();
 				List<Patient>patients=patientQueries.findAllPatients();
 				Patient selectedPatient=patients.get(selecteditem);
+				
+				String nom=selectedPatient.getName();
+				String prenom= selectedPatient.getPrenom();
+				String sex= selectedPatient.getSex();
+				
+				justificationAbsenceView.getNomText().setText(nom+" "+prenom);
+				justificationAbsenceView.getSex().setSelectedItem(sex);
 			}
 		}
 
@@ -120,11 +127,6 @@ public class ControllerJustification {
 			e.printStackTrace();
 		}
 	}
-	public void setJustificationEmpty(){
-		justificationAbsenceView.getNomText().setText("");
-		justificationAbsenceView.getNomPatient().setSelectedIndex(0);
-		justificationAbsenceView.getSujet().setText("");
-		justificationAbsenceView.getSex().setSelectedIndex(0);
-	}
+	
 
 }

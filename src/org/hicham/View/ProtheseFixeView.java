@@ -7,19 +7,24 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
 import java.beans.PropertyVetoException;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDesktopPane;
@@ -32,6 +37,7 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
 import javax.swing.border.Border;
 
+import org.hicham.Controller.ControllerProtheseFixe.ProtheseFixeMouseListener;
 import org.jdesktop.swingx.JXDatePicker;
 
 public class ProtheseFixeView extends JDesktopPane{
@@ -178,10 +184,28 @@ public class ProtheseFixeView extends JDesktopPane{
     	this.annuleImage.addActionListener(listener);
 
     }
+    public void setEmptyFields(){
+		this.getTimePicker().setValue(new Date());
+		this.getEntente().setText("");
+		this.getTypeProthese().setText("");
+		this.getNumero().setText("");
+		this.getDatePicker().setDate(new Date());
+	}
+    
+	
     public void addProtheseFixeMouseListener(MouseAdapter mouseAdapter,JLabel label){
     	label.addMouseListener(mouseAdapter);
 		
     }
+    
+    //utility methods
+    public void clearImages(){
+	    for (java.awt.Component label:this.getImagePanel().getComponents()){
+			this.getImagePanel().remove(label);
+		}
+		this.getImagePanel().revalidate();
+		this.getImagePanel().repaint();
+	}
 
 
 

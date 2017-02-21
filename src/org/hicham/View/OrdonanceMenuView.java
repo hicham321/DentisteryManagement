@@ -133,6 +133,14 @@ public class OrdonanceMenuView extends JPanel{
 		this.add.addActionListener(listener);
 		this.nomPrenomCombo.addActionListener(listener);
 	}
+	public void setFieldsEmpty(){
+		this.ageText.setText("");
+		this.nomText.setText("");
+		this.situation.setText("");
+		this.nomMed.setSelectedIndex(0);
+		this.medList.setText("");
+		this.prenomText.setText("");
+	}
 
 	public JComboBox getNomMed() {
 		return nomMed;
