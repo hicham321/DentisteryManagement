@@ -64,8 +64,6 @@ public class ControllerProtheseFixe {
 	int returnVal;
 	JFileChooser filechooser= new JFileChooser();
 	
-	
-	//BufferedImage bfImage;
 	List<String>imagePaths= new ArrayList<>();
 	ProtheseFixe currentProtheseFixe= new ProtheseFixe();
 	
@@ -73,6 +71,8 @@ public class ControllerProtheseFixe {
 	List<String> deletedImages= new ArrayList<>();
 	List<String> addedImages= new ArrayList<>();
 	int selectedImage;
+	
+	double montantActuel=0;
     
 	public ControllerProtheseFixe(ProtheseFixeView protheseFixeView
 			,ProtheseFixeQueries protheseFixeQueries
@@ -97,7 +97,7 @@ public class ControllerProtheseFixe {
 				if (countComponent==0) {
 					int input = JOptionPane.showOptionDialog(null
 							,"Vous n'avez pas ajouté des images, continué sans ajouté? "
-							, ""
+							, "Ajout d'image"
 							, JOptionPane.OK_CANCEL_OPTION
 							, JOptionPane.INFORMATION_MESSAGE, null, null, null);
 
@@ -125,10 +125,22 @@ public class ControllerProtheseFixe {
 					modifyFieldProtheseFixe();
 					protheseFixeQueries.addProtheseFixe(currentProtheseFixe);
 					List<String> oldImageLien= new ArrayList<>();
+					List<String> newImagesLien= new ArrayList<>();
 					for (int i = 0; i < currentProtheseFixe.getImageProtheseFixe().size(); i++) {
 						oldImageLien.add(currentProtheseFixe.getImageProtheseFixe().get(i).getLien());
+						//code to copy should be put here
+						//String newPath=protheseFixeQueries.CopyFileImage("C:/Users/Hicham/ImagesProtheseFixe", oldImageLien.get(i));
+						//newImagesLien.add(newPath);
+						
 					}
-					protheseFixeQueries.addNewImages(imagePaths, oldImageLien,currentProtheseFixe);
+					for (int i = 0; i < addedImages.size(); i++) {
+						String newPath=protheseFixeQueries.CopyFileImage("C:/Users/Hicham/ImagesProtheseFixe", addedImages.get(i));
+
+					}
+					//System.out.println("new paths"+newImagesLien.toString());
+					//System.out.println("old paths"+oldImageLien.toString());
+					protheseFixeQueries.addNewImages(addedImages, oldImageLien,currentProtheseFixe);
+					//protheseFixeQueries.addNewImages(imagePaths, oldImageLien,currentProtheseFixe);
                     for (int i = 0; i < deletedImages.size(); i++) {
                     	System.out.println(deletedImages.toString());
 						protheseFixeQueries.deleteProtheseImages(deletedImages.get(i));
@@ -150,6 +162,7 @@ public class ControllerProtheseFixe {
 
 					protheseFixeQueries.deleteProtheseFixe(currentProtheseFixe);
 					protheseFixeView.clearImages();
+					protheseFixeView.setEmptyFields();
 					clearImageList();
 					//refresh combo code
 
@@ -171,6 +184,7 @@ public class ControllerProtheseFixe {
 						showNewImage(lienImage);
 						imagePaths.add(lienImage);
 						imageOrder.add(lienImage);
+						addedImages.add(lienImage);
 						
 					}catch(Exception ex){
 						ex.printStackTrace();
@@ -181,6 +195,8 @@ public class ControllerProtheseFixe {
 				//show image in panel
 			}
 			if (e.getSource()==protheseFixeView.getNouveau()) {
+				currentProtheseFixe= new ProtheseFixe();
+				montantActuel=0;
 				protheseFixeView.getAjoute().setEnabled(true);
 				protheseFixeView.clearImages();
 				clearImageList();
@@ -191,6 +207,10 @@ public class ControllerProtheseFixe {
 				protheseFixeView.getAjoute().setEnabled(false);
 				int selectedDate= protheseFixeView.getListRVCombo().getSelectedIndex();
 				setSelectedProtheseFixeInfo(selectedDate);
+				protheseFixeView.getPayementActuelText().setText("");
+				protheseFixeView.getPayementTotalText().setText(new Double(currentProtheseFixe.getPayementTotal()).toString());
+				montantActuel= currentProtheseFixe.getPayementActuel();
+
 				protheseFixeView.clearImages();
 				clearImageList();
 			}
@@ -201,7 +221,7 @@ public class ControllerProtheseFixe {
 				//after search for the lien in the imagepath and delete it 
 				//after that if it's an add than all is good if it's a modify than we need to delete the image from table
 				int input = JOptionPane.showOptionDialog(null
-						, "Supprime Prothese"						,"Etes vous sure de vouloir supprimer l'image?"
+						, "Etes vous sure de vouloir supprimer l'image?"	,"Supprime Prothese"
 
 						, JOptionPane.OK_CANCEL_OPTION
 						, JOptionPane.INFORMATION_MESSAGE, null, null, null);
@@ -240,6 +260,30 @@ public class ControllerProtheseFixe {
         			
 				}
             	protheseFixeView.getShowImage().setVisible(false);				
+			}
+            if (e.getSource()==protheseFixeView.getAddPay()) {
+            	protheseFixeView.getPayementFrame().setVisible(true);
+
+            }
+            if (e.getSource()==protheseFixeView.getOkPay()) {            	
+            	//modify the payement and payement total if changed
+            	
+            	double payementAjout=new Double(protheseFixeView.getPayementActuelText().getText());
+            	double payementTotal= new Double( protheseFixeView.getPayementTotalText().getText());
+            	double payementRest=protheseFixeQueries.updatePayement(currentProtheseFixe,payementAjout,payementTotal);
+            	//update the rest label and the total and actual labels
+            	//protheseFixeView.getPayementActuel().setText(new Double(currentProtheseFixe.getPayementActuel()).toString());
+            	protheseFixeView.getPayementActuel().setText(new Double(montantActuel+payementAjout).toString());
+            	montantActuel=montantActuel+payementAjout;
+            	protheseFixeView.getPayementTotal().setText(new Double(payementTotal).toString());
+            	protheseFixeView.getPayementRest().setText(new Double(payementRest).toString());
+            	
+            	protheseFixeView.getPayementFrame().setVisible(false);
+            }
+            if (e.getSource()==protheseFixeView.getAnnulePay()) {
+
+            	protheseFixeView.getPayementFrame().setVisible(false);
+
 			}
 		}
 
@@ -315,6 +359,7 @@ public class ControllerProtheseFixe {
 		//add image from liens to the label
 		File imageFile= new File(lien);
 		label= setImageInLabel(imageFile);
+		label.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		//add the label dynamically into the panel
 		this.protheseFixeView.getImagePanel().add(label);
 		this.protheseFixeView.getImagePanel().revalidate();
@@ -326,6 +371,7 @@ public class ControllerProtheseFixe {
 		currentProtheseFixe.setEntante(protheseFixeView.getEntente().getText());
 		currentProtheseFixe.setTypeProthese(protheseFixeView.getTypeProthese().getText());
 		currentProtheseFixe.setNumero(protheseFixeView.getNumero().getText());
+		
 	}
 	public void clearImageList(){
 		imagePaths.clear();	
@@ -340,6 +386,11 @@ public class ControllerProtheseFixe {
 		protheseFixeView.getEntente().setText(protheseFixe.getEntante());
 		protheseFixeView.getNumero().setText(protheseFixe.getNumero());
 		protheseFixeView.getTypeProthese().setText(protheseFixe.getTypeProthese());
+		protheseFixeView.getPayementActuel().setText(new Double(protheseFixe.getPayementActuel()).toString());
+		protheseFixeView.getPayementTotal().setText(new Double(protheseFixe.getPayementTotal()).toString());
+		String payementReste=new Double(protheseFixe.getPayementTotal()- protheseFixe.getPayementActuel()).toString();
+		protheseFixeView.getPayementRest().setText(payementReste);
+		protheseFixeView.getPayementTotalText().setText(new Double(protheseFixe.getPayementTotal()).toString());
 		DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
 		Date date= new Date();
 		/*try {
@@ -378,13 +429,18 @@ public class ControllerProtheseFixe {
 		String num= protheseFixeView.getNumero().getText();
 		String typeProthese= protheseFixeView.getTypeProthese().getText();
 		String entante= protheseFixeView.getEntente().getText();
+		double payTotal= new Double(protheseFixeView.getPayementTotalText().getText());
+		double payActuel= new Double(protheseFixeView.getPayementActuelText().getText());
 
-		currentProtheseFixe= new ProtheseFixe(num, entante, typeProthese, time, date);
+		currentProtheseFixe= new ProtheseFixe(num, entante, typeProthese, time, date,payTotal,payActuel);
 		currentProtheseFixe.setPatient(controllerInfoPatient.getCurrentPatient());
 		protheseFixeQueries.addProtheseFixe(currentProtheseFixe);
 		//iterate over list of paths
 		for (int i = 0; i < imagePaths.size(); i++) {
-			ImageProtheseFixe imageProtheseFixe= new ImageProtheseFixe(imagePaths.get(i));
+			//copying
+			//destination should change when moving to jar file execution
+			String newImagePath=protheseFixeQueries.CopyFileImage("C:/Users/Hicham/ImagesProtheseFixe",imagePaths.get(i) );
+			ImageProtheseFixe imageProtheseFixe= new ImageProtheseFixe(newImagePath);//needs to change after copying
 			imageProtheseFixe.setProtheseFixe(currentProtheseFixe);
 			protheseFixeQueries.addProtheseFixeImage(imageProtheseFixe);
 		}

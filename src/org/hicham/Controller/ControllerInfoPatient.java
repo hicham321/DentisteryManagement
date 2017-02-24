@@ -79,6 +79,7 @@ public class ControllerInfoPatient {
 
 				setFieldsEmpty();
 				setFieldsActEnabled();
+				protheseFixeView.getNomPrenom().setText(currentPatient.getNomEtPrenom());
 
 			}
 			if (e.getSource()== infoPatient.getRechCombo()) {
@@ -108,8 +109,10 @@ public class ControllerInfoPatient {
 				List<Act>acts=currentPatient.getActList();
 				List<String> actsDates= new ArrayList<>();
 				for (int i = 0; i < acts.size(); i++) {
-					String date= acts.get(i).getDateRendezVous().toString();
-					actsDates.add(date);
+					Date date= acts.get(i).getDateRendezVous();
+					SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+	                String formatedDate = simpleDateFormat.format(date);
+					actsDates.add(formatedDate);
 				}
 				DefaultComboBoxModel dfcmAct=patientQueries.comboBoxModel(actsDates);
 				actPatientView.getListActCombo().setModel(dfcmAct);
@@ -117,8 +120,10 @@ public class ControllerInfoPatient {
 				List<Odf>odfs=currentPatient.getOdfList();
 				List<String> odfsDates= new ArrayList<>();
 				for (int i = 0; i < odfs.size(); i++) {
-					String date= odfs.get(i).getDateRendezVous().toString();
-					odfsDates.add(date);
+					Date date= odfs.get(i).getDateRendezVous();
+					SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+	                String formatedDate = simpleDateFormat.format(date);
+					odfsDates.add(formatedDate);
 				}
 				DefaultComboBoxModel dfcmOdf=patientQueries.comboBoxModel(odfsDates);
 				odfPatient.getListActCombo().setModel(dfcmOdf);
@@ -127,7 +132,10 @@ public class ControllerInfoPatient {
 				List<String> protheseFixeDates= new ArrayList<>();
 				for (int i = 0; i < prothesesFixe.size(); i++) {
 					Date date= prothesesFixe.get(i).getDate();
-					protheseFixeDates.add(date.toString());
+					//format date
+	                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+	                String formatedDate = simpleDateFormat.format(date);
+	                protheseFixeDates.add(formatedDate);
 				}
 				DefaultComboBoxModel dfcmProthFixe=patientQueries
 						.comboBoxModel(protheseFixeDates);

@@ -17,6 +17,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.transaction.Transactional;
+
+import com.sun.xml.internal.ws.message.PayloadElementSniffer;
 @Entity
 @Transactional
 @Table(name="ProtheseFixe")
@@ -36,6 +38,10 @@ public class ProtheseFixe {
 	@Column (name="date" ,nullable=false)
 	@Temporal(value=TemporalType.DATE)
 	Date date ;
+	@Column(name="payementActuel",nullable=false)
+	double payementActuel;
+	@Column(name="payementTotal",nullable=false)
+	double payementTotal;
 	@ManyToOne
     @JoinColumn(name="id_Patient")
     private Patient patient;
@@ -44,12 +50,14 @@ public class ProtheseFixe {
 	private List<ImageProtheseFixe> imageProtheseFixe;
 	
     public ProtheseFixe(String numero,String entante, String typeProthese
-    		,String temp, Date date) {
+    		,String temp, Date date, double payTotal,double payActuel) {
 		this.numero = numero;
 		this.typeProthese = typeProthese;
 		this.temp = temp;
 		this.date = date;
 		this.entante= entante;
+		this.payementActuel=payActuel;
+		this.payementTotal= payTotal;
 	}
 
 	public ProtheseFixe(){
@@ -118,6 +126,22 @@ public class ProtheseFixe {
 
 	public void setEntante(String entante) {
 		this.entante = entante;
+	}
+
+	public double getPayementActuel() {
+		return payementActuel;
+	}
+
+	public void setPayementActuel(double payementActuel) {
+		this.payementActuel = payementActuel;
+	}
+
+	public double getPayementTotal() {
+		return payementTotal;
+	}
+
+	public void setPayementTotal(double payementTotal) {
+		this.payementTotal = payementTotal;
 	}
 	
 
