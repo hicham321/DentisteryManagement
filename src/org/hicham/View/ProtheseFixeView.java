@@ -1,30 +1,17 @@
 package org.hicham.View;
 
-import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
 import java.beans.PropertyVetoException;
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDesktopPane;
@@ -35,9 +22,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
-import javax.swing.border.Border;
+import javax.swing.text.AbstractDocument;
 
-import org.hicham.Controller.ControllerProtheseFixe.ProtheseFixeMouseListener;
 import org.jdesktop.swingx.JXDatePicker;
 
 public class ProtheseFixeView extends JDesktopPane{
@@ -162,6 +148,8 @@ public class ProtheseFixeView extends JDesktopPane{
 		PayementTotalText.setBounds(170,90 ,200 ,30 );
 		okPay.setBounds(100,140 ,100 ,30 );
 		annulePay.setBounds(250,140 ,100 ,30 );
+		((AbstractDocument) PayementTotalText.getDocument()).setDocumentFilter(new MyDocumentFilter());
+		((AbstractDocument) payementActuelText.getDocument()).setDocumentFilter(new MyDocumentFilter());
 
 		panelPay.add(payementActuelTextLab);
 		panelPay.add(payementActuelText);
@@ -270,8 +258,8 @@ public class ProtheseFixeView extends JDesktopPane{
 		this.payementActuel.setText("");
 		this.payementTotal.setText("");
 		this.PayementRest.setText("");
-		this.payementActuelText.setText("");
-		this.PayementTotalText.setText("");
+		this.payementActuelText.setText("0");
+		this.PayementTotalText.setText("0");
 	}
 
 

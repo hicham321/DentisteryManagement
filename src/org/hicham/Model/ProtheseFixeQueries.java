@@ -125,8 +125,6 @@ public class ProtheseFixeQueries {
 			protheseFixe.setPayementActuel(0);
 		}
 		double newPayement= protheseFixe.getPayementActuel()+payementAjouté;
-		System.out.println("payement actuel "+protheseFixe.getPayementActuel());
-		System.out.println(newPayement);
 		protheseFixe.setPayementActuel(newPayement);
 		protheseFixe.setPayementTotal(payementTotal);
 		return payementTotal-newPayement;

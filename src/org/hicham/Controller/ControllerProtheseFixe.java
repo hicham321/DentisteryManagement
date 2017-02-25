@@ -391,15 +391,39 @@ public class ControllerProtheseFixe {
 		String payementReste=new Double(protheseFixe.getPayementTotal()- protheseFixe.getPayementActuel()).toString();
 		protheseFixeView.getPayementRest().setText(payementReste);
 		protheseFixeView.getPayementTotalText().setText(new Double(protheseFixe.getPayementTotal()).toString());
-		DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+		String dateValue= protheseFixe.getDate().toString();
 		Date date= new Date();
-		/*try {
-			 date = format.parse(protheseFixe.getDate());
+		try {
+			 date = new SimpleDateFormat("yyyy-MM-dd").parse(dateValue);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}*/
+		}
 		protheseFixeView.getDatePicker().setDate(date);
+		
+		///
+		
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
+		Date dateObject= new Date();
+		try {
+		      dateObject = formatter.parse(protheseFixe.getTemp());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		protheseFixeView.getTimePicker().setValue(dateObject);
+
+		
+//		SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+//        Object timeValue= new Object();
+//		try {
+//			timeValue = format.parseObject(protheseFixe.getTemp());
+//		} catch (ParseException e) {
+//			e.printStackTrace();
+//		}
+//		protheseFixeView.getTimePicker().setValue(timeValue);
+		
 		
 		for (ImageProtheseFixe image : protheseFixe.getImageProtheseFixe() ) {
 
@@ -425,7 +449,13 @@ public class ControllerProtheseFixe {
 	public void ajouteProthese(){
 		//insert images in protheseImages table
 		Date date= protheseFixeView.getDatePicker().getDate();
-		String time= protheseFixeView.getTimePicker().getValue().toString();
+		
+		
+		String time = new SimpleDateFormat("HH:mm").format(protheseFixeView.getTimePicker().getValue());
+
+		//String time= protheseFixeView.getTimePicker().getValue().toString();
+		
+		
 		String num= protheseFixeView.getNumero().getText();
 		String typeProthese= protheseFixeView.getTypeProthese().getText();
 		String entante= protheseFixeView.getEntente().getText();
