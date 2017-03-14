@@ -28,7 +28,7 @@ import org.jdesktop.swingx.JXDatePicker;
 
 public class ProtheseFixeView extends JDesktopPane{
 
-
+    //Gui part
 	JLabel  protheseRvLab= new JLabel("Rendez Vous Precedent: ");
 	final DefaultComboBoxModel protheseRvModel = new DefaultComboBoxModel();
 	private JComboBox listRVCombo= new JComboBox(protheseRvModel);
@@ -52,7 +52,6 @@ public class ProtheseFixeView extends JDesktopPane{
 	JLabel timeLab = new JLabel("A: ");
 	JSpinner timePicker = new JSpinner(new SpinnerDateModel());
 
-	JPanel imagePanel;
 
 
 	JButton ajoute= new JButton("Ajouté");
@@ -60,6 +59,9 @@ public class ProtheseFixeView extends JDesktopPane{
 	JButton supp= new JButton("Supprimer");
 	JButton nouveau= new JButton("Nouveau");
 
+	
+	//images
+	JPanel imagePanel;
 
 	JButton ajouteImage= new JButton("Image");
 	JButton deleteImage= new JButton("Supprimé");
@@ -82,19 +84,69 @@ public class ProtheseFixeView extends JDesktopPane{
 	
 	JInternalFrame payementFrame= new JInternalFrame();
 	JLabel payementActuelTextLab= new JLabel("payement a ajouté:");
-    JTextField payementActuelText= new JTextField();
+    JTextField payementActuelText= new JTextField("0");
 	JLabel PayementTotalTextLab= new JLabel("Total: ");
-    JTextField PayementTotalText= new JTextField();
+    JTextField PayementTotalText= new JTextField("0");
 	JButton okPay= new JButton("Ok");
 	JButton annulePay= new JButton("Annuler");
 
 
 
 	public ProtheseFixeView(){
-
+        //specific gui stuff
 		this.setLayout(null);
 		this.setBackground(Color.gray);
 
+		
+
+		JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(timePicker, "HH:mm");
+		timePicker.setEditor(timeEditor);
+		timePicker.setValue(new Date()); // will only show the current time
+		datePicker.setDate(Calendar.getInstance().getTime());
+		datePicker.setFormats(new SimpleDateFormat("dd.MM.yyyy"));
+		
+		this.add(numLabel);
+		this.add(numero);
+		this.add(nomPrenomLab);
+		this.add(nomPrenom);
+		this.add(typeProtheseLab);
+		this.add(typeProthese);
+		this.add(ententeLab);
+		this.add(entente);
+		this.add(dateRendezVousLab);
+		this.add(datePicker);
+		this.add(timeLab);
+		this.add(timePicker);
+		this.add(ajoute);
+		this.add(modifie);
+		this.add(supp);
+		this.add(nouveau);
+		this.add(listRVCombo);
+		this.add(protheseRvLab);
+		
+		protheseRvLab.setBounds(30, 40, 1200, 20);
+		listRVCombo.setBounds(170, 40, 200, 20);
+		numLabel.setBounds(30, 140, 120, 20);
+		numero.setBounds(170, 140, 200, 20);
+		nomPrenomLab.setBounds(30,90 , 120, 20);
+		nomPrenom.setBounds(170, 90, 200, 20);
+		typeProtheseLab.setBounds(30, 190, 120, 20);
+		typeProthese.setBounds(170, 190, 200, 20);
+		ententeLab.setBounds(30, 240, 120, 20);
+		entente.setBounds(170, 240, 200, 20);
+		dateRendezVousLab.setBounds(30, 290, 120, 20);
+		datePicker.setBounds(170, 290, 130, 20);
+		timeLab.setBounds(320,290 ,50 , 20);
+		timePicker.setBounds(390, 290, 80, 20);
+		ajoute.setBounds(70, 500, 100, 40);
+		modifie.setBounds(200, 500, 100, 40);
+		supp.setBounds(330, 500, 100, 40);
+		nouveau.setBounds(400, 30, 100, 40);
+
+		
+		
+		
+		//images 
 		imagePanel= new JPanel();
 		imagePanel.setBackground(Color.WHITE);
 		imagePanel.setLayout(new GridLayout(4,3));
@@ -102,12 +154,6 @@ public class ProtheseFixeView extends JDesktopPane{
 
 		this.add(imagePanel);
 		imagePanel.setBounds(650, 15 ,500 , 500);
-
-		JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(timePicker, "HH:mm");
-		timePicker.setEditor(timeEditor);
-		timePicker.setValue(new Date()); // will only show the current time
-		datePicker.setDate(Calendar.getInstance().getTime());
-		datePicker.setFormats(new SimpleDateFormat("dd.MM.yyyy"));
 
 		panelShowImage.setLayout(null);
 		panelShowImage.setBackground(Color.WHITE);
@@ -121,8 +167,6 @@ public class ProtheseFixeView extends JDesktopPane{
 		} catch (PropertyVetoException e) {
 			e.printStackTrace();
 		}
-		Dimension jInternalFrameSiz = this.showImage.getSize();
-
 		this.showImage.setLocation(0,0);
 		showImage.setVisible(false);	
 
@@ -136,6 +180,10 @@ public class ProtheseFixeView extends JDesktopPane{
 		deleteImage.setBounds(0, 500, 500, 70);
 		annuleImage.setBounds(500, 500,500, 70);
 		imageLabel.setBounds(0, 0, 1000, 500);
+		ajouteImage.setBounds(450, 500, 100, 40);
+
+		this.add(ajouteImage);
+		this.add(showImage);	
 
 		//payement
 		JPanel panelPay= new JPanel();
@@ -191,59 +239,22 @@ public class ProtheseFixeView extends JDesktopPane{
 		PayementRest.setBounds(170,420 ,120 , 20);
 		addPay.setBounds(400,340 , 100, 20);
 
-		this.add(numLabel);
-		this.add(numero);
-		this.add(nomPrenomLab);
-		this.add(nomPrenom);
-		this.add(typeProtheseLab);
-		this.add(typeProthese);
-		this.add(ententeLab);
-		this.add(entente);
-		this.add(dateRendezVousLab);
-		this.add(datePicker);
-		this.add(timeLab);
-		this.add(timePicker);
-		this.add(ajoute);
-		this.add(modifie);
-		this.add(supp);
-		this.add(ajouteImage);
-		this.add(nouveau);
-		this.add(listRVCombo);
-		this.add(protheseRvLab);
-		this.add(showImage);
-
-
-		protheseRvLab.setBounds(30, 40, 1200, 20);
-		listRVCombo.setBounds(170, 40, 200, 20);
-		numLabel.setBounds(30, 140, 120, 20);
-		numero.setBounds(170, 140, 200, 20);
-		nomPrenomLab.setBounds(30,90 , 120, 20);
-		nomPrenom.setBounds(170, 90, 200, 20);
-		typeProtheseLab.setBounds(30, 190, 120, 20);
-		typeProthese.setBounds(170, 190, 200, 20);
-		ententeLab.setBounds(30, 240, 120, 20);
-		entente.setBounds(170, 240, 200, 20);
-		dateRendezVousLab.setBounds(30, 290, 120, 20);
-		datePicker.setBounds(170, 290, 130, 20);
-		timeLab.setBounds(320,290 ,50 , 20);
-		timePicker.setBounds(390, 290, 80, 20);
-		ajoute.setBounds(70, 500, 100, 40);
-		modifie.setBounds(200, 500, 100, 40);
-		supp.setBounds(330, 500, 100, 40);
-		ajouteImage.setBounds(450, 500, 100, 40);
-		nouveau.setBounds(400, 30, 100, 40);
+		
+		
 	}
 
 	public void addProtheseFixActionListener(ActionListener listener){
-
+        //gui stuff
 		this.ajoute.addActionListener(listener);
 		this.modifie.addActionListener(listener);
 		this.supp.addActionListener(listener);
-		this.ajouteImage.addActionListener(listener);
 		this.nouveau.addActionListener(listener);
 		this.listRVCombo.addActionListener(listener);
+		//image
+		this.ajouteImage.addActionListener(listener);
 		this.deleteImage.addActionListener(listener);
 		this.annuleImage.addActionListener(listener);
+		//payement
 		this.addPay.addActionListener(listener);
 		this.okPay.addActionListener(listener);
 		this.annulePay.addActionListener(listener);
@@ -303,9 +314,6 @@ public class ProtheseFixeView extends JDesktopPane{
 		return timePicker;
 	}
 
-	public JPanel getImagePanel() {
-		return imagePanel;
-	}
 
 	public JButton getAjoute() {
 		return ajoute;
@@ -319,10 +327,6 @@ public class ProtheseFixeView extends JDesktopPane{
 		return supp;
 	}
 
-	public JButton getAjouteImage() {
-		return ajouteImage;
-	}
-
 	public JButton getNouveau() {
 		return nouveau;
 	}
@@ -330,7 +334,9 @@ public class ProtheseFixeView extends JDesktopPane{
 	public JComboBox getListRVCombo() {
 		return listRVCombo;
 	}
-
+	
+	
+// image gui 
 	public JPanel getPanelShowImage() {
 		return panelShowImage;
 	}
@@ -350,7 +356,17 @@ public class ProtheseFixeView extends JDesktopPane{
 	public JLabel getImageLabel() {
 		return imageLabel;
 	}
-
+	
+	public JPanel getImagePanel() {
+		return imagePanel;
+	}
+	
+	public JButton getAjouteImage() {
+		return ajouteImage;
+	}
+	
+	
+    //payement
 	public JButton getAddPay() {
 		return addPay;
 	}

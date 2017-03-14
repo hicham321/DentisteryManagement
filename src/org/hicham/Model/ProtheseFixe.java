@@ -17,8 +17,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.transaction.Transactional;
-
-import com.sun.xml.internal.ws.message.PayloadElementSniffer;
 @Entity
 @Transactional
 @Table(name="ProtheseFixe")

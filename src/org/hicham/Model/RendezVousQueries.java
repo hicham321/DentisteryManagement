@@ -45,7 +45,7 @@ public class RendezVousQueries {
 			for (int i = 0; i < ListOfAllPatients.size(); i++) {
 				List<Act> actsOfPatient= ListOfAllPatients.get(i).getActList();
 				for (int j = 0; j < actsOfPatient.size(); j++) {
-					if(actsOfPatient.get(j).getDateRendezVous().equals(date)){
+					if(actsOfPatient.get(j).getDate().equals(date)){
 						ListOfPatients.add(actsOfPatient.get(j).getPatient());
 					}
 				}

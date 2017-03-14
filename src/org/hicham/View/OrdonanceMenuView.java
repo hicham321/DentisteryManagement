@@ -30,6 +30,8 @@ public class OrdonanceMenuView extends JPanel{
     JTextArea situation= new JTextArea();
     
     JTextArea medList= new JTextArea();
+	private JScrollPane medListScrol;
+
     
 	JButton add = new JButton("Ajouter");
 		
@@ -72,12 +74,14 @@ public class OrdonanceMenuView extends JPanel{
 		nomPrenomCombo.setSelectedIndex(0);
 
 		
+		medList= new JTextArea(5, 20);
 		Border border = BorderFactory.createLineBorder(Color.BLACK);
 		medList.setBorder(BorderFactory.createCompoundBorder(border,
 				BorderFactory.createEmptyBorder(0, 0, 10, 10)));
 
 		medList.setLineWrap(true);
 		medList.setWrapStyleWord(true);
+		medListScrol= new JScrollPane(medList);
 		
 		cards = new JPanel(new CardLayout());
 
@@ -91,7 +95,7 @@ public class OrdonanceMenuView extends JPanel{
 		this.add(situation);
 		this.add(add);
 		this.add(ok);
-		this.add(medList);
+		this.add(medListScrol);
 		
 		this.add(nomPrenomlab);
 		this.add(nomPrenomCombo);
@@ -102,16 +106,13 @@ public class OrdonanceMenuView extends JPanel{
 		this.add(ageLab);
 		this.add(ageText);
 
-
-		
-
-		
+	
 		nomMedlab.setBounds(30,240,120,20);
 		nomMed.setBounds(170,240,270,20);
 		situationLab.setBounds(30,290,120,20);
 		situation.setBounds(170,290,270,20);
 		add.setBounds(450,290,80,20);
-		medList.setBounds(30,340,500,200);
+		medListScrol.setBounds(30,340,500,200);
         ok.setBounds(70,600,130,40);
         cards.setBounds(650, 15 ,500 , 600);
         

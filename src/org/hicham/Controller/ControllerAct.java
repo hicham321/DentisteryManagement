@@ -1,249 +1,467 @@
 package org.hicham.Controller;
 
+import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileFilter;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import javax.accessibility.AccessibleTableModelChange;
 import javax.imageio.ImageIO;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import org.hicham.Controller.ControllerProtheseFixe.ProtheseFixeMouseListener;
 import org.hicham.Model.Act;
 import org.hicham.Model.ActQueries;
-import org.hicham.Model.Patient;
+import org.hicham.Model.ImageAct;
+import org.hicham.Model.ImageProtheseFixe;
+import org.hicham.Model.MedicamentQueries;
 import org.hicham.Model.PatientQueries;
+import org.hicham.Model.ProtheseFixe;
+import org.hicham.Model.ProtheseFixeQueries;
 import org.hicham.View.ActPatientView;
 import org.hicham.View.InfoPatient;
 import org.hicham.View.OdfPatient;
 import org.hicham.View.Ordonance;
 import org.hicham.View.ProtheseFixeView;
+import org.hicham.View.ProthesePartielleView;
+import org.hicham.View.ProtheseTotaleView;
 import org.hicham.View.RecherchePatientView;
 
-import javafx.stage.FileChooser;
+import com.sun.xml.internal.ws.api.Component;
 
 public class ControllerAct {
-
 	ActPatientView actPatientView= new ActPatientView();
-	ActQueries actQueries        = new     ActQueries();
+	ActQueries actQueries= new ActQueries();
+	
+	ProtheseTotaleView protheseTotaleView= new ProtheseTotaleView();
+	ProthesePartielleView prothesePartielleView= new ProthesePartielleView();
+	ProtheseFixeView protheseFixeView= new ProtheseFixeView();
 	PatientQueries patientQueries= new PatientQueries();
 	OdfPatient odfPatient= new OdfPatient();
-	ProtheseFixeView protheseFixeView= new ProtheseFixeView();
 	Ordonance ordonance= new Ordonance();
 	InfoPatient infoPatient = new InfoPatient();
 
 	RecherchePatientView recherchePatientView = new RecherchePatientView();
+    ControllerInfoPatient controllerInfoPatient= new ControllerInfoPatient(infoPatient, patientQueries, recherchePatientView
+    		, actPatientView, odfPatient, protheseFixeView
+    		, prothesePartielleView, protheseTotaleView, ordonance);
+	
 
-	ControllerInfoPatient controllerInfoPatient= new ControllerInfoPatient(infoPatient
-			,patientQueries,recherchePatientView,actPatientView
-			,odfPatient,protheseFixeView,ordonance);
-
-	Act currentAct= new Act();
 
 	int returnVal;
 	JFileChooser filechooser= new JFileChooser();
-	File sourceFileImage;
-	String dbPathToFileImage="";
-
-	BufferedImage bfImage;
-	JLabel picLabel= new JLabel();
-	public ControllerAct(ActPatientView actPatientView,ActQueries actQueries
-			,PatientQueries patientQueries ,ControllerInfoPatient controllerInfoPatient){
-
-		this.actPatientView= actPatientView;
+	
+	List<String>imagePaths= new ArrayList<>();
+	Act currentAct= new Act();
+	
+	List<String> imageOrder= new ArrayList<>();
+	List<String> deletedImages= new ArrayList<>();
+	List<String> addedImages= new ArrayList<>();
+	int selectedImage;
+	
+	double montantActuel=0;
+    
+	public ControllerAct(ActPatientView actPatientView
+			,ActQueries actQueries
+			,ControllerInfoPatient controllerInfoPatient){
 		this.actQueries= actQueries;
-		this.patientQueries=patientQueries;
+		this.actPatientView= actPatientView;
 		this.controllerInfoPatient= controllerInfoPatient;
-		this.actPatientView.addActPatientViewActionListener(new ActPatientViewActionListener());
-
+		this.actPatientView.addActActionListener(new ActActionListener() );
 	}
-	class ActPatientViewActionListener implements ActionListener{
+
+	class ActActionListener implements ActionListener{
 
 		@Override
-		public void actionPerformed(ActionEvent arg0) {
+		public void actionPerformed(ActionEvent e) {
 
-			if(arg0.getSource()==actPatientView.getOk()){
+			if (e.getSource()==actPatientView.getAjoute()) {
+				if(!controllerInfoPatient.patientSelected){
+					int input = JOptionPane.showOptionDialog(null
+							,"Vous n'avez pas selectioné un patient. "
+							, "Erreur Patient"
+							, JOptionPane.OK_CANCEL_OPTION
+							, JOptionPane.INFORMATION_MESSAGE, null, null, null);
 
-				//put act information
-				String actText=actPatientView.getActText().getText();
-				Date actDate=actPatientView.getDatePicker().getDate();
-				String actTemp= actPatientView.getTimePicker().getValue().toString();
-				double actPayement= Double.parseDouble(actPatientView.getPayementCombo()
-						.getSelectedItem().toString());
-				String dbImagePath=dbPathToFileImage;
-				currentAct= new Act(actText,actPayement,actDate,actTemp,dbImagePath);
-				//setting patient for oneToMany relationship between Patient and Act
-				currentAct.setPatient(controllerInfoPatient.getCurrentPatient());
-				actQueries.addAct(currentAct);
+					if(input == JOptionPane.OK_OPTION){
 
+					}	
+				}else{
+					//Check if image panel doesn't contain images 
+					int countComponent=0;
+					for (java.awt.Component labeliterator:actPatientView.getImagePanel().getComponents()){
+						countComponent++;
+					}
+					if (countComponent==0) {
+						int input = JOptionPane.showOptionDialog(null
+								,"Vous n'avez pas ajouté des images, continué sans ajouté? "
+								, "Ajout d'image"
+								, JOptionPane.OK_CANCEL_OPTION
+								, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+
+						if(input == JOptionPane.OK_OPTION){
+							ajouteAct();
+							//refresh combo code
+						}	
+
+					}
+					else{
+						ajouteAct();
+						//refresh combo code
+					}
+				}
 			}
-			if (arg0.getSource()==actPatientView.getOuvrir()) {
+			if (e.getSource()==actPatientView.getModifie()) {
 
+				int input = JOptionPane.showOptionDialog(null
+						, "Enrigestré les modification?"						,"Modifie Prothese"
+
+						, JOptionPane.OK_CANCEL_OPTION
+						, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+
+				if(input == JOptionPane.OK_OPTION){
+					modifyFieldAct();
+					actQueries.addAct(currentAct);
+					List<String> oldImageLien= new ArrayList<>();
+					List<String> newImagesLien= new ArrayList<>();
+					for (int i = 0; i < currentAct.getImageAct().size(); i++) {
+						oldImageLien.add(currentAct.getImageAct().get(i).getLien());
+						
+					}
+					for (int i = 0; i < addedImages.size(); i++) {
+						String newPath=actQueries.CopyFileImage("C:/Users/Hicham/ImagesProtheseFixe", addedImages.get(i));
+
+					}
+					actQueries.addNewImages(addedImages, oldImageLien,currentAct);
+                    for (int i = 0; i < deletedImages.size(); i++) {
+                    	System.out.println(deletedImages.toString());
+						actQueries.deleteActImages(deletedImages.get(i));
+					}
+                    clearImageList();
+				}	
+			}
+			if (e.getSource()==actPatientView.getSupp()) {
+				//delete query
+				int input = JOptionPane.showOptionDialog(null
+						, "Etes vous sure de vouloir supprimer la prothese?"						,"Supprime Prothese"
+
+						, JOptionPane.OK_CANCEL_OPTION
+						, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+
+				if(input == JOptionPane.OK_OPTION){
+					
+
+					actQueries.deleteAct(currentAct);
+					actPatientView.clearImages();
+					actPatientView.setEmptyFields();
+					clearImageList();
+					//refresh combo code
+
+				}	
+			}
+			if (e.getSource()==actPatientView.getAjouteImage()) {
+				//add a new image to image panel
+				//insert image into protheseImage
 				FileNameExtensionFilter imageFilter = new FileNameExtensionFilter
 						("Image files", ImageIO.getReaderFileSuffixes());
 				filechooser.addChoosableFileFilter(imageFilter);
 				filechooser.setAcceptAllFileFilterUsed(false);	
 
 				returnVal = filechooser.showOpenDialog(null);
+				String lienImage="";
 				if(returnVal == JFileChooser.APPROVE_OPTION){
-					sourceFileImage = filechooser.getSelectedFile();
 					try{
-						setImageInPanel(sourceFileImage);
+						lienImage=filechooser.getSelectedFile().getPath();
+						showNewImage(lienImage);
+						imagePaths.add(lienImage);
+						imageOrder.add(lienImage);
+						addedImages.add(lienImage);
+						
 					}catch(Exception ex){
 						ex.printStackTrace();
 					}
 
-
 				}
 
+				//show image in panel
 			}
-			if (arg0.getSource()==actPatientView.getOkImage()) {
-				//destination file should changed after packaging the Jar  
-				String imageDestinationDir="C://Users/Hicham/ImageRadio";
+			if (e.getSource()==actPatientView.getNouveau()) {
+				currentAct= new Act();
+				montantActuel=0;
+				actPatientView.getAjoute().setEnabled(true);
+				actPatientView.clearImages();
+				clearImageList();
+				actPatientView.setEmptyFields();	
+			}
+			if (e.getSource()== actPatientView.getListRVCombo()) {
+				//set current prothese
+				actPatientView.getAjoute().setEnabled(false);
+				int selectedDate= actPatientView.getListRVCombo().getSelectedIndex();
+				setSelectedActInfo(selectedDate);
+				actPatientView.getPayementActuelText().setText("");
+				actPatientView.getPayementTotalText().setText(new Double(currentAct.getPayementTotal()).toString());
+				montantActuel= currentAct.getPayementActuel();
 
-				dbPathToFileImage=imageDestinationDir+"/"+CopyFileImage(imageDestinationDir);
-				actPatientView.getOuvrir().setEnabled(false);
+				actPatientView.clearImages();
+				clearImageList();
 			}
-			if (arg0.getSource()== actPatientView.getListActCombo()) {
-				//show related act info
-				int selecteditem=actPatientView.getListActCombo().getSelectedIndex();
-				setSelectedActInfo(selecteditem);
-
-
-			}
-			if (arg0.getSource()== actPatientView.getNouveauAct()) {
-				//set act empty  fields
-				actPatientView.getOk().setEnabled(true);
-				setfieldsActEmpty();
-			}
-			if (arg0.getSource()== actPatientView.getModifie()) {
-				modifyFieldsAct();
-
-			}
-			if (arg0.getSource()== actPatientView.getSuppAct()) {
+			if (e.getSource()== actPatientView.getDeleteImage()) {
 				int input = JOptionPane.showOptionDialog(null
-						,"Etes vous sure de vouloir supprimer ce Act?"
-						, "Supprimer l'act courant"
+						, "Etes vous sure de vouloir supprimer l'image?"	,"Supprime Prothese"
+
 						, JOptionPane.OK_CANCEL_OPTION
 						, JOptionPane.INFORMATION_MESSAGE, null, null, null);
 
 				if(input == JOptionPane.OK_OPTION){
+					int counter=0;
+					System.out.println("selected image"+ selectedImage);
 
-					actQueries.deleteAct(currentAct);
+					for (java.awt.Component labeliterator:actPatientView.getImagePanel().getComponents()){
+						if (counter==selectedImage) {
+							System.out.println("counter "+counter+" selected image"+ selectedImage);
+							((JLabel) labeliterator).setIcon( null );
+							actPatientView.getImagePanel().remove(labeliterator);
+							//remove from image order
+							deletedImages.add(imageOrder.get(selectedImage));
+							imageOrder.remove(selectedImage);
+							actPatientView.getImagePanel().revalidate();
+							actPatientView.getImagePanel().repaint();
+						}
+						counter++;
+
+						}
+                    
+	            	actPatientView.getShowImage().setVisible(false);				
 				}	
+				
 			}
-
-		}
-
-
-		//this copies selected image into the directory and gets the new path of the image
-		public String CopyFileImage(String pathTodestinationImageDir){
-			String imageName="";
-			try{
-				//sourceFileImage = filechooser.getSelectedFile();
-				imageName=sourceFileImage.getName();
-				//the path to the destination file should be changed when packaging the Jar file
-				File destinationFile = new File(pathTodestinationImageDir);
-				FileInputStream fileInputStream = new FileInputStream(sourceFileImage);
-				FileOutputStream fileOutputStream = new FileOutputStream( destinationFile
-						+"/"+sourceFileImage.getName());
-
-				int bufferSize;
-				byte[] bufffer = new byte[512];
-				while ((bufferSize = fileInputStream.read(bufffer)) > 0) {
-					fileOutputStream.write(bufffer, 0, bufferSize);
+            if (e.getSource()== actPatientView.getAnnuleImage()) {
+            	
+            	//removing image label from internal frame
+            	for (java.awt.Component labelIterator:actPatientView.getPanelShowImage().getComponents()){
+            		
+            		if (labelIterator instanceof JLabel) {
+            			((JLabel) labelIterator).setIcon( null ); 
+					}
+        			
 				}
-				fileInputStream.close();
-				fileOutputStream.close();
-
-			}catch(Exception ex){
-				ex.printStackTrace();
-
+            	actPatientView.getShowImage().setVisible(false);				
 			}
-			return imageName;
-		}
-		public void setImageInPanel(File imageFile){
+            if (e.getSource()==actPatientView.getAddPay()) {
+            	actPatientView.getPayementFrame().setVisible(true);
 
-			try{
-				bfImage = ImageIO.read(imageFile);
-			}catch(Exception ex){
-				ex.printStackTrace();
-			}
-			Image newimg = bfImage.getScaledInstance( 300, 300,  java.awt.Image.SCALE_SMOOTH );  
-			//picLabel= new JLabel(new ImageIcon(newimg));
-			picLabel.setIcon(new ImageIcon(newimg));
-			actPatientView.getPanelImageAct().add(picLabel);
-
-			actPatientView.getPanelImageAct().revalidate();
-			actPatientView.getPanelImageAct().repaint();
-
-			picLabel.setBounds(0,0 , 300, 300);	
-
-		}
-		public void setSelectedActInfo(int selectedAct ){
-			Act act=controllerInfoPatient.getCurrentPatient().getActList().get(selectedAct);
-
-			actPatientView.getActText().setText(act.getAct());
-			/*DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-            String time= act.getTempRendezVous();
-            DateFormat df = new SimpleDateFormat("HH:mm:ss"); 
-            Date startDate=new Date();
-            try {
-                startDate = df.parse(time);
-                String newDateString = df.format(startDate);
-            } catch (Exception e) {
-                e.printStackTrace();
             }
-			actPatientView.getTimePicker().setValue(startDate);*/
-			actPatientView.getDatePicker().setDate(act.getDateRendezVous());
-			actPatientView.getPayementCombo().setSelectedItem(act.getPayement());
-			File imageFile= new File(act.getLienImageRadio());
-			if (!"".equals(act.getLienImageRadio())) {
-				setImageInPanel(imageFile);
+            if (e.getSource()==actPatientView.getOkPay()) {            	
+            	//modify the payement and payement total if changed
+            	
+            	double payementAjout=new Double(actPatientView.getPayementActuelText().getText());
+            	double payementTotal= new Double( actPatientView.getPayementTotalText().getText());
+            	double payementRest=actQueries.updatePayement(currentAct,payementAjout,payementTotal);
+            	//update the rest label and the total and actual labels
+            	//protheseFixeView.getPayementActuel().setText(new Double(currentProtheseFixe.getPayementActuel()).toString());
+            	actPatientView.getPayementActuel().setText(new Double(montantActuel+payementAjout).toString());
+            	montantActuel=montantActuel+payementAjout;
+            	actPatientView.getPayementTotal().setText(new Double(payementTotal).toString());
+            	actPatientView.getPayementRest().setText(new Double(payementRest).toString());
+            	
+            	actPatientView.getPayementFrame().setVisible(false);
+            }
+            if (e.getSource()==actPatientView.getAnnulePay()) {
+
+            	actPatientView.getPayementFrame().setVisible(false);
+
 			}
-			else{
-				//code to empty image panel
-			}
 		}
-		public void setfieldsActEmpty(){
-			actPatientView.getActText().setText("");
-			DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-			Calendar cal = Calendar.getInstance();
-			actPatientView.getTimePicker().setValue(cal.getTime());
-			Date date= new Date();
-			actPatientView.getDatePicker().setDate(date);
-			actPatientView.getPayementCombo().setSelectedIndex(0);
-		}
-		public void modifyFieldsAct(){
-			currentAct.setAct(actPatientView.getActText().getText());     
-			currentAct.setDateRendezVous(actPatientView.getDatePicker().getDate());
-			currentAct.setTempRendezVous(actPatientView.getTimePicker().getValue().toString());
-			currentAct.setPayement(Double.parseDouble(actPatientView.getPayementCombo()
-					.getSelectedItem().toString()));
-			currentAct.setAct(dbPathToFileImage);
-		}
-
-
-
-
 
 	}
-}
+	public class ProtheseFixeMouseListener extends MouseAdapter{
 
+		@Override
+		public void mouseClicked(MouseEvent e) {
+            JLabel label = (JLabel)e.getSource();            
+            //iterate over panel components to get the current label
+            int countComponent=0;
+            for (java.awt.Component labeliterator:actPatientView.getImagePanel().getComponents()){
+            	if (label.equals(labeliterator)) {
+					selectedImage=countComponent;
+				}
+            	countComponent++;
+    		}
+            String lienFile= imageOrder.get(selectedImage);
+            File imageFile= new File(lienFile);
+            BufferedImage bfImageLabel=null;
+            try{
+    			 bfImageLabel = ImageIO.read(imageFile);
+    		}catch(Exception ex){
+    			ex.printStackTrace();
+    		}
+    		Image newimg = bfImageLabel.getScaledInstance( actPatientView.getImageLabel().getWidth(), 
+    				actPatientView.getImageLabel().getHeight(),  java.awt.Image.SCALE_SMOOTH ) ;
+    		bfImageLabel.flush();
+    		bfImageLabel = null;
+    		actPatientView.getImageLabel().setIcon(new ImageIcon(newimg));
+            actPatientView.getPanelShowImage().revalidate();
+            actPatientView.getShowImage().setVisible(true);                       
+		}
+	
+		
+	}
+	public synchronized JLabel setImageInLabel(File imageFile){
+		BufferedImage bfImage=null;
+		try{
+			bfImage = ImageIO.read(imageFile);
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		Image newimg = bfImage.getScaledInstance( 300, 300,  java.awt.Image.SCALE_SMOOTH ) ;
+		JLabel picLabel=new JLabel();
+		picLabel.setIcon(new ImageIcon(newimg));
+		
+		bfImage.flush();
+		bfImage = null;
+		actPatientView.addActMouseListener(new ProtheseFixeMouseListener(), picLabel);
+		
+		return picLabel;
+	}
+	public void makingImageLabels(List<String> liens){
+		for (int i = 0; i < liens.size(); i++) {
+			//create new label 
+			JLabel label= new JLabel("");
+			//add image from liens to the label
+			File imageFile= new File(liens.get(i));
+			label=setImageInLabel(imageFile);
+			label.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+			//add the label dynamically into the panel
+			this.actPatientView.getImagePanel().add(label);
+		}
+		this.actPatientView.getImagePanel().revalidate();
+
+	}
+	public void showNewImage(String lien){
+		//create new label 
+
+		JLabel label= new JLabel("");
+		//add image from liens to the label
+		File imageFile= new File(lien);
+		label= setImageInLabel(imageFile);
+		label.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		//add the label dynamically into the panel
+		this.actPatientView.getImagePanel().add(label);
+		this.actPatientView.getImagePanel().revalidate();
+	}
+	public void modifyFieldAct(){
+
+		currentAct.setDate(actPatientView.getDatePicker().getDate());  
+		String time = new SimpleDateFormat("HH:mm").format(actPatientView.getTimePicker().getValue());		
+		currentAct.setTemp(time);
+		currentAct.setEntante(actPatientView.getEntente().getText());
+		
+	}
+	public void clearImageList(){
+		imagePaths.clear();	
+		imageOrder.clear();
+		deletedImages.clear();
+		addedImages.clear();
+	}
+	public void setSelectedActInfo(int selectedAct){
+		Act act= controllerInfoPatient.getCurrentPatient()
+				.getActList().get(selectedAct);
+		currentAct= act;
+		actPatientView.getEntente().setText(act.getEntante());
+		actPatientView.getPayementActuel().setText(new Double(act.getPayementActuel()).toString());
+		actPatientView.getPayementTotal().setText(new Double(act.getPayementTotal()).toString());
+		String payementReste=new Double(act.getPayementTotal()- act.getPayementActuel()).toString();
+		actPatientView.getPayementRest().setText(payementReste);
+		actPatientView.getPayementTotalText().setText(new Double(act.getPayementTotal()).toString());
+		String dateValue= act.getDate().toString();
+		Date date= new Date();
+		try {
+			 date = new SimpleDateFormat("yyyy-MM-dd").parse(dateValue);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		actPatientView.getDatePicker().setDate(date);
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
+		Date dateObject= new Date();
+		try {
+		      dateObject = formatter.parse(act.getTemp());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		actPatientView.getTimePicker().setValue(dateObject);
+
+		for (ImageAct image : act.getImageAct() ) {
+
+			//put a different thread for every Image
+			new SwingWorker() {
+				@Override
+				protected Object doInBackground() throws Exception {
+					JLabel label= new JLabel("");
+					//add image from liens to the label
+					File imageFile= new File(image.getLien());
+					label= setImageInLabel(imageFile);
+					label.setCursor(new Cursor(Cursor.HAND_CURSOR));
+					actPatientView.getImagePanel().add(label);
+					addImageOrder(image.getLien());
+					actPatientView.getImagePanel().revalidate();			
+					return null;
+				}
+				
+				
+			}.execute();
+		}
+	}
+	public void ajouteAct(){
+		//insert images in protheseImages table
+		Date date= actPatientView.getDatePicker().getDate();
+		String time = new SimpleDateFormat("HH:mm").format(actPatientView.getTimePicker().getValue());		
+		String entante= actPatientView.getEntente().getText();
+		double payTotal= new Double(actPatientView.getPayementTotalText().getText());
+		double payActuel= new Double(actPatientView.getPayementActuelText().getText());
+
+		currentAct= new Act(entante,time, date,payTotal,payActuel);
+		currentAct.setPatient(controllerInfoPatient.getCurrentPatient());
+		actQueries.addAct(currentAct);
+		//iterate over list of paths
+		for (int i = 0; i < imageOrder.size(); i++) {
+			//copying
+			//destination should change when moving to jar file execution
+			String newImagePath=actQueries.CopyFileImage("C:/Users/Hicham/ImagesProtheseFixe",imageOrder.get(i) );
+			ImageAct imageAct= new ImageAct(newImagePath);//needs to change after copying
+			imageAct.setAct(currentAct);
+			actQueries.addActImage(imageAct);
+		}
+		//clear image panel and set fields empty
+		//set images empty
+		actPatientView.clearImages();
+		clearImageList();
+		actPatientView.setEmptyFields();
+	}
+	public  void addImageOrder(String lien){
+		imageOrder.add(lien);
+	}
+	
+	
+}

@@ -19,6 +19,8 @@ import org.hicham.Controller.ControllerOrdonanceMenu;
 import org.hicham.Controller.ControllerPatient;
 import org.hicham.Controller.ControllerProthese;
 import org.hicham.Controller.ControllerProtheseFixe;
+import org.hicham.Controller.ControllerProthesePartielle;
+import org.hicham.Controller.ControllerProtheseTotale;
 import org.hicham.Controller.ControllerRegister;
 import org.hicham.Controller.ControllerRendezVous;
 import org.hicham.Model.ActQueries;
@@ -27,6 +29,8 @@ import org.hicham.Model.OdfQueries;
 import org.hicham.Model.PatientQueries;
 import org.hicham.Model.ProduitQueries;
 import org.hicham.Model.ProtheseFixeQueries;
+import org.hicham.Model.ProthesePartielleQueries;
+import org.hicham.Model.ProtheseTotaleQueries;
 import org.hicham.Model.RegisterQueries;
 import org.hicham.Model.RendezVousQueries;
 import org.hicham.Model.SessionsDB;
@@ -74,6 +78,8 @@ public class Main {
 		RegisterQueries rq= new RegisterQueries();
 		OdfQueries oq= new OdfQueries();
 		ProtheseFixeQueries prfq= new ProtheseFixeQueries();
+		ProthesePartielleQueries prprq= new ProthesePartielleQueries();
+		ProtheseTotaleQueries prtoq= new ProtheseTotaleQueries();
 		//views
 		RegisterView rv= new RegisterView();
 		ChangeMotPassView cmpv= new ChangeMotPassView();
@@ -96,9 +102,9 @@ public class Main {
 		ExamenComplimentaireView excv= new ExamenComplimentaireView();
 		MainFrame mf= new MainFrame(hp,p,gs,rvv,jav,rv,ormv,excv,mb);
 		//controllers
-		ControllerInfoPatient cip= new ControllerInfoPatient(ip, pq,rp,ap,op,prfv,o);
-		ControllerAct ca= new ControllerAct(ap, aq, pq,cip);
-		ControllerOdf codf= new ControllerOdf(op, oq,pq,cip);
+		ControllerInfoPatient cip= new ControllerInfoPatient(ip, pq,rp,ap,op,prfv,prpv,prtv,o);
+		ControllerAct ca= new ControllerAct(ap, aq, cip);
+		ControllerOdf codf= new ControllerOdf(op, oq, cip);
 		ControllerPatient cp= new ControllerPatient(mf, p,o);
 		ControllerOrdonance co= new ControllerOrdonance(mf,hp, p, o,mq,cip);
 		ControllerMenuBar cmb= new ControllerMenuBar(mf,hp,mb, p,ip, o,gs,rvv
@@ -109,6 +115,8 @@ public class Main {
 		ControllerChangePass ccmp= new ControllerChangePass(cmpv, rq);
 		ControllerProthese crpr= new ControllerProthese(prv, prtv, prpv, prfv);
 		ControllerProtheseFixe crprf= new ControllerProtheseFixe(prfv, prfq, cip);
+		ControllerProthesePartielle crprp= new ControllerProthesePartielle(prpv, prprq, cip);
+		ControllerProtheseTotale crprto= new ControllerProtheseTotale(prtv, prtoq, cip);
 		ControllerJustification cj= new ControllerJustification(jav);
 		ControllerOrdonanceMenu corm= new ControllerOrdonanceMenu(ormv, pq);
 		ControllerExamenComplimentaire cexc= new ControllerExamenComplimentaire(excv, pq);

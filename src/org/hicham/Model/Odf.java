@@ -1,54 +1,61 @@
 package org.hicham.Model;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.transaction.Transactional;
 
+import org.hibernate.annotations.Type;
 @Entity
-@Table(name="ODF")
+@Transactional
+@Table(name="Odf")
 public class Odf {
 	@Id
 	@GeneratedValue(strategy= GenerationType.AUTO)
 	@Column (name="id" ,nullable=false)
 	int id;
-	@Column (name="odf" ,nullable=false)
-	String odf;
-	@Column (name="payement" ,nullable=false,length=1000)
-    int payement;
-	
-	@Column (name="payementTotal" ,nullable=false,length=1000)
-    int payementTotal;
-	@Column (name="payementRest" ,nullable=false,length=1000)
-    int payementRest;
-	@Column (name="date")
+	@Column (name="entante" ,nullable=false)
+	@Type(type="text")
+	String entante;
+	@Column (name="temp" ,nullable=false)
+	String temp ;
+	@Column (name="date" ,nullable=false)
 	@Temporal(value=TemporalType.DATE)
-    Date dateRendezVous;
-	@Column (name="temp")
-    String tempRendezVous;
+	Date date ;
+	@Column(name="payementActuel",nullable=false)
+	double payementActuel;
+	@Column(name="payementTotal",nullable=false)
+	double payementTotal;
 	@ManyToOne
     @JoinColumn(name="id_Patient")
     private Patient patient;
+	@OneToMany(targetEntity=ImageOdf.class,orphanRemoval = true, mappedBy="odf"
+			,cascade=CascadeType.DETACH,fetch= FetchType.EAGER)
+	private List<ImageOdf> imageOdf;
 	
-	public Odf(String odf, int payement, int payementTotal, int payementRest
-			, Date dateRendezVous,String tempRendezVous){
-		this.payement=payement;
-		this.payementTotal= payementTotal;
-		this.payementRest= payementRest;
-		this.odf= odf;
-		this.dateRendezVous= dateRendezVous;
-		this.tempRendezVous=tempRendezVous;
+    public Odf(String entante,String temp, Date date, double payTotal,double payActuel) {
+		this.temp = temp;
+		this.date = date;
+		this.entante= entante;
+		this.payementActuel=payActuel;
+		this.payementTotal= payTotal;
 	}
-	
+
 	public Odf(){
+		
 	}
 
 	public int getId() {
@@ -59,56 +66,22 @@ public class Odf {
 		this.id = id;
 	}
 
-	public String getOdf() {
-		return odf;
+	public String getTemp() {
+		return temp;
 	}
 
-	public void setOdf(String odf) {
-		this.odf = odf;
+	public void setTemp(String temp) {
+		this.temp = temp;
 	}
 
-	public int getPayementTotal() {
-		return payementTotal;
+	public Date getDate() {
+		return date;
 	}
 
-	public void setPayementTotal(int payementTotal) {
-		this.payementTotal = payementTotal;
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
-	public int getPayementRest() {
-		return payementRest;
-	}
-
-	public void setPayementRest(int payementRest) {
-		this.payementRest = payementRest;
-	}
-
-
-	
-	public int getPayement() {
-		return payement;
-	}
-
-	public void setPayement(int payement) {
-		this.payement = payement;
-	}
-
-	public Date getDateRendezVous() {
-		return dateRendezVous;
-	}
-
-	public void setDateRendezVous(Date dateRendezVous) {
-		this.dateRendezVous = dateRendezVous;
-	}
-
-	public String getTempRendezVous() {
-		return tempRendezVous;
-	}
-
-	public void setTempRendezVous(String tempRendezVous) {
-		this.tempRendezVous = tempRendezVous;
-	}
-	
 	public Patient getPatient() {
 		return patient;
 	}
@@ -118,10 +91,39 @@ public class Odf {
 	}
 
 	
+
+	public List<ImageOdf> getImageOdf() {
+		return imageOdf;
+	}
+
+	public void setImageOdf(List<ImageOdf> imageOdf) {
+		this.imageOdf = imageOdf;
+	}
+
+	public String getEntante() {
+		return entante;
+	}
+
+	public void setEntante(String entante) {
+		this.entante = entante;
+	}
+
+	public double getPayementActuel() {
+		return payementActuel;
+	}
+
+	public void setPayementActuel(double payementActuel) {
+		this.payementActuel = payementActuel;
+	}
+
+	public double getPayementTotal() {
+		return payementTotal;
+	}
+
+	public void setPayementTotal(double payementTotal) {
+		this.payementTotal = payementTotal;
+	}
 	
 
-	
+
 }
-
-
-

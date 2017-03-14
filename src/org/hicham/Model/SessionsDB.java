@@ -27,7 +27,13 @@ public class SessionsDB {
     				.addAnnotatedClass(Register.class)
     				.addAnnotatedClass(Odf.class)
     				.addAnnotatedClass(ProtheseFixe.class)
-    				.addAnnotatedClass(ImageProtheseFixe.class);
+    				.addAnnotatedClass(ImageProtheseFixe.class)
+    				.addAnnotatedClass(ProthesePartielle.class)
+    				.addAnnotatedClass(ImageProthesePartielle.class)
+    				.addAnnotatedClass(ProtheseTotale.class)
+    				.addAnnotatedClass(ImageProtheseTotale.class)
+    				.addAnnotatedClass(ImageOdf.class)
+    				.addAnnotatedClass(ImageAct.class);
     		 StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
     		 factory = configuration.buildSessionFactory(builder.build());
      		 System.out.println("Creating a new Factory");

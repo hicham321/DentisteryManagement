@@ -39,6 +39,8 @@ import org.hicham.View.InfoPatient;
 import org.hicham.View.OdfPatient;
 import org.hicham.View.Ordonance;
 import org.hicham.View.ProtheseFixeView;
+import org.hicham.View.ProthesePartielleView;
+import org.hicham.View.ProtheseTotaleView;
 import org.hicham.View.RecherchePatientView;
 
 import com.sun.xml.internal.ws.api.Component;
@@ -46,7 +48,9 @@ import com.sun.xml.internal.ws.api.Component;
 public class ControllerProtheseFixe {
 	ProtheseFixeView protheseFixeView= new ProtheseFixeView();
 	ProtheseFixeQueries protheseFixeQueries= new ProtheseFixeQueries();
-
+	
+	ProtheseTotaleView protheseTotaleView= new ProtheseTotaleView();
+	ProthesePartielleView prothesePartielleView= new ProthesePartielleView();
 	ActPatientView actPatientView= new ActPatientView();
 	ActQueries actQueries        = new     ActQueries();
 	PatientQueries patientQueries= new PatientQueries();
@@ -58,7 +62,7 @@ public class ControllerProtheseFixe {
 
 	ControllerInfoPatient controllerInfoPatient= new ControllerInfoPatient(infoPatient
 			,patientQueries,recherchePatientView
-			,actPatientView,odfPatient,protheseFixeView,ordonance);
+			,actPatientView,odfPatient,protheseFixeView,prothesePartielleView,protheseTotaleView,ordonance);
 
 
 	int returnVal;
@@ -89,31 +93,42 @@ public class ControllerProtheseFixe {
 		public void actionPerformed(ActionEvent e) {
 
 			if (e.getSource()==protheseFixeView.getAjoute()) {
-				//Check if image panel doesn't contain images 
-				int countComponent=0;
-				for (java.awt.Component labeliterator:protheseFixeView.getImagePanel().getComponents()){
-					countComponent++;
-				}
-				if (countComponent==0) {
+				if(!controllerInfoPatient.patientSelected){
 					int input = JOptionPane.showOptionDialog(null
-							,"Vous n'avez pas ajouté des images, continué sans ajouté? "
-							, "Ajout d'image"
+							,"Vous n'avez pas selectioné un patient. "
+							, "Erreur Patient"
 							, JOptionPane.OK_CANCEL_OPTION
 							, JOptionPane.INFORMATION_MESSAGE, null, null, null);
 
 					if(input == JOptionPane.OK_OPTION){
+
+					}	
+				}else{
+					//Check if image panel doesn't contain images 
+					int countComponent=0;
+					for (java.awt.Component labeliterator:protheseFixeView.getImagePanel().getComponents()){
+						countComponent++;
+					}
+					if (countComponent==0) {
+						int input = JOptionPane.showOptionDialog(null
+								,"Vous n'avez pas ajouté des images, continué sans ajouté? "
+								, "Ajout d'image"
+								, JOptionPane.OK_CANCEL_OPTION
+								, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+
+						if(input == JOptionPane.OK_OPTION){
+							ajouteProthese();
+							//refresh combo code
+						}	
+
+					}
+					else{
 						ajouteProthese();
 						//refresh combo code
-					}	
-
-				}
-				else{
-					ajouteProthese();
-					//refresh combo code
+					}
 				}
 			}
 			if (e.getSource()==protheseFixeView.getModifie()) {
-				//update query
 
 				int input = JOptionPane.showOptionDialog(null
 						, "Enrigestré les modification?"						,"Modifie Prothese"
@@ -128,25 +143,18 @@ public class ControllerProtheseFixe {
 					List<String> newImagesLien= new ArrayList<>();
 					for (int i = 0; i < currentProtheseFixe.getImageProtheseFixe().size(); i++) {
 						oldImageLien.add(currentProtheseFixe.getImageProtheseFixe().get(i).getLien());
-						//code to copy should be put here
-						//String newPath=protheseFixeQueries.CopyFileImage("C:/Users/Hicham/ImagesProtheseFixe", oldImageLien.get(i));
-						//newImagesLien.add(newPath);
 						
 					}
 					for (int i = 0; i < addedImages.size(); i++) {
 						String newPath=protheseFixeQueries.CopyFileImage("C:/Users/Hicham/ImagesProtheseFixe", addedImages.get(i));
 
 					}
-					//System.out.println("new paths"+newImagesLien.toString());
-					//System.out.println("old paths"+oldImageLien.toString());
 					protheseFixeQueries.addNewImages(addedImages, oldImageLien,currentProtheseFixe);
-					//protheseFixeQueries.addNewImages(imagePaths, oldImageLien,currentProtheseFixe);
                     for (int i = 0; i < deletedImages.size(); i++) {
                     	System.out.println(deletedImages.toString());
 						protheseFixeQueries.deleteProtheseImages(deletedImages.get(i));
 					}
                     clearImageList();
-					//protheseFixeQueries.deleteFoundImageProtheseFixe(imageOrder.get(selectedImage));
 				}	
 			}
 			if (e.getSource()==protheseFixeView.getSupp()) {
@@ -215,11 +223,6 @@ public class ControllerProtheseFixe {
 				clearImageList();
 			}
 			if (e.getSource()== protheseFixeView.getDeleteImage()) {
-				//code to delete the shown image 
-				//first get the count 
-				//after search for the lien in the imageOrder list
-				//after search for the lien in the imagepath and delete it 
-				//after that if it's an add than all is good if it's a modify than we need to delete the image from table
 				int input = JOptionPane.showOptionDialog(null
 						, "Etes vous sure de vouloir supprimer l'image?"	,"Supprime Prothese"
 
@@ -366,8 +369,9 @@ public class ControllerProtheseFixe {
 	}
 	public void modifyFieldProtheseFixe(){
 
-		currentProtheseFixe.setDate(protheseFixeView.getDatePicker().getDate());     
-		currentProtheseFixe.setTemp(protheseFixeView.getTimePicker().getValue().toString());
+		currentProtheseFixe.setDate(protheseFixeView.getDatePicker().getDate());  
+		String time = new SimpleDateFormat("HH:mm").format(protheseFixeView.getTimePicker().getValue());		
+		currentProtheseFixe.setTemp(time);
 		currentProtheseFixe.setEntante(protheseFixeView.getEntente().getText());
 		currentProtheseFixe.setTypeProthese(protheseFixeView.getTypeProthese().getText());
 		currentProtheseFixe.setNumero(protheseFixeView.getNumero().getText());
@@ -401,9 +405,6 @@ public class ControllerProtheseFixe {
 		}
 		protheseFixeView.getDatePicker().setDate(date);
 		
-		///
-		
-		
 		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
 		Date dateObject= new Date();
 		try {
@@ -414,17 +415,6 @@ public class ControllerProtheseFixe {
 		
 		protheseFixeView.getTimePicker().setValue(dateObject);
 
-		
-//		SimpleDateFormat format = new SimpleDateFormat("HH:mm");
-//        Object timeValue= new Object();
-//		try {
-//			timeValue = format.parseObject(protheseFixe.getTemp());
-//		} catch (ParseException e) {
-//			e.printStackTrace();
-//		}
-//		protheseFixeView.getTimePicker().setValue(timeValue);
-		
-		
 		for (ImageProtheseFixe image : protheseFixe.getImageProtheseFixe() ) {
 
 			//put a different thread for every Image
@@ -449,13 +439,7 @@ public class ControllerProtheseFixe {
 	public void ajouteProthese(){
 		//insert images in protheseImages table
 		Date date= protheseFixeView.getDatePicker().getDate();
-		
-		
-		String time = new SimpleDateFormat("HH:mm").format(protheseFixeView.getTimePicker().getValue());
-
-		//String time= protheseFixeView.getTimePicker().getValue().toString();
-		
-		
+		String time = new SimpleDateFormat("HH:mm").format(protheseFixeView.getTimePicker().getValue());		
 		String num= protheseFixeView.getNumero().getText();
 		String typeProthese= protheseFixeView.getTypeProthese().getText();
 		String entante= protheseFixeView.getEntente().getText();
@@ -466,10 +450,10 @@ public class ControllerProtheseFixe {
 		currentProtheseFixe.setPatient(controllerInfoPatient.getCurrentPatient());
 		protheseFixeQueries.addProtheseFixe(currentProtheseFixe);
 		//iterate over list of paths
-		for (int i = 0; i < imagePaths.size(); i++) {
+		for (int i = 0; i < imageOrder.size(); i++) {
 			//copying
 			//destination should change when moving to jar file execution
-			String newImagePath=protheseFixeQueries.CopyFileImage("C:/Users/Hicham/ImagesProtheseFixe",imagePaths.get(i) );
+			String newImagePath=protheseFixeQueries.CopyFileImage("C:/Users/Hicham/ImagesProtheseFixe",imageOrder.get(i) );
 			ImageProtheseFixe imageProtheseFixe= new ImageProtheseFixe(newImagePath);//needs to change after copying
 			imageProtheseFixe.setProtheseFixe(currentProtheseFixe);
 			protheseFixeQueries.addProtheseFixeImage(imageProtheseFixe);

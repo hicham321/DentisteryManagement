@@ -74,7 +74,6 @@ public class RegisterView extends JInternalFrame {
 		
         panel.setBounds(0, 0, this.getWidth(), this.getHeight());
 		this.add(panel);
-		
 	    this.setVisible(true);
 	}
 	

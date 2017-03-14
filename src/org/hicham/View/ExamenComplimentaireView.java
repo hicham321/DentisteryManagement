@@ -29,6 +29,8 @@ public class ExamenComplimentaireView extends JPanel{
     JTextArea situation= new JTextArea();
     
     JTextArea medList= new JTextArea();
+	private JScrollPane MedListScrol;
+
     
 	JButton add = new JButton("Ajouter");
 		
@@ -71,12 +73,14 @@ public class ExamenComplimentaireView extends JPanel{
 		nomPrenomCombo.setSelectedIndex(0);
 
 		
+		medList= new JTextArea(5, 20);
 		Border border = BorderFactory.createLineBorder(Color.BLACK);
 		medList.setBorder(BorderFactory.createCompoundBorder(border,
 				BorderFactory.createEmptyBorder(0, 0, 10, 10)));
 
 		medList.setLineWrap(true);
 		medList.setWrapStyleWord(true);
+		MedListScrol= new JScrollPane(medList);
 		
 		cards = new JPanel(new CardLayout());
 
@@ -90,7 +94,7 @@ public class ExamenComplimentaireView extends JPanel{
 		this.add(situation);
 		this.add(add);
 		this.add(ok);
-		this.add(medList);
+		this.add(MedListScrol);
 		
 		this.add(nomPrenomlab);
 		this.add(nomPrenomCombo);
@@ -110,7 +114,7 @@ public class ExamenComplimentaireView extends JPanel{
 		situationLab.setBounds(30,290,120,20);
 		situation.setBounds(170,290,270,20);
 		add.setBounds(450,290,80,20);
-		medList.setBounds(30,340,500,200);
+		MedListScrol.setBounds(30,340,500,200);
         ok.setBounds(70,600,130,40);
         cards.setBounds(650, 15 ,500 , 600);
         

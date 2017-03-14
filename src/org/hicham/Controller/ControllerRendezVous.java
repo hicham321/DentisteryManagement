@@ -34,6 +34,8 @@ public class ControllerRendezVous {
 	List<String> datesRendezVous= new ArrayList<>();
     List<String> actsRendezVous= new ArrayList<>();
     List<String> payements= new ArrayList<>();
+    List<String> versements= new ArrayList<>();
+    List<String> rests= new ArrayList<>();
     List<String> temps= new ArrayList<>();
     
     List<Patient> patients= new ArrayList<>();
@@ -50,12 +52,12 @@ public class ControllerRendezVous {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			
 			if (e.getSource()==rendezVousView.getRechercheBtn() & rendezVousView.getModeRechercheList().getSelectedIndex()==1) {
 				//show panel based on mode of search
 				//int patientid=rendezVousView.getPatientCombo().getSelectedIndex();
 				//show par rendez vous  panel
 				try{
-				System.out.println("rendez vous panel is executed ");
 				Date dateObject= rendezVousView.getDatePicker().getDate();
 				patients=rendezVousQueries.getPatientsFromDate(dateObject);
 				rendezVousView.getDateRV().setText(dateObject.toString());
@@ -65,17 +67,6 @@ public class ControllerRendezVous {
 				for (int i = 0; i < patients.size(); i++) {
 					//populate combobox with patient nom
 					 names.add(patients.get(i).getNomEtPrenom());
-					
-					
-					/*for (int j = 0; j < patients.size(); j++) {
-						if (acts.get(j).getDateRendezVous()== rendezVousView.getDatePicker().getDate()){
-							actPatients =acts.get(j);
-						}
-					}
-					
-					
-					System.out.println(patients.get(i).getNom());*/
-
 				}
 				//populate patient combo with names
 				DefaultComboBoxModel dcbm=addNamesToCombo(names);
@@ -95,26 +86,29 @@ public class ControllerRendezVous {
 			if (e.getSource()==rendezVousView.getRechercheBtn() & rendezVousView.getModeRechercheList().getSelectedIndex()==0) {
 				//show par patient  panel
 				try{
-				int selectedIndex=rendezVousView.getPatientCombo().getSelectedIndex();
-				List<Act> acts=rendezVousQueries.getActFromPatient(selectedIndex);
+					int selectedIndex=rendezVousView.getPatientCombo().getSelectedIndex();
+					List<Act> acts=rendezVousQueries.getActFromPatient(selectedIndex);
 
-				String nomPatient= rendezVousView.getPatientCombo().getSelectedItem().toString();
-				datesRendezVous= new ArrayList<>();
-				actsRendezVous= new ArrayList<>();
-				payements= new ArrayList<>();
-				temps= new ArrayList<>();
-                
-				for (int i=0; i<acts.size();i++) {
-					
-					Act act= acts.get(i);
-					datesRendezVous.add(act.getDateRendezVous().toString());
-					actsRendezVous.add(act.getAct());
-					payements.add(new Double(act.getPayement()).toString());
-					temps.add(act.getTempRendezVous());
+					String nomPatient= rendezVousView.getPatientCombo().getSelectedItem().toString();
+					datesRendezVous= new ArrayList<>();
+					actsRendezVous= new ArrayList<>();
+					payements= new ArrayList<>();
+					temps= new ArrayList<>();
 
-				}
-				//chargé dateCombo avec les dates 
-				DefaultComboBoxModel dcbm=addDateToCombo(datesRendezVous);
+					for (int i=0; i<acts.size();i++) {
+
+						Act act= acts.get(i);
+						datesRendezVous.add(act.getDate().toString());
+						actsRendezVous.add(act.getEntante());
+						payements.add(new Double(act.getPayementTotal()).toString());
+						versements.add(new Double(act.getPayementActuel()).toString());
+						double rest= act.getPayementTotal()-act.getPayementActuel();
+						rests.add(new Double(rest).toString());
+						temps.add(act.getTemp());
+
+					}
+					//chargé dateCombo avec les dates 
+					DefaultComboBoxModel dcbm=addDateToCombo(datesRendezVous);
 				rendezVousView.getActCombo().setModel(dcbm);
 
 				rendezVousView.getNomPatient().setText(nomPatient);
@@ -136,7 +130,10 @@ public class ControllerRendezVous {
 					String tempRV=temps.get(selectedItem);
 					String actRV=actsRendezVous.get(selectedItem);
 					String payRV=payements.get(selectedItem);
-					setPatientPanel(actRV,payRV,tempRV);
+					String restRv=rests.get(selectedItem);
+					String actuelPayRV=versements.get(selectedItem);
+
+					setPatientPanel(actRV,payRV,actuelPayRV,restRv,tempRV);
 				} catch (Exception e2) {
 					e2.printStackTrace();			
 				}
@@ -148,6 +145,9 @@ public class ControllerRendezVous {
 				rendezVousView.getTempsRendezVous().setText("");
 				rendezVousView.getActRendezVous().setText("");
 				rendezVousView.getPayement().setText("");
+				rendezVousView.getVerse().setText("");
+				rendezVousView.getRestVersement().setText("");
+
 
 			}
 			if (e.getSource()== rendezVousView.getPatientComboRV()) {
@@ -159,14 +159,17 @@ public class ControllerRendezVous {
                 Act searchedAct= new Act();
 				for (int i = 0; i < acts.size(); i++) {
 					
-					if (acts.get(i).getDateRendezVous().equals(rendezVousView.getDatePicker().getDate())){
+					if (acts.get(i).getDate().equals(rendezVousView.getDatePicker().getDate())){
 						searchedAct=acts.get(i);
 					}
 				}
 				//set labels depending on selected act
-				rendezVousView.getPayementRV().setText(new Double(searchedAct.getPayement()).toString());
-				rendezVousView.getActPatientRV().setText(searchedAct.getAct());
-				rendezVousView.getTempRV().setText(searchedAct.getTempRendezVous());
+				rendezVousView.getPayementRV().setText(new Double(searchedAct.getPayementActuel()).toString());
+				rendezVousView.getVerseRV().setText(new Double(searchedAct.getPayementActuel()).toString());
+				double rest= searchedAct.getPayementActuel()-searchedAct.getPayementActuel();
+				rendezVousView.getRestVersementRV().setText(new Double(rest).toString());
+				rendezVousView.getActPatientRV().setText(searchedAct.getEntante());
+				rendezVousView.getTempRV().setText(searchedAct.getTemp());
 
 			}
 			
@@ -202,11 +205,14 @@ public class ControllerRendezVous {
 
 	}
 
-	public void setPatientPanel(String actPatient, String Payement, String temp){
+	public void setPatientPanel(String actPatient, String payementTotal,String verse,String restVersemement, String temp){
         
 		rendezVousView.getActRendezVous().setText(actPatient);
 		rendezVousView.getTempsRendezVous().setText(temp);
-		rendezVousView.getPayement().setText(new Double(Payement).toString());
+		rendezVousView.getPayement().setText(new Double(payementTotal).toString());
+		rendezVousView.getVerse().setText(new Double(verse).toString());
+		rendezVousView.getRestVersement().setText(new Double(restVersemement).toString());
+
 		
 		rendezVousView.getPanelRechercheRendezVous().revalidate();
 		rendezVousView.getPanelRechercheRendezVous().repaint();

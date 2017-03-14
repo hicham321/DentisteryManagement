@@ -73,9 +73,22 @@ public class MainFrame extends JFrame{
 		cards.add(this.card6, "Card 6");
 		cards.add(this.card7, "Card 7");
 
-
-		getContentPane().add(cards); 
+       
+		getContentPane().add(cards);
+		disableFrameComponents();
 		this.pack();
+	}
+	public void disableFrameComponents(){
+		for (java.awt.Component componentIterator:this.menuBar.getMenu().getComponents()){
+			componentIterator.setEnabled(false);
+		}
+		
+	}
+	public void enableFrameComponents(){
+		for (java.awt.Component componentIterator:this.menuBar.getMenu().getComponents()){
+			componentIterator.setEnabled(true);
+		}
+		
 	}
 
 }

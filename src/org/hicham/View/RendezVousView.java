@@ -3,7 +3,6 @@ package org.hicham.View;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.event.ActionListener;
-
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -12,11 +11,10 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
+import javax.swing.border.Border;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableModel;
-
 import org.jdesktop.swingx.JXDatePicker;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
@@ -42,6 +40,9 @@ public class RendezVousView extends JPanel{
 	JLabel actRendezVousLab= new JLabel("Act De Rendez Vous: ");
 	JLabel payementLab= new JLabel("Le payement: ");
 	JLabel tempsRendezVousLab= new JLabel("Le temps: ");
+	JLabel verseLab= new JLabel("Versé: ");
+	JLabel restVersementLab= new JLabel("Rest Du Payement: ");
+
 
 	
 
@@ -50,8 +51,14 @@ public class RendezVousView extends JPanel{
 	final DefaultComboBoxModel actModel = new DefaultComboBoxModel();
 	final JComboBox actCombo = new JComboBox(actModel);    
 	private JScrollPane produitListScrol = new JScrollPane(actCombo);
-	JLabel actRendezVous= new JLabel("");
+	JTextArea actRendezVous= new JTextArea();
+	private JScrollPane actScrol;
+
+
 	JLabel payement= new JLabel("");
+	JLabel verse= new JLabel("");
+	JLabel restVersement= new JLabel("");
+
 	JLabel tempsRendezVous= new JLabel("");
 
 
@@ -64,25 +71,18 @@ public class RendezVousView extends JPanel{
 	private JScrollPane patientListScrolRV = new JScrollPane(patientComboRV);
 	
 	JLabel actPatientRVLab= new JLabel("Act du patient: ");
-	JLabel actPatientRV= new JLabel("");
+	JTextArea actPatientRV= new JTextArea();
+	private JScrollPane actScrolRV;
+
 	JLabel tempRVLab= new JLabel("Temp du rendez vous: ");
 	JLabel tempRV= new JLabel("");
 	JLabel payementRVLab= new JLabel("Payement: ");
 	JLabel payementRV= new JLabel("");
-    //panel odf rendez vous
-	JLabel diagnistiqeOdfLab= new JLabel("diagnostique du patient: ");
-	JLabel diagnistiqeOdf= new JLabel("ODF Text: ");
-	JLabel odfTeRendezVousLab= new JLabel("Temp du rendez vous: ");
-	JLabel odfTeRendezVous= new JLabel("");
-	
-	/*JLabel = new JLabel("Payement: ");
-	JLabel = new JLabel("");
-	JLabel = new JLabel("Rest du Payemen: ");
-	JLabel = new JLabel("");
-	JLabel = new JLabel("Payement: ");
-	JLabel = new JLabel("");
-	*/
-
+	JLabel verseRVLab= new JLabel("Versé: ");
+	JLabel verseRV= new JLabel("");
+	JLabel restVersementRVLab= new JLabel("Rest Du Payement: ");
+	JLabel restVersementRV= new JLabel("");
+    
 	
 	
 	JPanel panelPatient;
@@ -90,9 +90,6 @@ public class RendezVousView extends JPanel{
 	JPanel panelRendezVous;
 	
     JPanel panelRechercheRendezVous;
-    
-    JPanel panelPatientOdf;
-
     
     
 	public JPanel cards ;
@@ -112,10 +109,6 @@ public class RendezVousView extends JPanel{
 		panelPatient.setLayout(null);
 		panelPatient.setBorder(BorderFactory.createTitledBorder("Recherche Par Patient: "));
 		
-		panelPatientOdf= new JPanel();
-		panelPatientOdf.setBackground(Color.WHITE);
-		panelPatientOdf.setLayout(null);
-		panelPatientOdf.setBorder(BorderFactory.createTitledBorder("Rendez Vous Odf: "));
 		
 	    panelRendezVous= new JPanel();
 		panelRendezVous.setBackground(Color.WHITE);
@@ -143,6 +136,14 @@ public class RendezVousView extends JPanel{
 		panelRechercheRendezVous.add(rechercheBtn);
 		
         //panel rendezVous components
+		actPatientRV= new JTextArea(5, 20);
+		Border border1 = BorderFactory.createLineBorder(Color.BLACK);
+		actPatientRV.setBorder(BorderFactory.createCompoundBorder(border1,
+				BorderFactory.createEmptyBorder(0, 0, 10, 10)));
+
+		actPatientRV.setLineWrap(true);
+		actPatientRV.setWrapStyleWord(true);
+        actScrolRV= new JScrollPane(actPatientRV);
 		
 		panelRendezVous.add(dateRVLab);
 		panelRendezVous.add(dateRV);
@@ -154,57 +155,72 @@ public class RendezVousView extends JPanel{
 		panelRendezVous.add(tempRV);
 		panelRendezVous.add(payementRVLab);
 		panelRendezVous.add(payementRV);
+		panelRendezVous.add(verseRVLab);
+		panelRendezVous.add(verseRV);
+		panelRendezVous.add(restVersementRVLab);
+		panelRendezVous.add(restVersementRV);
+
 		
 		dateRVLab.setBounds(30, 30, 120, 20);
 		patientNomRVLab.setBounds(30, 90, 120, 20);
-		actPatientRVLab.setBounds(30, 160, 120, 20);
-		tempRVLab.setBounds(30, 210, 120, 20);
-		payementRVLab.setBounds(30, 260, 120, 20);
+		actPatientRVLab.setBounds(30, 150, 120, 20);
+		payementRVLab.setBounds(30,520 , 120, 20);
+		tempRVLab.setBounds(30, 340, 120, 20);
+		restVersementRVLab.setBounds(30, 400, 120, 20);
+		verseRVLab.setBounds(30, 460, 120, 20);
 
 		dateRV.setBounds(160,30,120,20);
-		patientComboRV.setBounds(160, 90, 120, 20);
-		actPatientRV.setBounds(160, 160, 120, 20);
-		tempRV.setBounds(160, 210, 120, 20);
-		payementRV.setBounds(160, 	260, 120, 20);
-
-
+		patientComboRV.setBounds(160,90 , 120, 20);
+		actPatientRV.setBounds(160,150 , 300, 150);
+		payementRV.setBounds(160,520 	, 120, 20);
+		tempRV.setBounds(160,340 , 120, 20);
+		restVersementRV.setBounds(160, 400, 120, 20);
+		verseRV.setBounds(160,460 , 120, 20);
 		
 		//panel patient components
 		
 		this.actModel.addElement("");
 		actCombo.setSelectedIndex(0);
+		
+		actRendezVous= new JTextArea(5, 20);
+		Border border = BorderFactory.createLineBorder(Color.BLACK);
+		actRendezVous.setBorder(BorderFactory.createCompoundBorder(border,
+				BorderFactory.createEmptyBorder(0, 0, 10, 10)));
+
+		actRendezVous.setLineWrap(true);
+		actRendezVous.setWrapStyleWord(true);
+		actScrol= new JScrollPane(actRendezVous);
 
 		panelPatient.add(nomPatient);
 		panelPatient.add(actCombo);
 		panelPatient.add(actRendezVous);
 		panelPatient.add(payement);
+		panelPatient.add(verse);
+		panelPatient.add(restVersement);
+		panelPatient.add(restVersementLab);
+		panelPatient.add(verseLab);
 		panelPatient.add(nomPatientLab);
 		panelPatient.add(dateRendezVousLab);
 		panelPatient.add(actRendezVousLab);
 		panelPatient.add(payementLab);
 		panelPatient.add(tempsRendezVousLab);
 		panelPatient.add(tempsRendezVous);
-		
-		panelPatient.add(panelPatientOdf);
-		panelPatientOdf.setBounds(300, 0, 300, 300);
 
-		
-		
 		nomPatientLab.setBounds(30, 30, 120, 20);
 		dateRendezVousLab.setBounds(30, 90, 120, 20);
-		actRendezVousLab.setBounds(30, 160, 120, 20);
-		payementLab.setBounds(30, 210, 120, 20);
-		tempsRendezVousLab.setBounds(30, 260, 120, 20);
-
+		actRendezVousLab.setBounds(30, 150, 120, 20);
+		payementLab.setBounds(30,520 , 120, 20);
+		tempsRendezVousLab.setBounds(30, 340, 120, 20);
+		restVersementLab.setBounds(30, 400, 120, 20);
+        verseLab.setBounds(30, 460, 120, 20);
+		
 		nomPatient.setBounds(160,30,120,20);
-		actCombo.setBounds(160, 90, 120, 20);
-		actRendezVous.setBounds(160, 160, 120, 20);
-		payement.setBounds(160, 210, 120, 20);
-		tempsRendezVous.setBounds(160, 	260, 120, 20);
-
-
-
-        
+		actCombo.setBounds(160,90 , 120, 20);
+		actRendezVous.setBounds(160,150 , 300, 150);
+		payement.setBounds(160,520 	, 120, 20);
+		tempsRendezVous.setBounds(160,340 , 120, 20);
+		restVersement.setBounds(160, 400, 120, 20);
+        verse.setBounds(160,460 , 120, 20);
 		
 		modeRechercheLab.setBounds(70, 40, 150, 20);
 		modeRechercheList.setBounds(250, 40, 200, 40);
@@ -214,30 +230,20 @@ public class RendezVousView extends JPanel{
 		datePicker.setBounds(250, 130, 200, 20);
 		rechercheBtn.setBounds(250, 170, 100, 30);
 		
-		
-		//panelPatient.setBounds(0, 300, 1000, 300);
-     	//panelRendezVous.setBounds(0, 300, 1000, 300);
-		
+				
         cards = new JPanel(new CardLayout());
 		
 		cards.add(panelPatient, "Card 1");
 		cards.add(panelRendezVous, "Card 2");
-		cards.setBounds(0, 300, 1000, 300);
+		cards.setBounds(600, 40, 500, 600);
 		
 		this.add(cards);
 
 		
 		
 		this.add(panelRechercheRendezVous);
-		//this.add(panelPatient);
-		//this.add(panelRendezVous);
 
-		panelRechercheRendezVous.setBounds(0, 0, 700, 300);
-//		panelPatient.setBounds(0, 300, 1000, 300);
-//		panelRendezVous.setBounds(0, 300, 1000, 300);
-		
-		
-
+		panelRechercheRendezVous.setBounds(30, 40, 500, 400);
         
 	}
 	
@@ -281,7 +287,7 @@ public class RendezVousView extends JPanel{
 		return actModel;
 	}
 
-	public JLabel getActRendezVous() {
+	public JTextArea getActRendezVous() {
 		return actRendezVous;
 	}
 
@@ -313,7 +319,7 @@ public class RendezVousView extends JPanel{
 		return patientComboRV;
 	}
 
-	public JLabel getActPatientRV() {
+	public JTextArea getActPatientRV() {
 		return actPatientRV;
 	}
 
@@ -323,6 +329,22 @@ public class RendezVousView extends JPanel{
 
 	public JLabel getPayementRV() {
 		return payementRV;
+	}
+
+	public JLabel getVerse() {
+		return verse;
+	}
+
+	public JLabel getRestVersement() {
+		return restVersement;
+	}
+
+	public JLabel getVerseRV() {
+		return verseRV;
+	}
+
+	public JLabel getRestVersementRV() {
+		return restVersementRV;
 	}
 	
 

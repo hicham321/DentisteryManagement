@@ -35,6 +35,8 @@ public class Ordonance extends JPanel {
     JTextArea situation= new JTextArea();
     
     JTextArea medList= new JTextArea();
+	private JScrollPane medListScrol;
+
     
 	JButton add = new JButton("Ajouter");
 		
@@ -58,12 +60,14 @@ public class Ordonance extends JPanel {
 		AutoCompleteDecorator.decorate(nomMed);
 		nomMed.setSelectedIndex(0);
 		
+		medList= new JTextArea(5, 20);
 		Border border = BorderFactory.createLineBorder(Color.BLACK);
 		medList.setBorder(BorderFactory.createCompoundBorder(border,
 				BorderFactory.createEmptyBorder(0, 0, 10, 10)));
 
 		medList.setLineWrap(true);
 		medList.setWrapStyleWord(true);
+		medListScrol= new JScrollPane(medList);
 		
 		cards = new JPanel(new CardLayout());
 
@@ -77,7 +81,7 @@ public class Ordonance extends JPanel {
 		this.add(situation);
 		this.add(add);
 		this.add(ok);
-		this.add(medList);
+		this.add(medListScrol);
 		this.add(nomEtPrenomLab);
 		this.add(nomEtPrenom);
 
@@ -89,7 +93,7 @@ public class Ordonance extends JPanel {
 		situationLab.setBounds(30, 150, 100, 20);
 		situation.setBounds(150, 150, 270, 20);
 		add.setBounds(450, 150, 80, 20);
-		medList.setBounds(30, 190, 500, 200);
+		medListScrol.setBounds(30, 190, 500, 200);
         ok.setBounds(70,450, 130, 40);
         cards.setBounds(650, 15 ,500 , 600);
 

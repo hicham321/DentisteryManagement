@@ -75,10 +75,8 @@ public class ControllerRegister {
 				String typeUser= registerView.getTypeUserCombo().getSelectedItem().toString();
 
 				if (registerQueries.checkPassCorrect(password, typeUser)) {
-					mainFrame.setEnabled(true);
-					
+					mainFrame.enableFrameComponents();
 					registerView.dispose();
-
 				}
 				else{
 					//error message 

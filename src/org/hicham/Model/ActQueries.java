@@ -1,24 +1,36 @@
 package org.hicham.Model;
 
-import java.util.Date;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.DefaultComboBoxModel;
-
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
-import org.hicham.Model.PatientQueries.MyClass;
 
-public class ActQueries extends UsefulMethods{
-	
+public class ActQueries {
+       //insert update and delete queries
 	public void addAct(Act act){
 		SessionsDB FactoryObject= new SessionsDB();
 		Session session= FactoryObject.getFactory().openSession();
-		//Session session = SessionsDB.getFactory().openSession();
 		try {
 
-			//save act object
 			session.beginTransaction();
 			session.saveOrUpdate(act);
+			session.getTransaction().commit();
+
+		} finally {
+			session.close();
+		}
+	}
+	public void addActImage(ImageAct imageAct){
+		SessionsDB FactoryObject= new SessionsDB();
+		Session session= FactoryObject.getFactory().openSession();
+		try {
+
+			session.beginTransaction();
+			session.saveOrUpdate(imageAct);
 			session.getTransaction().commit();
 
 		} finally {
@@ -28,10 +40,8 @@ public class ActQueries extends UsefulMethods{
 	public void deleteAct(Act act){
 		SessionsDB FactoryObject= new SessionsDB();
 		Session session= FactoryObject.getFactory().openSession();
-		//Session session = SessionsDB.getFactory().openSession();
 		try {
 
-			//delete act object
 			session.beginTransaction();
 			session.delete(act);
 			session.getTransaction().commit();
@@ -41,23 +51,83 @@ public class ActQueries extends UsefulMethods{
 		}
 	}
 	
-	public List<Act> findAllActs(){
+	public void deleteActImages(String lien ){
 		SessionsDB FactoryObject= new SessionsDB();
 		Session session= FactoryObject.getFactory().openSession();
-		//Session session = SessionsDB.getFactory().openSession();
+		ImageAct imageAct= new ImageAct();
 		try {
+			List<ImageAct> listImagesAct= new ArrayList<>();
+			Hibernate.initialize(listImagesAct);
+			listImagesAct= session.createQuery("from ImageAct").list();
+            for (int i = 0; i < listImagesAct.size(); i++) {
+				if (lien.equals(listImagesAct.get(i).getLien())) {
+					imageAct= listImagesAct.get(i);
+				}
+			}
 
-			List<Act> listAct= session.createQuery("from Act").list();
+			session.beginTransaction();
+			session.delete(imageAct);
+			session.getTransaction().commit();
 
-			return listAct;
 		} finally {
 			session.close();
-		}	
+		}
 	}
 	
-	public Act getAct(int id){
-		List<Act> listOfallActs= findAllActs(); 
-		return listOfallActs.get(id);
+	public void addNewImages(List<String>newList,List<String>oldList,Act currentAct){
+		//compare and insert the new image in prothese
+		boolean found= false;
+		for (int i = 0; i < newList.size(); i++) {
+			for (int j = 0; j < oldList.size(); j++) {
+				if (newList.get(i)==oldList.get(j)) {
+					//do nothing 
+					found=true;
+				}
+			
+			}
+			if (!found) {
+				//add the new lien to the database
+			    ImageAct imageAct= new ImageAct(newList.get(i));
+			    imageAct.setAct(currentAct);
+			    addActImage(imageAct);
+			    found=false;
+			}
+			
+		}
 	}
+	public String CopyFileImage(String pathTodestinationImageDir, String sourceFileImagePath){
+		String newImagePathFile="";
+		try{
+			File sourceFileImage = new File(sourceFileImagePath);
+			//the path to the destination file should be changed when packaging the Jar file
+			
+			File destinationFile = new File(pathTodestinationImageDir);
+			FileInputStream fileInputStream = new FileInputStream(sourceFileImage);
+			newImagePathFile=destinationFile+"/"+sourceFileImage.getName();
+			FileOutputStream fileOutputStream = new FileOutputStream( newImagePathFile);
+			int bufferSize;
+			byte[] bufffer = new byte[512];
+			while ((bufferSize = fileInputStream.read(bufffer)) > 0) {
+				fileOutputStream.write(bufffer, 0, bufferSize);
+			}
+			fileInputStream.close();
+			fileOutputStream.close();
 
+		}catch(Exception ex){
+			ex.printStackTrace();
+
+		}
+		return newImagePathFile;
+	}
+	//payement update
+	public double updatePayement(Act act, double payementAjouté, double payementTotal){
+		if (new Double(act.getPayementActuel())==null ) {
+			act.setPayementActuel(0);
+		}
+		double newPayement= act.getPayementActuel()+payementAjouté;
+		act.setPayementActuel(newPayement);
+		act.setPayementTotal(payementTotal);
+		return payementTotal-newPayement;
+	}
+	
 }

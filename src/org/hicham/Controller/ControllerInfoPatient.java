@@ -17,11 +17,15 @@ import org.hicham.Model.Odf;
 import org.hicham.Model.Patient;
 import org.hicham.Model.PatientQueries;
 import org.hicham.Model.ProtheseFixe;
+import org.hicham.Model.ProthesePartielle;
+import org.hicham.Model.ProtheseTotale;
 import org.hicham.View.ActPatientView;
 import org.hicham.View.InfoPatient;
 import org.hicham.View.OdfPatient;
 import org.hicham.View.Ordonance;
 import org.hicham.View.ProtheseFixeView;
+import org.hicham.View.ProthesePartielleView;
+import org.hicham.View.ProtheseTotaleView;
 import org.hicham.View.RecherchePatientView;
 
 public class ControllerInfoPatient {
@@ -32,17 +36,20 @@ public class ControllerInfoPatient {
 	ActPatientView actPatientView= new ActPatientView();
 	OdfPatient odfPatient= new OdfPatient();
 	ProtheseFixeView protheseFixeView= new ProtheseFixeView();
+	ProthesePartielleView prothesePartielleView= new ProthesePartielleView();
+	ProtheseTotaleView protheseTotaleView= new ProtheseTotaleView();
 	Ordonance ordonance= new Ordonance();
 	//this field needs to be updated when adding a new patient or when selecting a new patient
 	Patient currentPatient= new Patient();
 
-
+    boolean patientSelected= false;
 
 
 	public ControllerInfoPatient(InfoPatient infoPatient, PatientQueries patientQueries 
 			,RecherchePatientView recherchePatientView
 			,ActPatientView actPatientView,OdfPatient odfPatient
-			,ProtheseFixeView protheseFixeView,	Ordonance ordonance){
+			,ProtheseFixeView protheseFixeView,ProthesePartielleView prothesePartielleView
+			,ProtheseTotaleView protheseTotaleView,	Ordonance ordonance){
 
 		this.infoPatient= infoPatient;
 		this.patientQueries=patientQueries;
@@ -50,6 +57,8 @@ public class ControllerInfoPatient {
 		this.actPatientView= actPatientView;
 		this.odfPatient= odfPatient;
 		this.protheseFixeView= protheseFixeView;
+		this.prothesePartielleView= prothesePartielleView;
+		this.protheseTotaleView= protheseTotaleView;
 		this.ordonance= ordonance;
 		this.infoPatient.addInfoPatientActionListener(new InfoPatientActionListener());
 	}
@@ -76,13 +85,15 @@ public class ControllerInfoPatient {
 						,infoPatient.getFonction().getText()
 						);
 				patientQueries.addPatient(currentPatient);
-
+				patientSelected= true;
 				setFieldsEmpty();
 				setFieldsActEnabled();
-				protheseFixeView.getNomPrenom().setText(currentPatient.getNomEtPrenom());
+				setAllActivityFieldsEmpty();
+				setNameInActivities(currentPatient.getNomEtPrenom());
 
 			}
 			if (e.getSource()== infoPatient.getRechCombo()) {
+				setAllActivityFieldsEmpty();
 				setFieldsActEnabled();
 				infoPatient.getOk().setEnabled(false);
 				infoPatient.getModifie().setEnabled(true);
@@ -93,6 +104,13 @@ public class ControllerInfoPatient {
 				Patient selectedPatient=patients.get(selecteditem);
 				currentPatient=selectedPatient;
 				protheseFixeView.getNomPrenom().setText(currentPatient.getNomEtPrenom());
+				prothesePartielleView.getNomPrenom().setText(currentPatient.getNomEtPrenom());
+				protheseTotaleView.getNomPrenom().setText(currentPatient.getNomEtPrenom());
+			    actPatientView.getNomPrenom().setText(currentPatient.getNomEtPrenom());
+				odfPatient.getNomPrenom().setText(currentPatient.getNomEtPrenom());
+				
+				patientSelected= true;
+
 				//show selected patient info in text fields
 				setFieldsPatientInfo(selectedPatient.getName(), selectedPatient.getPrenom(), 
 						selectedPatient.getAge(), selectedPatient.getAddress(),
@@ -109,25 +127,25 @@ public class ControllerInfoPatient {
 				List<Act>acts=currentPatient.getActList();
 				List<String> actsDates= new ArrayList<>();
 				for (int i = 0; i < acts.size(); i++) {
-					Date date= acts.get(i).getDateRendezVous();
+					Date date= acts.get(i).getDate();
 					SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 	                String formatedDate = simpleDateFormat.format(date);
 					actsDates.add(formatedDate);
 				}
 				DefaultComboBoxModel dfcmAct=patientQueries.comboBoxModel(actsDates);
-				actPatientView.getListActCombo().setModel(dfcmAct);
+				actPatientView.getListRVCombo().setModel(dfcmAct);
 				//set info in act for the selected patient
 				List<Odf>odfs=currentPatient.getOdfList();
 				List<String> odfsDates= new ArrayList<>();
 				for (int i = 0; i < odfs.size(); i++) {
-					Date date= odfs.get(i).getDateRendezVous();
+					Date date= odfs.get(i).getDate();
 					SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 	                String formatedDate = simpleDateFormat.format(date);
 					odfsDates.add(formatedDate);
 				}
 				DefaultComboBoxModel dfcmOdf=patientQueries.comboBoxModel(odfsDates);
-				odfPatient.getListActCombo().setModel(dfcmOdf);
-				//protheses
+				odfPatient.getListRVCombo().setModel(dfcmOdf);
+				//prothese fixe
 				List<ProtheseFixe>prothesesFixe=currentPatient.getProtheseFixes();
 				List<String> protheseFixeDates= new ArrayList<>();
 				for (int i = 0; i < prothesesFixe.size(); i++) {
@@ -140,11 +158,38 @@ public class ControllerInfoPatient {
 				DefaultComboBoxModel dfcmProthFixe=patientQueries
 						.comboBoxModel(protheseFixeDates);
 				protheseFixeView.getListRVCombo().setModel(dfcmProthFixe);
+				//prothese Partielle
+				List<ProthesePartielle>prothesesPartielle=currentPatient.getProthesePartielles();
+				List<String> prothesePartielleDates= new ArrayList<>();
+				for (int i = 0; i < prothesesPartielle.size(); i++) {
+					Date date= prothesesPartielle.get(i).getDate();
+					//format date
+	                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+	                String formatedDate = simpleDateFormat.format(date);
+	                prothesePartielleDates.add(formatedDate);
+				}
+				DefaultComboBoxModel dfcmProthPartielle=patientQueries
+						.comboBoxModel(prothesePartielleDates);
+				prothesePartielleView.getListRVCombo().setModel(dfcmProthPartielle);
+				//prothese Totale
+				List<ProtheseTotale>prothesesTotale=currentPatient.getProtheseTotales();
+				List<String> protheseTotaleDates= new ArrayList<>();
+				for (int i = 0; i < prothesesTotale.size(); i++) {
+					Date date= prothesesTotale.get(i).getDate();
+					//format date
+	                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+	                String formatedDate = simpleDateFormat.format(date);
+	                protheseTotaleDates.add(formatedDate);
+				}
+				DefaultComboBoxModel dfcmProthTotale=patientQueries
+						.comboBoxModel(protheseTotaleDates);
+				protheseTotaleView.getListRVCombo().setModel(dfcmProthTotale);
 
-				showOrdonanceInfo();
-			}
+				setNameInActivities(currentPatient.getNomEtPrenom());
+				}
 			if (e.getSource()== infoPatient.getNouveauPatient()) {
 				//set all fields empty and enable ok button 
+				setNameInActivities("");
 				setfieldPatientenabled();
 				setFieldsActDisabled();
 				setFieldsEmpty();
@@ -177,6 +222,7 @@ public class ControllerInfoPatient {
 				if(input == JOptionPane.OK_OPTION){
 					// do something
 					patientQueries.deletePatient(currentPatient);
+					patientSelected= false;
 					setFieldsEmpty();
 					//refresh combobox
 
@@ -237,29 +283,26 @@ public class ControllerInfoPatient {
 			infoPatient.getFonction().setText(fonction);
 		}
 		public void setFieldsActInfo(){
-			actPatientView.getActText().setText("");
+			/*actPatientView.getActText().setText("");
 			DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 			Calendar cal = Calendar.getInstance();
 			actPatientView.getTimePicker().setValue(cal.getTime());
 			Date date= new Date();
 			actPatientView.getDatePicker().setDate(date);
-			actPatientView.getPayementCombo().setSelectedIndex(0);
+			actPatientView.getPayementCombo().setSelectedIndex(0);*/
 		}
 		public void setFieldsActDisabled(){
-			setFieldsActInfo();
+			/*setFieldsActInfo();
 			actPatientView.getActText().setEnabled(false);
 			actPatientView.getTimePicker().setEnabled(false);
 			actPatientView.getDatePicker().setEnabled(false);
 			actPatientView.getPayementCombo().setEnabled(false);
 			actPatientView.getOkImage().setEnabled(false);
 			actPatientView.getOuvrir().setEnabled(false);
-			//actPatientView.getListActCombo().setEnabled(false);
-			//actPatientView.getNouveauAct().setEnabled(false);
-			actPatientView.getOk().setEnabled(false);
-			//actPatientView.getModifie().setEnabled(false);
+			actPatientView.getOk().setEnabled(false);*/
 		}
 		public void setFieldsActEnabled(){
-			setFieldsActInfo();
+			/*setFieldsActInfo();
 			actPatientView.getActText().setEnabled(true);
 			actPatientView.getTimePicker().setEnabled(true);
 			actPatientView.getDatePicker().setEnabled(true);
@@ -269,7 +312,7 @@ public class ControllerInfoPatient {
 			actPatientView.getListActCombo().setEnabled(true);
 			actPatientView.getNouveauAct().setEnabled(true);
 			actPatientView.getOk().setEnabled(false);
-			actPatientView.getModifie().setEnabled(true);
+			actPatientView.getModifie().setEnabled(true);*/
 		}
 
 		public void modifyPatientFields(String name, String prenom,String nomEtPrenom
@@ -289,10 +332,21 @@ public class ControllerInfoPatient {
 
 		}
 
-		public void showOrdonanceInfo(){
-			String nomEtPrenom=currentPatient.getNomEtPrenom();
+		
+		public void setNameInActivities(String nomEtPrenom){
+			protheseFixeView.getNomPrenom().setText(nomEtPrenom);
+			protheseTotaleView.getNomPrenom().setText(nomEtPrenom);
+			prothesePartielleView.getNomPrenom().setText(nomEtPrenom);
+			actPatientView.getNomPrenom().setText(nomEtPrenom);
+			odfPatient.getNomPrenom().setText(nomEtPrenom);
 			ordonance.getNomEtPrenom().setText(nomEtPrenom);
-
+		}
+		public void setAllActivityFieldsEmpty(){
+			protheseFixeView.setEmptyFields();
+			protheseTotaleView.setEmptyFields();
+			prothesePartielleView.setEmptyFields();
+			actPatientView.setEmptyFields();
+			odfPatient.setEmptyFields();
 		}
 
 

@@ -3,9 +3,10 @@ package org.hicham.Model;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,41 +16,46 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.transaction.Transactional;
 
-import org.hibernate.annotations.ManyToAny;
-
+import org.hibernate.annotations.Type;
 @Entity
+@Transactional
 @Table(name="Act")
 public class Act {
 	@Id
 	@GeneratedValue(strategy= GenerationType.AUTO)
 	@Column (name="id" ,nullable=false)
 	int id;
-	@Column (name="act" ,nullable=false)
-	String act;
-	@Column (name="payement" ,nullable=false,length=1000)
-    double payement;
-	@Column (name="date")
+	@Column (name="entante" ,nullable=false)
+	@Type(type="text")
+	String entante;
+	@Column (name="temp" ,nullable=false)
+	String temp ;
+	@Column (name="date" ,nullable=false)
 	@Temporal(value=TemporalType.DATE)
-    Date dateRendezVous;
-	@Column (name="temp")
-    String tempRendezVous;
-	@Column (name="lienImageRadio",nullable= true)
-	String lienImageRadio;
+	Date date ;
+	@Column(name="payementActuel",nullable=false)
+	double payementActuel;
+	@Column(name="payementTotal",nullable=false)
+	double payementTotal;
 	@ManyToOne
     @JoinColumn(name="id_Patient")
     private Patient patient;
+	@OneToMany(targetEntity=ImageAct.class,orphanRemoval = true, mappedBy="act"
+			,cascade=CascadeType.DETACH,fetch= FetchType.EAGER)
+	private List<ImageAct> imageAct;
 	
-	public Act(String act, double payement, Date dateRendezVous
-			,String tempRendezVous,String lienImageRadio){
-		this.payement=payement;
-		this.act= act;
-		this.dateRendezVous= dateRendezVous;
-		this.tempRendezVous=tempRendezVous;
-		this.lienImageRadio=lienImageRadio;
+    public Act(String entante,String temp, Date date, double payTotal,double payActuel) {
+		this.temp = temp;
+		this.date = date;
+		this.entante= entante;
+		this.payementActuel=payActuel;
+		this.payementTotal= payTotal;
 	}
-	
+
 	public Act(){
+		
 	}
 
 	public int getId() {
@@ -60,44 +66,20 @@ public class Act {
 		this.id = id;
 	}
 
-	public String getAct() {
-		return act;
+	public String getTemp() {
+		return temp;
 	}
 
-	public void setAct(String act) {
-		this.act = act;
+	public void setTemp(String temp) {
+		this.temp = temp;
 	}
 
-	public double getPayement() {
-		return payement;
+	public Date getDate() {
+		return date;
 	}
 
-	public void setPayement(double payement) {
-		this.payement = payement;
-	}
-
-	public Date getDateRendezVous() {
-		return dateRendezVous;
-	}
-
-	public void setDateRendezVous(Date dateRendezVous) {
-		this.dateRendezVous = dateRendezVous;
-	}
-
-	public String getTempRendezVous() {
-		return tempRendezVous;
-	}
-
-	public void setTempRendezVous(String tempRendezVous) {
-		this.tempRendezVous = tempRendezVous;
-	}
-	
-	public String getLienImageRadio() {
-		return lienImageRadio;
-	}
-
-	public void setLienImageRadio(String lienImageRadio) {
-		this.lienImageRadio = lienImageRadio;
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 	public Patient getPatient() {
@@ -109,4 +91,39 @@ public class Act {
 	}
 
 	
+
+	public List<ImageAct> getImageAct() {
+		return imageAct;
+	}
+
+	public void setImageAct(List<ImageAct> imageAct) {
+		this.imageAct = imageAct;
+	}
+
+	public String getEntante() {
+		return entante;
+	}
+
+	public void setEntante(String entante) {
+		this.entante = entante;
+	}
+
+	public double getPayementActuel() {
+		return payementActuel;
+	}
+
+	public void setPayementActuel(double payementActuel) {
+		this.payementActuel = payementActuel;
+	}
+
+	public double getPayementTotal() {
+		return payementTotal;
+	}
+
+	public void setPayementTotal(double payementTotal) {
+		this.payementTotal = payementTotal;
+	}
+	
+
+
 }

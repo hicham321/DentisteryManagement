@@ -45,7 +45,7 @@ public class ImageProthesePartielle {
 		this.lien = lien;
 	}
 
-	public ProthesePartielle getProtheseFixe() {
+	public ProthesePartielle getProthesePartielle() {
 		return prothesePartielle;
 	}
 

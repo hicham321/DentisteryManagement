@@ -54,6 +54,13 @@ public class Patient {
 	@OneToMany(targetEntity=ProtheseFixe.class, mappedBy="patient"
 			,cascade=CascadeType.ALL,fetch= FetchType.EAGER)
 	private List<ProtheseFixe> protheseFixes;
+	@OneToMany(targetEntity=ProthesePartielle.class, mappedBy="patient"
+			,cascade=CascadeType.ALL,fetch= FetchType.EAGER)
+	private List<ProthesePartielle> prothesePartielles;
+	@OneToMany(targetEntity=ProtheseTotale.class, mappedBy="patient"
+			,cascade=CascadeType.ALL,fetch= FetchType.EAGER)
+	private List<ProtheseTotale> protheseTotales;
+
 
 
 
@@ -160,6 +167,19 @@ public class Patient {
 	public void setProtheseFixes(List<ProtheseFixe> protheseFixes) {
 		this.protheseFixes = protheseFixes;
 	}
+	public List<ProthesePartielle> getProthesePartielles() {
+		return prothesePartielles;
+	}
+	public void setProthesePartielles(List<ProthesePartielle> prothesePartielles) {
+		this.prothesePartielles = prothesePartielles;
+	}
+	public List<ProtheseTotale> getProtheseTotales() {
+		return protheseTotales;
+	}
+	public void setProtheseTotales(List<ProtheseTotale> protheseTotales) {
+		this.protheseTotales = protheseTotales;
+	}
+	
 	
 	
 }

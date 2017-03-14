@@ -85,7 +85,7 @@ public class ControllerOrdonance {
 	ActPatientView actPatientView= new ActPatientView();
 	ControllerInfoPatient controllerInfoPatient= new ControllerInfoPatient(infoPatient
 			,patientQueries,recherchePatientView
-			,actPatientView,odfPatient,protheseFixeView,ordonance);
+			,actPatientView,odfPatient,protheseFixeView,prothesePartielleView,protheseTotaleView,ordonance);
 
 	Collection<OrdonanceReportBean> collBean = new ArrayList<OrdonanceReportBean>();
 	int id=1;
