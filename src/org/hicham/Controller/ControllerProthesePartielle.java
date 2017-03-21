@@ -49,7 +49,6 @@ public class ControllerProthesePartielle {
 	OdfPatient odfPatient= new OdfPatient();
 	Ordonance ordonance= new Ordonance();
 	InfoPatient infoPatient = new InfoPatient();
-	//ProtheseFixeView protheseFixeView= new ProtheseFixeView();
 
 	RecherchePatientView recherchePatientView = new RecherchePatientView();
 
@@ -113,12 +112,14 @@ public class ControllerProthesePartielle {
 						if(input == JOptionPane.OK_OPTION){
 							ajouteProthese();
 							//refresh combo code
+							refreshComboProthese();
 						}	
 
 					}
 					else{
 						ajouteProthese();
 						//refresh combo code
+						refreshComboProthese();
 					}
 				}
 			}
@@ -169,7 +170,7 @@ public class ControllerProthesePartielle {
 					prothesePartielleView.setEmptyFields();
 					clearImageList();
 					//refresh combo code
-
+					refreshComboProthese();
 				}	
 			}
 			if (e.getSource()==prothesePartielleView.getAjouteImage()) {
@@ -466,6 +467,10 @@ public class ControllerProthesePartielle {
 	}
 	public  void addImageOrder(String lien){
 		imageOrder.add(lien);
+	}
+	public void refreshComboProthese(){
+		int selectedItem=infoPatient.getRechCombo().getSelectedIndex();
+		infoPatient.getRechCombo().setSelectedIndex(selectedItem);
 	}
 
 }

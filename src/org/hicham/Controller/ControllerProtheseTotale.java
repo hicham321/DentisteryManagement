@@ -113,12 +113,14 @@ public class ControllerProtheseTotale {
 						if(input == JOptionPane.OK_OPTION){
 							ajouteProthese();
 							//refresh combo code
+							refreshComboProthese();
 						}	
 
 					}
 					else{
 						ajouteProthese();
 						//refresh combo code
+						refreshComboProthese();
 					}
 				}
 			}
@@ -167,7 +169,7 @@ public class ControllerProtheseTotale {
 					protheseTotaleView.setEmptyFields();
 					clearImageList();
 					//refresh combo code
-
+					refreshComboProthese();
 				}	
 			}
 			if (e.getSource()==protheseTotaleView.getAjouteImage()) {
@@ -460,6 +462,10 @@ public class ControllerProtheseTotale {
 	}
 	public  void addImageOrder(String lien){
 		imageOrder.add(lien);
+	}
+	public void refreshComboProthese(){
+		int selectedItem=infoPatient.getRechCombo().getSelectedIndex();
+		infoPatient.getRechCombo().setSelectedIndex(selectedItem);
 	}
 	
 

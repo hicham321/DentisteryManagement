@@ -466,16 +466,6 @@ public class ControllerAct {
 		imageOrder.add(lien);
 	}
 	public void refreshComboAct(){
-		/*List<Act>acts=controllerInfoPatient.getCurrentPatient().getActList();
-		List<String> actsDates= new ArrayList<>();
-		for (int i = 0; i < acts.size(); i++) {
-			Date date= acts.get(i).getDate();
-			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            String formatedDate = simpleDateFormat.format(date);
-			actsDates.add(formatedDate);
-		}
-		DefaultComboBoxModel dfcmAct=patientQueries.comboBoxModel(actsDates);
-		actPatientView.getListRVCombo().setModel(dfcmAct);*/
 		int selectedItem=infoPatient.getRechCombo().getSelectedIndex();
 		infoPatient.getRechCombo().setSelectedIndex(selectedItem);
 	}

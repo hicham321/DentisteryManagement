@@ -119,12 +119,14 @@ public class ControllerOdf{
 						if(input == JOptionPane.OK_OPTION){
 							ajouteProthese();
 							//refresh combo code
+							refreshComboOdf();
 						}	
 
 					}
 					else{
 						ajouteProthese();
 						//refresh combo code
+						refreshComboOdf();
 					}
 				}
 			}
@@ -173,7 +175,7 @@ public class ControllerOdf{
 					odfPatient.setEmptyFields();
 					clearImageList();
 					//refresh combo code
-
+					refreshComboOdf();
 				}	
 			}
 			if (e.getSource()==odfPatient.getAjouteImage()) {
@@ -460,6 +462,12 @@ public class ControllerOdf{
 	}
 	public  void addImageOrder(String lien){
 		imageOrder.add(lien);
+	}
+	
+	public void refreshComboOdf(){
+		
+		int selectedItem=infoPatient.getRechCombo().getSelectedIndex();
+		infoPatient.getRechCombo().setSelectedIndex(selectedItem);
 	}
 		
 }
