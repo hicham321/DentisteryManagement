@@ -73,7 +73,7 @@ public class ControllerRegister {
 				//check if password is correct depending on user type:
 				char[] password= registerView.getPassword().getPassword();
 				String typeUser= registerView.getTypeUserCombo().getSelectedItem().toString();
-
+				
 				if (registerQueries.checkPassCorrect(password, typeUser)) {
 					mainFrame.enableFrameComponents();
 					registerView.dispose();
@@ -85,9 +85,7 @@ public class ControllerRegister {
 
 			} 
 			if(arg0.getSource()== registerView.getAnnule()){
-				//get out of the program
-				//System.exit(0);
-				registerView.dispose();
+				System.exit(0);
 			}
 		}
 

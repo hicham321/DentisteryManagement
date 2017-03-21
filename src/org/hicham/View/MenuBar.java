@@ -16,7 +16,7 @@ public class MenuBar {
 
 	JMenuItem ajoutbase = new JMenuItem("Ouvrir");
 
-	JMenuItem quiter = new JMenuItem("quiter ");
+	JMenuItem quiter = new JMenuItem("Quiter ");
 
 	JMenuItem motpasse = new JMenuItem("Changé Le Mot De passe");
 

@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 public class ActQueries {
        //insert update and delete queries
@@ -19,9 +20,9 @@ public class ActQueries {
 			session.beginTransaction();
 			session.saveOrUpdate(act);
 			session.getTransaction().commit();
-
 		} finally {
 			session.close();
+
 		}
 	}
 	public void addActImage(ImageAct imageAct){

@@ -42,7 +42,9 @@ public class ControllerChangePass {
 			}
 			if (arg0.getSource()== changeMotPassView.getAnnuler()) {
 				//close changepassview
-				changeMotPassView.dispose();
+				resetPasswordFields();
+				changeMotPassView.getErrorLab().setVisible(false);
+				changeMotPassView.setVisible(false);
 			}
 		}
 

@@ -103,7 +103,7 @@ public class Main {
 		MainFrame mf= new MainFrame(hp,p,gs,rvv,jav,rv,ormv,excv,mb);
 		//controllers
 		ControllerInfoPatient cip= new ControllerInfoPatient(ip, pq,rp,ap,op,prfv,prpv,prtv,o);
-		ControllerAct ca= new ControllerAct(ap, aq, cip);
+		ControllerAct ca= new ControllerAct(ap, aq,ip, cip);
 		ControllerOdf codf= new ControllerOdf(op, oq, cip);
 		ControllerPatient cp= new ControllerPatient(mf, p,o);
 		ControllerOrdonance co= new ControllerOrdonance(mf,hp, p, o,mq,cip);

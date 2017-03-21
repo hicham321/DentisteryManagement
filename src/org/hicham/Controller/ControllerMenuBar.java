@@ -103,7 +103,7 @@ public class ControllerMenuBar {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-
+   
 			if (e.getSource()== menuBar.getOrdonance()) {
 				//show ordonance card
 				
@@ -111,6 +111,9 @@ public class ControllerMenuBar {
 			if (e.getSource()== menuBar.getPatient()) {
 				//show patient card
 
+			}
+			if (e.getSource()== menuBar.getQuiter()) {
+				System.exit(0);
 			}
 			if (e.getSource()== menuBar.getInfoPatientItem()) {
 				//show info patient card

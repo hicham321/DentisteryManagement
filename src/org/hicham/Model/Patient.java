@@ -46,7 +46,7 @@ public class Patient {
 	String fonction;
 	
 	@OneToMany(targetEntity=Act.class, mappedBy="patient"
-			,cascade=CascadeType.ALL,fetch= FetchType.EAGER)
+			,cascade=CascadeType.MERGE,fetch= FetchType.EAGER)
 	private List<Act> actList;
 	@OneToMany(targetEntity=Odf.class, mappedBy="patient"
 			,cascade=CascadeType.ALL,fetch= FetchType.EAGER)

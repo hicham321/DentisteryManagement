@@ -348,6 +348,7 @@ public class ControllerInfoPatient {
 			actPatientView.setEmptyFields();
 			odfPatient.setEmptyFields();
 		}
+		
 
 
 

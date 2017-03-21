@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.UIManager;
 
 import org.hicham.Model.MedicamentQueries;
 import org.hicham.Model.OrdonanceReportBean;
@@ -155,8 +156,10 @@ public class ControllerOrdonance {
 			//JasperReport jasperReport = JasperCompileManager.compileReport(stream);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(stream
 					,params, getData());
-			
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 			JRViewer v= new JRViewer(jasperPrint);
+            //JasperViewer v = new JasperViewer(jasperPrint,false); 
+
 			v.setZoomRatio(0.55f);
 			ordonance.cards.add(v, "Card 2");
 			CardLayout cardLayout = (CardLayout) ordonance.cards.getLayout();

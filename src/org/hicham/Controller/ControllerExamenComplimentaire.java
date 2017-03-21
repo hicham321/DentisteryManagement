@@ -12,6 +12,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.UIManager;
+
 import org.hicham.Controller.ControllerOrdonanceMenu.OrdonanceMenuActionListener;
 import org.hicham.Model.OrdonanceReportBean;
 import org.hicham.Model.Patient;
@@ -108,7 +110,7 @@ public class ControllerExamenComplimentaire {
 			//JasperReport jasperReport = JasperCompileManager.compileReport(stream);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(stream
 					,params, getData());
-			
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 			JRViewer v= new JRViewer(jasperPrint);
 			v.setZoomRatio(0.55f);
 			examenComplimentaireView.cards.add(v, "Card 2");
