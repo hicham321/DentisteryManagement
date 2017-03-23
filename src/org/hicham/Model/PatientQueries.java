@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import org.hibernate.Session;
+import static java.lang.Math.toIntExact;
 
 
 public class PatientQueries {
@@ -45,7 +46,6 @@ public class PatientQueries {
 	public List<Patient> findAllPatients(){
 		SessionsDB FactoryObject= new SessionsDB();
 		Session session= FactoryObject.getFactory().openSession();
-	    //Session session = SessionsDB.getFactory().openSession();
 		try {
 
 			List<Patient> listPatient= session.createQuery("from Patient").list();
@@ -79,6 +79,20 @@ public class PatientQueries {
 		}
 		return comboModel;
 
+	}
+	public int getCount(){
+		SessionsDB FactoryObject= new SessionsDB();
+		Session session= FactoryObject.getFactory().openSession();
+		try {
+			Long extracted = (Long) session.createQuery("select count(*) from  Patient")
+                    .uniqueResult();
+			//java8 to exatract an int from a long
+			int count  = toIntExact(extracted);
+
+			return count;
+		} finally {
+			session.close();
+		}
 	}
 	public class MyClass{
 

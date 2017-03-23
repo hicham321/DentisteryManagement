@@ -11,6 +11,7 @@ import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.SwingWorker;
 
 import org.hicham.Model.Act;
 import org.hicham.Model.Odf;
@@ -90,6 +91,8 @@ public class ControllerInfoPatient {
 				setFieldsActEnabled();
 				setAllActivityFieldsEmpty();
 				setNameInActivities(currentPatient.getNomEtPrenom());
+				//refresh combobox
+				refreshComboInfoPatient();
 
 			}
 			if (e.getSource()== infoPatient.getRechCombo()) {
@@ -357,6 +360,23 @@ public class ControllerInfoPatient {
 
 	public Patient getCurrentPatient() {
 		return currentPatient;
+	}
+	public void refreshComboInfoPatient(){
+		new SwingWorker() {
+
+			@Override
+			protected Object doInBackground() throws Exception {
+				try{
+					DefaultComboBoxModel dftb=patientQueries.getComboModel();
+					infoPatient.getRechCombo().setModel(dftb);
+					int count  = patientQueries.getCount();
+					infoPatient.getRechCombo().setSelectedIndex(count-1);
+				}catch(Exception ex){
+					ex.printStackTrace();
+				}
+				return null;
+			}
+		}.execute();
 	}
 
 }
