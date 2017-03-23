@@ -72,10 +72,11 @@ public class ControllerProthesePartielle {
 	
 	
 	public ControllerProthesePartielle(ProthesePartielleView prothesePartielleView
-			,ProthesePartielleQueries prothesePartielleQueries
+			,ProthesePartielleQueries prothesePartielleQueries, InfoPatient infoPatient
 			,ControllerInfoPatient controllerInfoPatient){
 		this.prothesePartielleQueries= prothesePartielleQueries;
 		this.prothesePartielleView= prothesePartielleView;
+		this.infoPatient= infoPatient;
 		this.controllerInfoPatient= controllerInfoPatient;
 		this.prothesePartielleView.addProthesePartielleActionListener(new ProthesePartielleActionListener() );
 	}

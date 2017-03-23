@@ -79,10 +79,11 @@ public class ControllerProtheseFixe {
 	double montantActuel=0;
     
 	public ControllerProtheseFixe(ProtheseFixeView protheseFixeView
-			,ProtheseFixeQueries protheseFixeQueries
+			,ProtheseFixeQueries protheseFixeQueries,InfoPatient infoPatient
 			,ControllerInfoPatient controllerInfoPatient){
 		this.protheseFixeQueries= protheseFixeQueries;
 		this.protheseFixeView= protheseFixeView;
+		this.infoPatient= infoPatient;
 		this.controllerInfoPatient= controllerInfoPatient;
 		this.protheseFixeView.addProtheseFixActionListener(new ProtheseFixActionListener() );
 	}

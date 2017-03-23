@@ -78,10 +78,11 @@ public class ControllerOdf{
 	double montantActuel=0;
     
 	public ControllerOdf(OdfPatient odfPatient
-			,OdfQueries odfQueries
+			,OdfQueries odfQueries,InfoPatient infoPatient
 			,ControllerInfoPatient controllerInfoPatient){
 		this.odfQueries= odfQueries;
 		this.odfPatient= odfPatient;
+		this.infoPatient= infoPatient;
 		this.controllerInfoPatient= controllerInfoPatient;
 		this.odfPatient.addOdfActionListener(new OdfActionListener() );
 	}
@@ -120,6 +121,7 @@ public class ControllerOdf{
 							ajouteProthese();
 							//refresh combo code
 							refreshComboOdf();
+							System.out.println("selected patient again");
 						}	
 
 					}
@@ -127,6 +129,8 @@ public class ControllerOdf{
 						ajouteProthese();
 						//refresh combo code
 						refreshComboOdf();
+						System.out.println("selected patient again");
+
 					}
 				}
 			}
@@ -176,6 +180,7 @@ public class ControllerOdf{
 					clearImageList();
 					//refresh combo code
 					refreshComboOdf();
+					System.out.println("selected patient again");
 				}	
 			}
 			if (e.getSource()==odfPatient.getAjouteImage()) {

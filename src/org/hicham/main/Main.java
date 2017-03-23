@@ -104,7 +104,7 @@ public class Main {
 		//controllers
 		ControllerInfoPatient cip= new ControllerInfoPatient(ip, pq,rp,ap,op,prfv,prpv,prtv,o);
 		ControllerAct ca= new ControllerAct(ap, aq,ip, cip);
-		ControllerOdf codf= new ControllerOdf(op, oq, cip);
+		ControllerOdf codf= new ControllerOdf(op, oq,ip,cip);
 		ControllerPatient cp= new ControllerPatient(mf, p,o);
 		ControllerOrdonance co= new ControllerOrdonance(mf,hp, p, o,mq,cip);
 		ControllerMenuBar cmb= new ControllerMenuBar(mf,hp,mb, p,ip, o,gs,rvv
@@ -114,9 +114,9 @@ public class Main {
 		ControllerRegister cr= new ControllerRegister(rq, rv, mf);
 		ControllerChangePass ccmp= new ControllerChangePass(cmpv, rq);
 		ControllerProthese crpr= new ControllerProthese(prv, prtv, prpv, prfv);
-		ControllerProtheseFixe crprf= new ControllerProtheseFixe(prfv, prfq, cip);
-		ControllerProthesePartielle crprp= new ControllerProthesePartielle(prpv, prprq, cip);
-		ControllerProtheseTotale crprto= new ControllerProtheseTotale(prtv, prtoq, cip);
+		ControllerProtheseFixe crprf= new ControllerProtheseFixe(prfv, prfq,ip,cip);
+		ControllerProthesePartielle crprp= new ControllerProthesePartielle(prpv, prprq,ip,cip);
+		ControllerProtheseTotale crprto= new ControllerProtheseTotale(prtv, prtoq,ip,cip);
 		ControllerJustification cj= new ControllerJustification(jav);
 		ControllerOrdonanceMenu corm= new ControllerOrdonanceMenu(ormv, pq);
 		ControllerExamenComplimentaire cexc= new ControllerExamenComplimentaire(excv, pq);

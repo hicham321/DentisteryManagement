@@ -74,10 +74,11 @@ public class ControllerProtheseTotale {
 	
 	double montantActuel=0;
 	public ControllerProtheseTotale(ProtheseTotaleView protheseTotaleView
-			,ProtheseTotaleQueries protheseTotaleQueries
+			,ProtheseTotaleQueries protheseTotaleQueries,InfoPatient infoPatient
 			,ControllerInfoPatient controllerInfoPatient){
 		this.protheseTotaleQueries= protheseTotaleQueries;
 		this.protheseTotaleView= protheseTotaleView;
+		this.infoPatient=infoPatient;
 		this.controllerInfoPatient= controllerInfoPatient;
 		this.protheseTotaleView.addProtheseTotaleActionListener(new ProtheseTotaleActionListener() );
 	}
