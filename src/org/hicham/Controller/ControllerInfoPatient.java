@@ -88,7 +88,6 @@ public class ControllerInfoPatient {
 				patientQueries.addPatient(currentPatient);
 				patientSelected= true;
 				setFieldsEmpty();
-				setFieldsActEnabled();
 				setAllActivityFieldsEmpty();
 				setNameInActivities(currentPatient.getNomEtPrenom());
 				//refresh combobox
@@ -97,7 +96,6 @@ public class ControllerInfoPatient {
 			}
 			if (e.getSource()== infoPatient.getRechCombo()) {
 				setAllActivityFieldsEmpty();
-				setFieldsActEnabled();
 				infoPatient.getOk().setEnabled(false);
 				infoPatient.getModifie().setEnabled(true);
 				
@@ -121,72 +119,11 @@ public class ControllerInfoPatient {
 						selectedPatient.getSex(),selectedPatient.getAnticident(),
 						selectedPatient.getFonction());
 				
-				
-				//this part can be multithreaded
-
-				//show related patient acts
-				setFieldsActInfo();
-				//set info in act for the selected patient
-				List<Act>acts=currentPatient.getActList();
-				List<String> actsDates= new ArrayList<>();
-				for (int i = 0; i < acts.size(); i++) {
-					Date date= acts.get(i).getDate();
-					SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-	                String formatedDate = simpleDateFormat.format(date);
-					actsDates.add(formatedDate);
-				}
-				DefaultComboBoxModel dfcmAct=patientQueries.comboBoxModel(actsDates);
-				actPatientView.getListRVCombo().setModel(dfcmAct);
-				//set info in act for the selected patient
-				List<Odf>odfs=currentPatient.getOdfList();
-				List<String> odfsDates= new ArrayList<>();
-				for (int i = 0; i < odfs.size(); i++) {
-					Date date= odfs.get(i).getDate();
-					SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-	                String formatedDate = simpleDateFormat.format(date);
-					odfsDates.add(formatedDate);
-				}
-				DefaultComboBoxModel dfcmOdf=patientQueries.comboBoxModel(odfsDates);
-				odfPatient.getListRVCombo().setModel(dfcmOdf);
-				//prothese fixe
-				List<ProtheseFixe>prothesesFixe=currentPatient.getProtheseFixes();
-				List<String> protheseFixeDates= new ArrayList<>();
-				for (int i = 0; i < prothesesFixe.size(); i++) {
-					Date date= prothesesFixe.get(i).getDate();
-					//format date
-	                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-	                String formatedDate = simpleDateFormat.format(date);
-	                protheseFixeDates.add(formatedDate);
-				}
-				DefaultComboBoxModel dfcmProthFixe=patientQueries
-						.comboBoxModel(protheseFixeDates);
-				protheseFixeView.getListRVCombo().setModel(dfcmProthFixe);
-				//prothese Partielle
-				List<ProthesePartielle>prothesesPartielle=currentPatient.getProthesePartielles();
-				List<String> prothesePartielleDates= new ArrayList<>();
-				for (int i = 0; i < prothesesPartielle.size(); i++) {
-					Date date= prothesesPartielle.get(i).getDate();
-					//format date
-	                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-	                String formatedDate = simpleDateFormat.format(date);
-	                prothesePartielleDates.add(formatedDate);
-				}
-				DefaultComboBoxModel dfcmProthPartielle=patientQueries
-						.comboBoxModel(prothesePartielleDates);
-				prothesePartielleView.getListRVCombo().setModel(dfcmProthPartielle);
-				//prothese Totale
-				List<ProtheseTotale>prothesesTotale=currentPatient.getProtheseTotales();
-				List<String> protheseTotaleDates= new ArrayList<>();
-				for (int i = 0; i < prothesesTotale.size(); i++) {
-					Date date= prothesesTotale.get(i).getDate();
-					//format date
-	                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-	                String formatedDate = simpleDateFormat.format(date);
-	                protheseTotaleDates.add(formatedDate);
-				}
-				DefaultComboBoxModel dfcmProthTotale=patientQueries
-						.comboBoxModel(protheseTotaleDates);
-				protheseTotaleView.getListRVCombo().setModel(dfcmProthTotale);
+				refreshComboAct();
+				refreshComboOdf();
+				refreshComboProtheseFixe();
+				refreshComboProthesePartielle();
+				refreshComboProtheseTotale();
 
 				setNameInActivities(currentPatient.getNomEtPrenom());
 				}
@@ -194,7 +131,6 @@ public class ControllerInfoPatient {
 				//set all fields empty and enable ok button 
 				setNameInActivities("");
 				setfieldPatientenabled();
-				setFieldsActDisabled();
 				setFieldsEmpty();
 				infoPatient.getOk().setEnabled(true);
 				infoPatient.getModifie().setEnabled(false);
@@ -285,38 +221,7 @@ public class ControllerInfoPatient {
 			infoPatient.getAnticident().setText(anticident);
 			infoPatient.getFonction().setText(fonction);
 		}
-		public void setFieldsActInfo(){
-			/*actPatientView.getActText().setText("");
-			DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-			Calendar cal = Calendar.getInstance();
-			actPatientView.getTimePicker().setValue(cal.getTime());
-			Date date= new Date();
-			actPatientView.getDatePicker().setDate(date);
-			actPatientView.getPayementCombo().setSelectedIndex(0);*/
-		}
-		public void setFieldsActDisabled(){
-			/*setFieldsActInfo();
-			actPatientView.getActText().setEnabled(false);
-			actPatientView.getTimePicker().setEnabled(false);
-			actPatientView.getDatePicker().setEnabled(false);
-			actPatientView.getPayementCombo().setEnabled(false);
-			actPatientView.getOkImage().setEnabled(false);
-			actPatientView.getOuvrir().setEnabled(false);
-			actPatientView.getOk().setEnabled(false);*/
-		}
-		public void setFieldsActEnabled(){
-			/*setFieldsActInfo();
-			actPatientView.getActText().setEnabled(true);
-			actPatientView.getTimePicker().setEnabled(true);
-			actPatientView.getDatePicker().setEnabled(true);
-			actPatientView.getPayementCombo().setEnabled(true);
-			actPatientView.getOkImage().setEnabled(true);
-			actPatientView.getOuvrir().setEnabled(true);
-			actPatientView.getListActCombo().setEnabled(true);
-			actPatientView.getNouveauAct().setEnabled(true);
-			actPatientView.getOk().setEnabled(false);
-			actPatientView.getModifie().setEnabled(true);*/
-		}
+		
 
 		public void modifyPatientFields(String name, String prenom,String nomEtPrenom
 				,String age, String teinte, String fonction,String tel, String anticident
@@ -374,6 +279,135 @@ public class ControllerInfoPatient {
 				}catch(Exception ex){
 					ex.printStackTrace();
 				}
+				return null;
+			}
+		}.execute();
+	}
+	public void refreshComboAct(){
+		new SwingWorker() {
+			@Override
+			protected Object doInBackground() throws Exception {
+				try {
+					List<Act>acts=currentPatient.getActList();
+					List<String> actsDates= new ArrayList<>();
+					for (int i = 0; i < acts.size(); i++) {
+						Date date= acts.get(i).getDate();
+						SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+						String formatedDate = simpleDateFormat.format(date);
+						actsDates.add(formatedDate);
+					}
+					DefaultComboBoxModel dfcmAct=patientQueries.comboBoxModel(actsDates);
+					actPatientView.getListRVCombo().setModel(dfcmAct);
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				return null;
+			}
+		}.execute();
+
+	}
+
+	public void refreshComboOdf(){
+		new SwingWorker() {
+
+			@Override
+			protected Object doInBackground() throws Exception {
+				try {
+					List<Odf>odfs=currentPatient.getOdfList();
+					List<String> odfsDates= new ArrayList<>();
+					for (int i = 0; i < odfs.size(); i++) {
+						Date date= odfs.get(i).getDate();
+						SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+						String formatedDate = simpleDateFormat.format(date);
+						odfsDates.add(formatedDate);
+					}
+					DefaultComboBoxModel dfcmOdf=patientQueries.comboBoxModel(odfsDates);
+					odfPatient.getListRVCombo().setModel(dfcmOdf);
+
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}				
+				return null;
+			}
+		}.execute();
+	}
+	public void refreshComboProtheseFixe(){
+		new SwingWorker() {
+
+			@Override
+			protected Object doInBackground() throws Exception {
+				try {
+					List<ProtheseFixe>prothesesFixe=currentPatient.getProtheseFixes();
+					List<String> protheseFixeDates= new ArrayList<>();
+					for (int i = 0; i < prothesesFixe.size(); i++) {
+						Date date= prothesesFixe.get(i).getDate();
+						//format date
+						SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+						String formatedDate = simpleDateFormat.format(date);
+						protheseFixeDates.add(formatedDate);
+					}
+					DefaultComboBoxModel dfcmProthFixe=patientQueries
+							.comboBoxModel(protheseFixeDates);
+					protheseFixeView.getListRVCombo().setModel(dfcmProthFixe);
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}				
+				return null;
+			}
+		}.execute();
+	}
+	public void refreshComboProthesePartielle(){
+		new SwingWorker() {
+
+			@Override
+			protected Object doInBackground() throws Exception {
+				try {
+					List<ProthesePartielle>prothesesPartielle=currentPatient.getProthesePartielles();
+					List<String> prothesePartielleDates= new ArrayList<>();
+					for (int i = 0; i < prothesesPartielle.size(); i++) {
+						Date date= prothesesPartielle.get(i).getDate();
+						//format date
+						SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+						String formatedDate = simpleDateFormat.format(date);
+						prothesePartielleDates.add(formatedDate);
+					}
+					DefaultComboBoxModel dfcmProthPartielle=patientQueries
+							.comboBoxModel(prothesePartielleDates);
+					prothesePartielleView.getListRVCombo().setModel(dfcmProthPartielle);
+
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}				
+				return null;
+			}
+		}.execute();
+	}
+	public void refreshComboProtheseTotale(){
+		new SwingWorker() {
+
+			@Override
+			protected Object doInBackground() throws Exception {
+				try {
+					List<ProtheseTotale>prothesesTotale=currentPatient.getProtheseTotales();
+					List<String> protheseTotaleDates= new ArrayList<>();
+					for (int i = 0; i < prothesesTotale.size(); i++) {
+						Date date= prothesesTotale.get(i).getDate();
+						//format date
+						SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+						String formatedDate = simpleDateFormat.format(date);
+						protheseTotaleDates.add(formatedDate);
+					}
+					DefaultComboBoxModel dfcmProthTotale=patientQueries
+							.comboBoxModel(protheseTotaleDates);
+					protheseTotaleView.getListRVCombo().setModel(dfcmProthTotale);
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}				
 				return null;
 			}
 		}.execute();

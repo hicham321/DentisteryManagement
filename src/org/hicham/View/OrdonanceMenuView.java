@@ -17,6 +17,8 @@ import javax.swing.border.Border;
 
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
+import net.sf.jasperreports.view.JRViewer;
+
 public class OrdonanceMenuView extends JPanel{
 	
 
@@ -38,6 +40,9 @@ public class OrdonanceMenuView extends JPanel{
 	JButton ok = new JButton("Genérer");
 	
 	JPanel ordonancePanel;
+	
+	JRViewer viewer;
+
 	
 	public JPanel cards;
 	
@@ -86,6 +91,8 @@ public class OrdonanceMenuView extends JPanel{
 		cards = new JPanel(new CardLayout());
 
 		cards.add(ordonancePanel, "Card 1");
+		
+		viewer= new JRViewer(null);
 
 		this.add(cards);
 		
@@ -125,6 +132,10 @@ public class OrdonanceMenuView extends JPanel{
         ageLab.setBounds(30,190,120,20);
         ageText.setBounds(170,190,270,20);
 
+	}
+
+	public JRViewer getViewer() {
+		return viewer;
 	}
 
 	public void addOrdonanceMenuActionListener(ActionListener listener){

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionListener;
+import java.beans.PropertyVetoException;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -12,6 +13,8 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDesktopPane;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
@@ -20,10 +23,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.AbstractDocument;
 
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
-public class GestionStockView extends JPanel{
+public class GestionStockView extends JDesktopPane{
 	// ajout qte
 	
 	JLabel nomProduitLab= new JLabel("Produit: ");
@@ -67,33 +71,54 @@ public class GestionStockView extends JPanel{
 	
 	
 	//Label Info General
-
-
-
-
 	
 	public  DefaultTableModel dt;
 	public  JTable produitsTab;
 	private JScrollPane scrolPane;
+	//
+	JInternalFrame produitNomFrame= new JInternalFrame();
+	public JInternalFrame getProduitNomFrame() {
+		return produitNomFrame;
+	}
+
+	JLabel nomProduitTextLab= new JLabel("Nom du produit:");
+    JTextField newNameText= new JTextField("");
+	public JTextField getNewNameText() {
+		return newNameText;
+	}
+
+	JButton okModifie= new JButton("Ok");
+	public JButton getOkModifie() {
+		return okModifie;
+	}
+
+	JButton annuleModifie= new JButton("Annuler");
+
+
+
+	public JButton getAnnuleModifie() {
+		return annuleModifie;
+	}
+
 
 
 	public GestionStockView(){
 		
 		this.setLayout(null);
-		this.setBackground(Color.decode("#d2fdf9"));
+		this.setBackground(Color.white);
 		//panel for adding quatity
 		JPanel panelAjoutqte= new JPanel();
-		panelAjoutqte.setBackground(Color.cyan);
+		panelAjoutqte.setBackground(Color.white);
 		panelAjoutqte.setLayout(null);
 		panelAjoutqte.setBorder(BorderFactory.createTitledBorder("Ajouté une qte: "));
 		//panel for adding new products		
 		JPanel panelAjoutProduit= new JPanel();
-		panelAjoutProduit.setBackground(Color.decode("#d2fdf9"));
+		panelAjoutProduit.setBackground(Color.white);
 		panelAjoutProduit.setLayout(null);
 		panelAjoutProduit.setBorder(BorderFactory.createTitledBorder("Ajouté un produit: "));
 		//panel for labels 
 		JPanel panelProduitInfo= new JPanel();
-		panelProduitInfo.setBackground(Color.decode("#d2fdf9"));
+		panelProduitInfo.setBackground(Color.white);
 		panelProduitInfo.setLayout(null);
 		panelProduitInfo.setBorder(BorderFactory.createTitledBorder("Info du Produit: "));
 		
@@ -183,6 +208,38 @@ public class GestionStockView extends JPanel{
 		panelAjoutqte.setBounds(50, 50, 400, 200);
 		panelAjoutProduit.setBounds(600,50,400, 200);
 		panelProduitInfo.setBounds(50,300, 400, 200);
+		
+		
+		//
+		JPanel panelPay= new JPanel();
+		panelPay.setLayout(null);
+		panelPay.setBackground(Color.WHITE);
+		
+		nomProduitTextLab.setBounds(30,40 ,120 ,30 );;
+		newNameText.setBounds(170,40 ,200 ,30 );
+		okModifie.setBounds(100,85 ,100 ,30 );
+		annuleModifie.setBounds(250,85 ,100 ,30 );
+
+		panelPay.add(nomProduitTextLab);
+		panelPay.add(newNameText);
+		panelPay.add(okModifie);
+		panelPay.add(annuleModifie);
+
+
+
+		produitNomFrame.add(panelPay);
+		produitNomFrame.setTitle("Modifie le nom du produit");
+		produitNomFrame.setSize(450, 180);
+		produitNomFrame.toFront();
+		try {
+			produitNomFrame.setSelected(true);
+		} catch (PropertyVetoException e) {
+			e.printStackTrace();
+		}
+
+		this.produitNomFrame.setLocation(490,180);
+		produitNomFrame.setVisible(false);
+		this.add(produitNomFrame);
 	
 	}
 	
@@ -196,7 +253,10 @@ public class GestionStockView extends JPanel{
 		this.ajoutQte.addActionListener(Listener);
 		this.choixBtn.addActionListener(Listener);
 		this.modifieItem.addActionListener(Listener);
-		this.supItem.addActionListener(Listener);		
+		this.supItem.addActionListener(Listener);
+		this.annuleModifie.addActionListener(Listener);
+		this.okModifie.addActionListener(Listener);
+
 	}
 
 

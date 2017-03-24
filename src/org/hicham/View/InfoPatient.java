@@ -72,7 +72,7 @@ public class InfoPatient extends JPanel{
 
 	public InfoPatient(){
         this.setLayout(null);
-		this.setBackground(Color.decode("#d2fdf9"));
+		this.setBackground(Color.white);
 
 		this.TeintModel.addElement("");
 		AutoCompleteDecorator.decorate(teinte);

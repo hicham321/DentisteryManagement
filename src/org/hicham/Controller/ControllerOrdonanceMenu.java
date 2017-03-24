@@ -12,7 +12,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import org.hicham.Model.OrdonanceReportBean;
 import org.hicham.Model.Patient;
@@ -106,11 +108,18 @@ public class ControllerOrdonanceMenu {
 		try {
 			Map<String, Object> params = new HashMap<String, Object>();
 			InputStream stream= new FileInputStream("src/resources/ordonanceReport.jasper");
-			//JasperReport jasperReport = JasperCompileManager.compileReport(stream);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(stream
 					,params, getData());
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-			JRViewer v= new JRViewer(jasperPrint);
+			JRViewer v= ordonanceMenuView.getViewer();
+		    v= new JRViewer(jasperPrint);
+		    /*LookAndFeel previousLF = UIManager.getLookAndFeel();
+		    try {
+		        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		        v=new JRViewer(jasperPrint);
+		        UIManager.setLookAndFeel(previousLF);
+		    } catch (IllegalAccessException | UnsupportedLookAndFeelException | InstantiationException | ClassNotFoundException e) {}
+			*/
+		    
 			v.setZoomRatio(0.55f);
 			ordonanceMenuView.cards.add(v, "Card 2");
 			CardLayout cardLayout = (CardLayout) ordonanceMenuView.cards.getLayout();

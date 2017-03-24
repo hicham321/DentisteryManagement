@@ -7,6 +7,7 @@ import java.sql.SQLException;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 
 import org.hicham.Model.Produit;
 import org.hicham.Model.ProduitQueries;
@@ -41,10 +42,40 @@ public class ControllerGestionStock {
 
 			}
 			if (e.getSource()== gestionStockView.getModifieItem()) {
+				gestionStockView.getProduitNomFrame().setVisible(true);
+				gestionStockView.getNewNameText().setText(gestionStockView.getProduitCombo().getSelectedItem().toString());
+                
+			}
+			if (e.getSource()==gestionStockView.getOkModifie()) {
+				//modify code
+				int selectedItem= gestionStockView.getProduitCombo().getSelectedIndex();
+				Produit produit=produitQueries.getProduct(selectedItem);
+				produit.setProduitNom(gestionStockView.getNewNameText().getText());
+				produitQueries.updateProduct(produit);
+				gestionStockView.getProduitNomFrame().setVisible(false);
+				refreshComboBox();
+				gestionStockView.getProduitCombo().setSelectedIndex(selectedItem);
+
+			}
+			if (e.getSource()==gestionStockView.getAnnuleModifie()) {
+				gestionStockView.getProduitNomFrame().setVisible(false);
 
 			}
 			if (e.getSource()== gestionStockView.getSupItem()) {
+				// delete code
+				int input = JOptionPane.showOptionDialog(null
+						,"Supprimer ce produit? "
+						, "Supprimer produit"
+						, JOptionPane.OK_CANCEL_OPTION
+						, JOptionPane.INFORMATION_MESSAGE, null, new String[]{"Oui", "Non"}, "default");
 
+				if(input == JOptionPane.OK_OPTION){
+					int selectedItem= gestionStockView.getProduitCombo().getSelectedIndex();
+					Produit produit=produitQueries.getProduct(selectedItem);
+					produitQueries.deleteProduct(produit);
+					refreshComboBox();
+				}	
+				
 			}
 			if (e.getSource()== gestionStockView.getAjoutQte()) {
 				//update query for product row

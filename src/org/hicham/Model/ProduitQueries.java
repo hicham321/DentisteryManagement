@@ -13,12 +13,38 @@ public class ProduitQueries extends UsefulMethods{
 	public void addProduct(String nomProduit,double prix, int qte){
 		SessionsDB FactoryObject= new SessionsDB();
 		Session session= FactoryObject.getFactory().openSession();
-		//Session session = SessionsDB.getFactory().openSession();
 		try {
 
 			//save patient object
 			session.beginTransaction();
-			session.save( new Produit(nomProduit,prix,qte) );
+			session.saveOrUpdate( new Produit(nomProduit,prix,qte) );
+			session.getTransaction().commit();
+
+		} finally {
+			session.close();
+		}
+	}
+	public void updateProduct(Produit produit){
+		SessionsDB FactoryObject= new SessionsDB();
+		Session session= FactoryObject.getFactory().openSession();
+		try {
+
+			//save patient object
+			session.beginTransaction();
+			session.saveOrUpdate( produit );
+			session.getTransaction().commit();
+
+		} finally {
+			session.close();
+		}
+	}
+	public void deleteProduct(Produit produit){
+		SessionsDB FactoryObject= new SessionsDB();
+		Session session= FactoryObject.getFactory().openSession();
+		try {
+
+			session.beginTransaction();
+			session.delete(produit);
 			session.getTransaction().commit();
 
 		} finally {
