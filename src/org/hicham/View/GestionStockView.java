@@ -141,6 +141,8 @@ public class GestionStockView extends JDesktopPane{
 		panelAjoutqte.add(sousQte);
 		panelAjoutqte.add(choixBtn);
 		panelAjoutqte.add(qteErrorLab);
+		((AbstractDocument) qteAjout.getDocument()).setDocumentFilter(new IntegerDocumentFilter());
+
 		//put image icon
 		try {
 			Image img = ImageIO.read(getClass().getResource("/resources/61456.png"));
@@ -168,6 +170,8 @@ public class GestionStockView extends JDesktopPane{
 		panelAjoutProduit.add(prixAjoutLab);
 		panelAjoutProduit.add(textPrixAjout);
         panelAjoutProduit.add(ajoutProduit);
+		((AbstractDocument) textPrixAjout.getDocument()).setDocumentFilter(new MyDocumentFilter());
+
 
         produitAjoutLab.setBounds(5, 20, 100, 20);
         textProduitAjout.setBounds(130, 20, 100, 20);

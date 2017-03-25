@@ -79,10 +79,11 @@ public class ControllerGestionStock {
 			}
 			if (e.getSource()== gestionStockView.getAjoutQte()) {
 				//update query for product row
+				int selectedComboItem= gestionStockView.getProduitCombo().getSelectedIndex();
 				int qteOfSelectedProduct= Integer.parseInt(gestionStockView.getQteAjout().getText());
 				changeQte(qteOfSelectedProduct);
 				refreshComboBox();
-
+                setLabProductEmpty();
 			}
 			if (e.getSource()== gestionStockView.getSousQte()) {
 				//check if global qte is bigger than quatity subtracted
@@ -92,15 +93,21 @@ public class ControllerGestionStock {
 				int qteGlobale= produit.getQte();
 				if (qteOfSelectedProduct>qteGlobale) {
 					//error message
-					gestionStockView.getQteErrorLab().setVisible(true);
-					gestionStockView.getQteAjout().setForeground(Color.red);
+					int input = JOptionPane.showOptionDialog(null
+							,"La quantité est incorrect "
+							, "Erreur "
+							, JOptionPane.OK_CANCEL_OPTION
+							, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+
+					if(input == JOptionPane.OK_OPTION){
+						gestionStockView.getQteAjout().setText(""); 
+					}	
 				}
 				else{
 					changeQte(-qteOfSelectedProduct);
 					refreshComboBox();
 					gestionStockView.getQteErrorLab().setVisible(false);
 					gestionStockView.getQteAjout().setForeground(Color.black);
-
 
 				}
 			}
@@ -153,6 +160,12 @@ public class ControllerGestionStock {
 			//calculate prix total:
 			Double prixTotal= prixProduct*qte;
 			gestionStockView.getPrixTotal().setText(prixTotal.toString());
+		}
+		public void setLabProductEmpty(){
+			gestionStockView.getProduitNomInfo().setText("");
+			gestionStockView.getProduitPrixInfo().setText("");
+			gestionStockView.getQteInfo().setText("");
+			gestionStockView.getPrixTotal().setText("");
 		}
 		public void changeQte(int qte){
 			int selectedItem= productId;
