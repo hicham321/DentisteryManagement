@@ -94,7 +94,7 @@ public class ProthesePartielleView extends JDesktopPane{
 	public ProthesePartielleView(){
         //specific gui stuff
 		this.setLayout(null);
-		this.setBackground(Color.yellow);
+		this.setBackground(Color.WHITE);
 
 		
 

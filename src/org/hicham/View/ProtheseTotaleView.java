@@ -95,7 +95,7 @@ public class ProtheseTotaleView extends JDesktopPane{
 	public ProtheseTotaleView(){
         //specific gui stuff
 		this.setLayout(null);
-		this.setBackground(Color.green);
+		this.setBackground(Color.WHITE);
 
 		
 

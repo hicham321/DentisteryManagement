@@ -4,12 +4,10 @@ import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.SwingWorker;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
-
 import org.hicham.Model.MedicamentQueries;
 import org.hicham.Model.PatientQueries;
 import org.hicham.Model.ProduitQueries;
@@ -30,7 +28,6 @@ import org.hicham.View.ProtheseFixeView;
 import org.hicham.View.ProthesePartielleView;
 import org.hicham.View.ProtheseTotaleView;
 import org.hicham.View.ProtheseView;
-import org.hicham.View.RecherchePatientView;
 import org.hicham.View.RegisterView;
 import org.hicham.View.RendezVousView;
 
@@ -47,12 +44,11 @@ public class ControllerMenuBar {
 	ProtheseTotaleView protheseTotaleView= new ProtheseTotaleView();
 	ProtheseView protheseView= new ProtheseView(protheseTotaleView,prothesePartielleView
 			,protheseFixeView);
-    RecherchePatientView recherchePatientView= new RecherchePatientView();
     GestionStockView gestionStockView= new GestionStockView();
    
     RendezVousView rendezVousView= new RendezVousView();
 	PatientView patient= new PatientView(infoPatient,actPatient,odfPatient,protheseView,
-			ordonance,recherchePatientView);
+			ordonance);
 	PatientQueries patientQueries= new PatientQueries();
 	RegisterView registerView= new RegisterView ();
     JustificationAbsenceView justificationAbsenceView= new JustificationAbsenceView();
@@ -75,7 +71,7 @@ public class ControllerMenuBar {
 	public ControllerMenuBar(MainFrame mainFrame,HomePanel homePanel,MenuBar menuBar
 			,PatientView patient,InfoPatient infoPatient,Ordonance ordonance
 			,GestionStockView gestionStockView,RendezVousView rendezVousView
-			,RecherchePatientView recherchePatientView,ProduitQueries produitQueries
+			,ProduitQueries produitQueries
 			,PatientQueries patientQueries,ChangeMotPassView changeMotPassView
 			,JustificationAbsenceView justificationAbsenceView
 			,OrdonanceMenuView ordonanceMenuView,ExamenComplimentaireView examenComplimentaireView){
@@ -90,7 +86,6 @@ public class ControllerMenuBar {
 		this.produitQueries=produitQueries;
 		this.patientQueries= patientQueries;
 		this.rendezVousView= rendezVousView;
-		this.recherchePatientView= recherchePatientView;
 		this.justificationAbsenceView =justificationAbsenceView;
 		this.changeMotPassView= changeMotPassView;
 		this.ordonanceMenuView= ordonanceMenuView;
@@ -124,7 +119,6 @@ public class ControllerMenuBar {
 					protected Object doInBackground() throws Exception {
 						try{
 							DefaultComboBoxModel dftb=patientQueries.getComboModel();
-							recherchePatientView.getRech().setModel(dftb);
 							infoPatient.getRechCombo().setModel(dftb);
 						}catch(Exception ex){
 							ex.printStackTrace();
@@ -155,20 +149,13 @@ public class ControllerMenuBar {
 				DefaultComboBoxModel dftb=patientQueries.getComboModel();
 				rendezVousView.getPatientCombo().setModel(dftb);
 			}
-			if (e.getSource()== menuBar.getLabo()) {
-				//show labo card
-
-			}
+			
 			if (e.getSource()== menuBar.getGestionStockItem()){
 				//prepare gestionStockViiew Combobox with data
 				DefaultComboBoxModel dftb=produitQueries.getComboModel();
 				gestionStockView.getProduitCombo().setModel(dftb);	
 				//show gestionStock card
 				showGestionStockCard();
-			}
-			if (e.getSource()== menuBar.getStat()){
-				//show gestionStock card
-
 			}
 			
 			if (e.getSource()== menuBar.getRetour()) {
@@ -186,10 +173,7 @@ public class ControllerMenuBar {
 				//show apropos frame
 
 			}
-			if (e.getSource()== menuBar.getAjoutbase()) {
-				//show Jfileschooser card
-
-			}
+			
 			if (e.getSource()== menuBar.getOrdonanceItem()){
 				//show ordonance card
 				showOrdonanceMenuViewCard();

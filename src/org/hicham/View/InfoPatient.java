@@ -32,9 +32,7 @@ public class InfoPatient extends JPanel{
 	JFormattedTextField tel;
 
     JLabel teinteLab= new JLabel("Teinte: ");
-	final DefaultComboBoxModel TeintModel = new DefaultComboBoxModel();
-	final JComboBox teinte = new JComboBox(TeintModel);    
-	private JScrollPane teinteListScrol = new JScrollPane(teinte);
+	final JTextField teinte = new JTextField();    
 	
 	
     JLabel sexLab= new JLabel("Sex: ");
@@ -74,9 +72,6 @@ public class InfoPatient extends JPanel{
         this.setLayout(null);
 		this.setBackground(Color.white);
 
-		this.TeintModel.addElement("");
-		AutoCompleteDecorator.decorate(teinte);
-		teinte.setSelectedIndex(0);
 
 		this.sexmodel.addElement("");
 		this.sexmodel.addElement("Male");
@@ -222,8 +217,8 @@ public class InfoPatient extends JPanel{
         this.modifie.setBounds(260,540 ,120, 40);
         
         this.patientRechLab.setBounds(500,100 ,100, 20);
-        this.rechCombo.setBounds(610,100 ,100, 20);
-        this.nouveauPatient.setBounds(400,50,100, 20);
+        this.rechCombo.setBounds(610,100 ,200, 20);
+        this.nouveauPatient.setBounds(100,50,100, 20);
         
         this.suppPatient.setBounds(420, 540, 120, 40);
         
@@ -269,7 +264,7 @@ public class InfoPatient extends JPanel{
 		return tel;
 	}
 
-	public JComboBox getTeinte() {
+	public JTextField getTeinte() {
 		return teinte;
 	}
 

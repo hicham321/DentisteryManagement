@@ -46,7 +46,7 @@ public class JustificationAbsenceView extends JPanel{
 	public JustificationAbsenceView(){
 		
 		this.setLayout( null);
-		this.setBackground(Color.decode("#d2fdf9"));
+		this.setBackground(Color.WHITE);
 		
 		justificationPanel= new JPanel();
 		justificationPanel.setBackground(Color.WHITE);

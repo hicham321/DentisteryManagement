@@ -21,7 +21,6 @@ public class MainFrame extends JFrame{
 	ProtheseTotaleView protheseTotaleView= new ProtheseTotaleView();
 	ProtheseView protheseView= new ProtheseView(protheseTotaleView,prothesePartielleView
 			,protheseFixeView);
-	RecherchePatientView recherchePatientView= new RecherchePatientView();
 	
 	RegisterView registerView= new RegisterView();
     ChangeMotPassView changeMotPassView= new ChangeMotPassView();
@@ -29,7 +28,7 @@ public class MainFrame extends JFrame{
 	public HomePanel card1= new HomePanel(registerView,changeMotPassView);
 	
 	public PatientView card2= new PatientView(infoPatient,actPatient,odfPatient,
-			protheseView,ordonance,recherchePatientView);
+			protheseView,ordonance);
 
 	public GestionStockView card3= new GestionStockView();
 

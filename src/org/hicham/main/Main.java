@@ -1,6 +1,5 @@
 package org.hicham.Main;
 
-import java.io.IOException;
 import java.util.List;
 
 import javax.swing.SwingUtilities;
@@ -52,7 +51,6 @@ import org.hicham.View.ProtheseFixeView;
 import org.hicham.View.ProthesePartielleView;
 import org.hicham.View.ProtheseTotaleView;
 import org.hicham.View.ProtheseView;
-import org.hicham.View.RecherchePatientView;
 import org.hicham.View.RegisterView;
 import org.hicham.View.RendezVousView;
 
@@ -91,8 +89,7 @@ public class Main {
 		ProtheseFixeView prfv= new ProtheseFixeView();
 		ProtheseView prv= new ProtheseView(prtv,prpv,prfv);
 		Ordonance o= new Ordonance();
-		RecherchePatientView rp= new RecherchePatientView();
-		PatientView p = new PatientView(ip,ap,op,prv,o,rp);
+		PatientView p = new PatientView(ip,ap,op,prv,o);
 		GestionStockView gs= new GestionStockView();
 		MenuBar mb= new MenuBar();
 		HomePanel hp= new HomePanel(rv,cmpv);
@@ -102,13 +99,13 @@ public class Main {
 		ExamenComplimentaireView excv= new ExamenComplimentaireView();
 		MainFrame mf= new MainFrame(hp,p,gs,rvv,jav,rv,ormv,excv,mb);
 		//controllers
-		ControllerInfoPatient cip= new ControllerInfoPatient(ip, pq,rp,ap,op,prfv,prpv,prtv,o);
+		ControllerInfoPatient cip= new ControllerInfoPatient(ip, pq,ap,op,prfv,prpv,prtv,o);
 		ControllerAct ca= new ControllerAct(ap, aq,ip, cip);
 		ControllerOdf codf= new ControllerOdf(op, oq,ip,cip);
 		ControllerPatient cp= new ControllerPatient(mf, p,o);
 		ControllerOrdonance co= new ControllerOrdonance(mf,hp, p, o,mq,cip);
 		ControllerMenuBar cmb= new ControllerMenuBar(mf,hp,mb, p,ip, o,gs,rvv
-				,rp,prq,pq,cmpv,jav,ormv,excv);
+				,prq,pq,cmpv,jav,ormv,excv);
 		ControllerGestionStock cgs= new ControllerGestionStock(gs, prq);
 		ControllerRendezVous crv= new ControllerRendezVous(rvv,rvq);
 		ControllerRegister cr= new ControllerRegister(rq, rv, mf);

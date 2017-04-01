@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.JOptionPane;
 import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -24,7 +25,10 @@ import org.hicham.View.OrdonanceMenuView;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.engine.util.JRProperties;
 import net.sf.jasperreports.view.JRViewer;
 
 public class ControllerOrdonanceMenu {
@@ -107,27 +111,30 @@ public class ControllerOrdonanceMenu {
 	public void printReport(){
 		try {
 			Map<String, Object> params = new HashMap<String, Object>();
-			InputStream stream= new FileInputStream("src/resources/ordonanceReport.jasper");
-			JasperPrint jasperPrint = JasperFillManager.fillReport(stream
-					,params, getData());
+			JRProperties.setProperty("net.sf.jasperreports.awt.ignore.missing.font", "true");
+			//InputStream stream= new FileInputStream("/src/resources/ordonanceReport.jasper");
+			InputStream stream= getClass().getResourceAsStream("/resources/ordonanceReport.jasper");
+
+			
+			JasperReport report = (JasperReport) JRLoader.loadObject(stream);
+			JasperPrint jasperPrint = JasperFillManager.fillReport(report, params, getData());
+
+			
+			/*JasperPrint jasperPrint = JasperFillManager.fillReport(stream
+					,params, getData());*/
+
 			JRViewer v= ordonanceMenuView.getViewer();
-		    v= new JRViewer(jasperPrint);
-		    /*LookAndFeel previousLF = UIManager.getLookAndFeel();
-		    try {
-		        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		        v=new JRViewer(jasperPrint);
-		        UIManager.setLookAndFeel(previousLF);
-		    } catch (IllegalAccessException | UnsupportedLookAndFeelException | InstantiationException | ClassNotFoundException e) {}
-			*/
-		    
+		    v= new JRViewer(jasperPrint);	    
 			v.setZoomRatio(0.55f);
 			ordonanceMenuView.cards.add(v, "Card 2");
 			CardLayout cardLayout = (CardLayout) ordonanceMenuView.cards.getLayout();
 			cardLayout.show(ordonanceMenuView.cards, "Card 2");
 
 		}catch (Exception e) {
-			e.printStackTrace();
-		}
+			JOptionPane.showMessageDialog(null, 
+					e.toString(), 
+	                "ghghgh", 
+	                JOptionPane.ERROR_MESSAGE);		}
 	}
 	
 	public void showPatientInfoPanel(){

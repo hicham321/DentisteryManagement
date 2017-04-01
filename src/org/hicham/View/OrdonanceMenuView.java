@@ -63,7 +63,7 @@ public class OrdonanceMenuView extends JPanel{
 
 	public OrdonanceMenuView() {
 		this.setLayout( null);
-		this.setBackground(Color.decode("#d2fdf9"));
+		this.setBackground(Color.WHITE);
 		
 		ordonancePanel= new JPanel();
 		ordonancePanel.setBackground(Color.WHITE);
@@ -82,6 +82,8 @@ public class OrdonanceMenuView extends JPanel{
 		medList= new JTextArea(5, 20);
 		Border border = BorderFactory.createLineBorder(Color.BLACK);
 		medList.setBorder(BorderFactory.createCompoundBorder(border,
+				BorderFactory.createEmptyBorder(0, 0, 10, 10)));
+		situation.setBorder(BorderFactory.createCompoundBorder(border,
 				BorderFactory.createEmptyBorder(0, 0, 10, 10)));
 
 		medList.setLineWrap(true);

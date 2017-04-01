@@ -21,7 +21,6 @@ import org.hicham.View.ProtheseFixeView;
 import org.hicham.View.ProthesePartielleView;
 import org.hicham.View.ProtheseTotaleView;
 import org.hicham.View.ProtheseView;
-import org.hicham.View.RecherchePatientView;
 import org.hicham.View.RegisterView;
 import org.hicham.View.RendezVousView;
 
@@ -41,12 +40,11 @@ public class ControllerRegister {
 	ProtheseTotaleView protheseTotaleView= new ProtheseTotaleView();
 	ProtheseView protheseView= new ProtheseView(protheseTotaleView,prothesePartielleView
 			,protheseFixeView);
-	RecherchePatientView recherchePatientView= new RecherchePatientView();
 	GestionStockView gestionStockView= new GestionStockView();
 
 	RendezVousView rendezVousView= new RendezVousView();
 	PatientView patient= new PatientView(infoPatient,actPatient,odfPatient
-			,protheseView,ordonance,recherchePatientView);
+			,protheseView,ordonance);
 	PatientQueries patientQueries= new PatientQueries();
 	public HomePanel homePanel= new HomePanel(registerView,changeMotPassView);
 	JustificationAbsenceView justificationAbsenceView= new JustificationAbsenceView();

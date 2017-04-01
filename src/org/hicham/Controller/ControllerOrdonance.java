@@ -36,7 +36,6 @@ import org.hicham.View.ProtheseFixeView;
 import org.hicham.View.ProthesePartielleView;
 import org.hicham.View.ProtheseTotaleView;
 import org.hicham.View.ProtheseView;
-import org.hicham.View.RecherchePatientView;
 import org.hicham.View.RegisterView;
 import org.hicham.View.RendezVousView;
 
@@ -63,10 +62,9 @@ public class ControllerOrdonance {
 	ProtheseView protheseView= new ProtheseView(protheseTotaleView,prothesePartielleView
 			,protheseFixeView);
 	Ordonance ordonance= new Ordonance();
-	RecherchePatientView recherchePatientView= new RecherchePatientView();
 
 	PatientView patient= new PatientView(infoPatient,actPatient,odfPatient
-			,protheseView, ordonance,recherchePatientView);
+			,protheseView, ordonance);
 	MenuBar menuBar= new MenuBar();
 	GestionStockView gestionStockView= new GestionStockView();
 	MedicamentQueries medicamentQueries= new MedicamentQueries();
@@ -85,7 +83,7 @@ public class ControllerOrdonance {
 	PatientQueries patientQueries= new PatientQueries();
 	ActPatientView actPatientView= new ActPatientView();
 	ControllerInfoPatient controllerInfoPatient= new ControllerInfoPatient(infoPatient
-			,patientQueries,recherchePatientView
+			,patientQueries
 			,actPatientView,odfPatient,protheseFixeView,prothesePartielleView,protheseTotaleView,ordonance);
 
 	Collection<OrdonanceReportBean> collBean = new ArrayList<OrdonanceReportBean>();

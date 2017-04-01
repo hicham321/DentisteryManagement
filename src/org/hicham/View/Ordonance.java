@@ -49,7 +49,7 @@ public class Ordonance extends JPanel {
     
 	public Ordonance() {
 		this.setLayout( null);
-		this.setBackground(Color.decode("#d2fdf9"));
+		this.setBackground(Color.WHITE);
 		
 		ordonancePanel= new JPanel();
 		ordonancePanel.setBackground(Color.WHITE);
@@ -69,6 +69,7 @@ public class Ordonance extends JPanel {
 		medList.setWrapStyleWord(true);
 		medListScrol= new JScrollPane(medList);
 		
+		
 		cards = new JPanel(new CardLayout());
 
 		cards.add(ordonancePanel, "Card 1");
@@ -84,6 +85,9 @@ public class Ordonance extends JPanel {
 		this.add(medListScrol);
 		this.add(nomEtPrenomLab);
 		this.add(nomEtPrenom);
+		
+		situation.setBorder(BorderFactory.createCompoundBorder(border,
+				BorderFactory.createEmptyBorder(0, 0, 10, 10)));
 
 		
 		nomEtPrenomLab.setBounds(30, 50,120 ,20 );

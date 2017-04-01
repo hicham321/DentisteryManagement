@@ -95,7 +95,7 @@ public class ProtheseFixeView extends JDesktopPane{
 	public ProtheseFixeView(){
         //specific gui stuff
 		this.setLayout(null);
-		this.setBackground(Color.gray);
+		this.setBackground(Color.WHITE);
 
 		
 

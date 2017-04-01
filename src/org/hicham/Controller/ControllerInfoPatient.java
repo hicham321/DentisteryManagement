@@ -27,13 +27,11 @@ import org.hicham.View.Ordonance;
 import org.hicham.View.ProtheseFixeView;
 import org.hicham.View.ProthesePartielleView;
 import org.hicham.View.ProtheseTotaleView;
-import org.hicham.View.RecherchePatientView;
 
 public class ControllerInfoPatient {
 
 	InfoPatient infoPatient= new InfoPatient();
 	PatientQueries patientQueries= new PatientQueries();
-	RecherchePatientView recherchePatientView= new RecherchePatientView();
 	ActPatientView actPatientView= new ActPatientView();
 	OdfPatient odfPatient= new OdfPatient();
 	ProtheseFixeView protheseFixeView= new ProtheseFixeView();
@@ -47,14 +45,12 @@ public class ControllerInfoPatient {
 
 
 	public ControllerInfoPatient(InfoPatient infoPatient, PatientQueries patientQueries 
-			,RecherchePatientView recherchePatientView
 			,ActPatientView actPatientView,OdfPatient odfPatient
 			,ProtheseFixeView protheseFixeView,ProthesePartielleView prothesePartielleView
 			,ProtheseTotaleView protheseTotaleView,	Ordonance ordonance){
 
 		this.infoPatient= infoPatient;
 		this.patientQueries=patientQueries;
-		this.recherchePatientView=recherchePatientView;
 		this.actPatientView= actPatientView;
 		this.odfPatient= odfPatient;
 		this.protheseFixeView= protheseFixeView;
@@ -80,7 +76,7 @@ public class ControllerInfoPatient {
 						,infoPatient.getAge().getText()
 						,infoPatient.getAddress().getText()
 						,infoPatient.getTel().getText()
-						,infoPatient.getTeinte().getSelectedItem().toString()
+						,infoPatient.getTeinte().getText()
 						,infoPatient.getSex().getSelectedItem().toString()
 						,infoPatient.getAnticident().getText()
 						,infoPatient.getFonction().getText()
@@ -143,7 +139,7 @@ public class ControllerInfoPatient {
 						, infoPatient.getPrenom().getText()
 						, infoPatient.getNom().getText()+ " "+infoPatient.getPrenom().getText()
 						, infoPatient.getAge().getText()
-						, infoPatient.getTeinte().getSelectedItem().toString()
+						, infoPatient.getTeinte().getText()
 						, infoPatient.getFonction().getText()
 						, infoPatient.getTel().getText()
 						, infoPatient.getAnticident().getText()
@@ -179,7 +175,7 @@ public class ControllerInfoPatient {
 			infoPatient.getAge().setText("");
 			infoPatient.getAddress().setText("");
 			infoPatient.getTel().setText("");
-			infoPatient.getTeinte().setSelectedIndex(0);
+			infoPatient.getTeinte().getText();
 			infoPatient.getSex().setSelectedIndex(0);
 			infoPatient.getAnticident().setText("");
 			infoPatient.getFonction().setText("");
@@ -216,7 +212,7 @@ public class ControllerInfoPatient {
 			infoPatient.getAge().setText(age);
 			infoPatient.getAddress().setText(address);
 			infoPatient.getTel().setText( tel);
-			infoPatient.getTeinte().setSelectedItem(teinte);
+			infoPatient.getTeinte().setText(teinte);
 			infoPatient.getSex().setSelectedItem(sex);;
 			infoPatient.getAnticident().setText(anticident);
 			infoPatient.getFonction().setText(fonction);

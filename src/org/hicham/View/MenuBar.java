@@ -14,7 +14,6 @@ public class MenuBar {
 
 	JMenu menuouvrir = new JMenu("Fichier");
 
-	JMenuItem ajoutbase = new JMenuItem("Ouvrir");
 
 	JMenuItem quiter = new JMenuItem("Quiter ");
 
@@ -26,17 +25,13 @@ public class MenuBar {
 
 	JMenu ordonance = new JMenu("Ordonance");
 	JMenuItem ordonanceItem = new JMenuItem("Ordonnance");
-	JMenuItem examenItem = new JMenuItem("Examen");
+	JMenuItem examenItem = new JMenuItem("Examen Complimentaire");
 	JMenuItem justificationItem = new JMenuItem("Justification d'absence");
 
 
-	JMenu menuGestionStock = new JMenu("Gestion De Stock");
+	JMenu menuGestionStock = new JMenu("Labo");
 	JMenuItem gestionStockItem = new JMenuItem("Gestion De Stock ");
-	JMenuItem stat = new JMenuItem("Statistiques");
 
-	
-
-	JMenu labo = new JMenu("Labo");
 
 	JMenu retour = new JMenu("Retour");
 
@@ -48,7 +43,6 @@ public class MenuBar {
 
 		menu.setFont(new Font("sans-serif", Font.PLAIN, 12));
 
-		menuouvrir.add(ajoutbase);
 		menuouvrir.add(motpasse);
 		menuouvrir.add(quiter);
 		
@@ -57,7 +51,6 @@ public class MenuBar {
 		ordonance.add(justificationItem);
 
 		menuGestionStock.add(gestionStockItem);
-		menuGestionStock.add(stat);
         
 		menuPatient.add(infoPatientItem);
 		menuPatient.add(rendezVousPatient);
@@ -67,7 +60,6 @@ public class MenuBar {
 		menu.add(menuPatient);
 		menu.add(ordonance);
 		menu.add(menuGestionStock);
-		menu.add(labo);
 		menu.add(retour);
 		menu.add(menuapropos);
 
@@ -75,7 +67,6 @@ public class MenuBar {
 
 	public void addMenuBarActionListener(ActionListener listener){
 
-		this.ajoutbase.addActionListener(listener);
 		this.motpasse.addActionListener(listener);
 		this.quiter.addActionListener(listener);
 
@@ -88,19 +79,13 @@ public class MenuBar {
 		this.ordonance.addActionListener(listener);
 
 		this.gestionStockItem.addActionListener(listener);
-		this.stat.addActionListener(listener);
 		
 		this.ordonanceItem.addActionListener(listener);
 		this.examenItem.addActionListener(listener);
 		this.justificationItem.addActionListener(listener);
 
-
-
-		this.labo.addActionListener(listener);
-
 		this.retour.addActionListener(listener);
 
-		this.labo.addActionListener(listener);
 
 		this.menuapropos.addActionListener(listener);
 
@@ -117,9 +102,7 @@ public class MenuBar {
 		return menuouvrir;
 	}
 
-	public JMenuItem getAjoutbase() {
-		return ajoutbase;
-	}
+	
 
 	public JMenuItem getQuiter() {
 		return quiter;
@@ -141,9 +124,6 @@ public class MenuBar {
 		return menuGestionStock;
 	}
 
-	public JMenuItem getLabo() {
-		return labo;
-	}
 
 	public JMenuItem getRetour() {
 		return retour;
@@ -155,10 +135,6 @@ public class MenuBar {
 
 	public JMenuItem getGestionStockItem() {
 		return gestionStockItem;
-	}
-
-	public JMenuItem getStat() {
-		return stat;
 	}
 
 	public JMenuItem getInfoPatientItem() {

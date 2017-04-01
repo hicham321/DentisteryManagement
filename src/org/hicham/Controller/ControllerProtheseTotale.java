@@ -24,6 +24,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.hicham.Controller.ControllerProtheseFixe.ProtheseFixActionListener;
 import org.hicham.Controller.ControllerProtheseFixe.ProtheseFixeMouseListener;
+import org.hicham.Main.Main;
 import org.hicham.Model.ActQueries;
 import org.hicham.Model.ImageProtheseFixe;
 import org.hicham.Model.ImageProtheseTotale;
@@ -39,7 +40,6 @@ import org.hicham.View.Ordonance;
 import org.hicham.View.ProtheseFixeView;
 import org.hicham.View.ProthesePartielleView;
 import org.hicham.View.ProtheseTotaleView;
-import org.hicham.View.RecherchePatientView;
 
 public class ControllerProtheseTotale {
 	ProtheseTotaleView protheseTotaleView= new ProtheseTotaleView();
@@ -54,10 +54,9 @@ public class ControllerProtheseTotale {
 	Ordonance ordonance= new Ordonance();
 	InfoPatient infoPatient = new InfoPatient();
 
-	RecherchePatientView recherchePatientView = new RecherchePatientView();
 
 	ControllerInfoPatient controllerInfoPatient= new ControllerInfoPatient(infoPatient
-			,patientQueries,recherchePatientView
+			,patientQueries
 			,actPatientView,odfPatient,protheseFixeView,prothesePartielleView,protheseTotaleView,ordonance);
 
 
@@ -143,7 +142,16 @@ public class ControllerProtheseTotale {
 						
 					}
 					for (int i = 0; i < addedImages.size(); i++) {
-						String newPath=protheseTotaleQueries.CopyFileImage("C:/Users/Hicham/ImagesProtheseFixe", addedImages.get(i));
+						try {
+							String jarPath=protheseTotaleQueries.CopyFileImage(
+							 Main.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()+"/ImagesProtheseFixe"
+							, addedImages.get(i));
+							//String newPath=protheseTotaleQueries.CopyFileImage("C:/Users/Hicham/ImagesProtheseFixe"
+							//		, addedImages.get(i));
+						} catch (Exception e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 
 					}
 					protheseTotaleQueries.addNewImages(addedImages, oldImageLien,currentProtheseTotale);
