@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
 import org.hicham.Controller.ControllerOrdonanceMenu.OrdonanceMenuActionListener;
@@ -21,10 +22,16 @@ import org.hicham.Model.PatientQueries;
 import org.hicham.View.ExamenComplimentaireView;
 import org.hicham.View.OrdonanceMenuView;
 
+import net.sf.jasperreports.engine.DefaultJasperReportsContext;
 import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JRPropertiesUtil;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.JasperReportsContext;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.engine.util.JRProperties;
 import net.sf.jasperreports.view.JRViewer;
 
 public class ControllerExamenComplimentaire {
@@ -106,11 +113,17 @@ public class ControllerExamenComplimentaire {
 	public void printReport(){
 		try {
 			Map<String, Object> params = new HashMap<String, Object>();
-			InputStream stream= new FileInputStream("src/resources/Examen.jasper");
-			//JasperReport jasperReport = JasperCompileManager.compileReport(stream);
+			JasperReportsContext jasperReportsContext = DefaultJasperReportsContext.getInstance();
+			JRPropertiesUtil jrPropertiesUtil = JRPropertiesUtil.getInstance(jasperReportsContext);
+			jrPropertiesUtil.setProperty("net.sf.jasperreports.awt.ignore.missing.font", "true");
+			//InputStream stream= new FileInputStream("/src/resources/ordonanceReport.jasper");
+			InputStream stream= getClass().getResourceAsStream("/resources/Examen.jasper");
+
+			
+			//JasperReport report = (JasperReport) JRLoader.loadObject(stream);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(stream
 					,params, getData());
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			
 			JRViewer v= new JRViewer(jasperPrint);
 			v.setZoomRatio(0.55f);
 			examenComplimentaireView.cards.add(v, "Card 2");
@@ -118,8 +131,10 @@ public class ControllerExamenComplimentaire {
 			cardLayout.show(examenComplimentaireView.cards, "Card 2");
 
 		}catch (Exception e) {
-			e.printStackTrace();
-		}
+			JOptionPane.showMessageDialog(null, 
+					e.toString(), 
+	                "ghghgh", 
+	                JOptionPane.ERROR_MESSAGE);			}
 	}
 	
 	public void showPatientInfoPanel(){

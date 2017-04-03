@@ -22,10 +22,13 @@ import org.hicham.Model.Patient;
 import org.hicham.Model.PatientQueries;
 import org.hicham.View.OrdonanceMenuView;
 
+import net.sf.jasperreports.engine.DefaultJasperReportsContext;
 import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JRPropertiesUtil;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.JasperReportsContext;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.engine.util.JRProperties;
@@ -111,7 +114,9 @@ public class ControllerOrdonanceMenu {
 	public void printReport(){
 		try {
 			Map<String, Object> params = new HashMap<String, Object>();
-			JRProperties.setProperty("net.sf.jasperreports.awt.ignore.missing.font", "true");
+			JasperReportsContext jasperReportsContext = DefaultJasperReportsContext.getInstance();
+			JRPropertiesUtil jrPropertiesUtil = JRPropertiesUtil.getInstance(jasperReportsContext);
+			jrPropertiesUtil.setProperty("net.sf.jasperreports.awt.ignore.missing.font", "true");
 			//InputStream stream= new FileInputStream("/src/resources/ordonanceReport.jasper");
 			InputStream stream= getClass().getResourceAsStream("/resources/ordonanceReport.jasper");
 
@@ -134,7 +139,8 @@ public class ControllerOrdonanceMenu {
 			JOptionPane.showMessageDialog(null, 
 					e.toString(), 
 	                "ghghgh", 
-	                JOptionPane.ERROR_MESSAGE);		}
+	                JOptionPane.ERROR_MESSAGE);		
+			}
 	}
 	
 	public void showPatientInfoPanel(){

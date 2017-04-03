@@ -8,6 +8,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -145,8 +147,9 @@ public class ControllerProthesePartielle {
 					for (int i = 0; i < addedImages.size(); i++) {
 						
 						try {
-							String jarPath=prothesePartielleQueries.CopyFileImage(
-							 Main.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()+"/ImagesProtheseFixe"
+							java.net.URL jarLocation = Main.class.getProtectionDomain().getCodeSource().getLocation();
+							URL path=new java.net.URL(jarLocation, ".");
+							String jarPath=prothesePartielleQueries.CopyFileImage(path.getPath()+"ImageProtheseFixe"
 							, addedImages.get(i));
 							//String newPath=prothesePartielleQueries.CopyFileImage("C:/Users/Hicham/ImagesProtheseFixe", addedImages.get(i));
 						} catch (Exception e1) {
@@ -462,10 +465,17 @@ public class ControllerProthesePartielle {
 		for (int i = 0; i < imageOrder.size(); i++) {
 			//copying
 			//destination should change when moving to jar file execution
-			String newImagePath=prothesePartielleQueries.CopyFileImage("C:/Users/Hicham/ImagesProtheseFixe",imageOrder.get(i) );
-			ImageProthesePartielle imageProthesePartielle= new ImageProthesePartielle(newImagePath);//needs to change after copying
-			imageProthesePartielle.setProthesePartielle(currentProthesePartielle);
-			prothesePartielleQueries.addProthesePartielleImage(imageProthesePartielle);
+			try {
+				java.net.URL jarLocation = Main.class.getProtectionDomain().getCodeSource().getLocation();
+				URL path=new java.net.URL(jarLocation, ".");
+				String newImagePath=prothesePartielleQueries.CopyFileImage(path.getPath()+"ImageProtheseFixe",imageOrder.get(i) );
+				ImageProthesePartielle imageProthesePartielle= new ImageProthesePartielle(newImagePath);//needs to change after copying
+				imageProthesePartielle.setProthesePartielle(currentProthesePartielle);
+				prothesePartielleQueries.addProthesePartielleImage(imageProthesePartielle);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		//clear image panel and set fields empty
 		//set images empty

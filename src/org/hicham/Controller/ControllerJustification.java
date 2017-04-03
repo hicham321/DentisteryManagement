@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
 import org.hicham.Model.JustificationReportBean;
@@ -28,10 +29,16 @@ import org.hicham.Model.Patient;
 import org.hicham.Model.PatientQueries;
 import org.hicham.View.JustificationAbsenceView;
 
+import net.sf.jasperreports.engine.DefaultJasperReportsContext;
 import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JRPropertiesUtil;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.JasperReportsContext;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.engine.util.JRProperties;
 import net.sf.jasperreports.view.JRViewer;
 
 public class ControllerJustification {
@@ -114,7 +121,16 @@ public class ControllerJustification {
 	public void printReport(){
 		try {
 			Map<String, Object> params = new HashMap<String, Object>();
-			InputStream stream= new FileInputStream("src/resources/justification.jasper");
+			
+			JasperReportsContext jasperReportsContext = DefaultJasperReportsContext.getInstance();
+			JRPropertiesUtil jrPropertiesUtil = JRPropertiesUtil.getInstance(jasperReportsContext);
+			jrPropertiesUtil.setProperty("net.sf.jasperreports.awt.ignore.missing.font", "true");
+			
+			//InputStream stream= new FileInputStream("/src/resources/ordonanceReport.jasper");
+			InputStream stream= getClass().getResourceAsStream("/resources/justification.jasper");
+
+			
+			//JasperReport report = (JasperReport) JRLoader.loadObject(stream);
 			//JasperReport jasperReport = JasperCompileManager.compileReport(stream);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(stream
 					,params, getData());
@@ -126,8 +142,12 @@ public class ControllerJustification {
 			cardLayout.show(justificationAbsenceView.cards, "Card 2");
 
 		}catch (Exception e) {
+			/*JOptionPane.showMessageDialog(null, 
+					e.toString(), 
+	                "ghghgh", 
+	                JOptionPane.ERROR_MESSAGE);	*/	
 			e.printStackTrace();
-		}
+			}
 	}
 	
 

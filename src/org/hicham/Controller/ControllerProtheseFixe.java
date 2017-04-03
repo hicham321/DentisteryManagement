@@ -6,10 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.text.DateFormat;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -17,21 +16,16 @@ import java.util.Date;
 import java.util.List;
 
 import javax.imageio.ImageIO;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import org.hicham.Controller.ControllerProtheseFixe.ProtheseFixeMouseListener;
 import org.hicham.Main.Main;
 import org.hicham.Model.ActQueries;
 import org.hicham.Model.ImageProtheseFixe;
-import org.hicham.Model.MedicamentQueries;
 import org.hicham.Model.PatientQueries;
 import org.hicham.Model.ProtheseFixe;
 import org.hicham.Model.ProtheseFixeQueries;
@@ -42,8 +36,6 @@ import org.hicham.View.Ordonance;
 import org.hicham.View.ProtheseFixeView;
 import org.hicham.View.ProthesePartielleView;
 import org.hicham.View.ProtheseTotaleView;
-
-import com.sun.xml.internal.ws.api.Component;
 
 public class ControllerProtheseFixe {
 	ProtheseFixeView protheseFixeView= new ProtheseFixeView();
@@ -150,8 +142,10 @@ public class ControllerProtheseFixe {
 					}
 					for (int i = 0; i < addedImages.size(); i++) {
 						try{
-						String jarPath=protheseFixeQueries.CopyFileImage(
-								 Main.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()+"/ImagesProtheseFixe"
+						java.net.URL jarLocation = Main.class.getProtectionDomain().getCodeSource().getLocation();
+						URL path=new java.net.URL(jarLocation, "");
+						
+						String jarPath=protheseFixeQueries.CopyFileImage(path.getPath()+"ImageProtheseFixe"
 								, addedImages.get(i));
 						//String newPath=protheseFixeQueries.CopyFileImage("C:/Users/Hicham/ImagesProtheseFixe", addedImages.get(i));
 						}catch(Exception ex){
@@ -463,10 +457,17 @@ public class ControllerProtheseFixe {
 		for (int i = 0; i < imageOrder.size(); i++) {
 			//copying
 			//destination should change when moving to jar file execution
-			String newImagePath=protheseFixeQueries.CopyFileImage("C:/Users/Hicham/ImagesProtheseFixe",imageOrder.get(i) );
-			ImageProtheseFixe imageProtheseFixe= new ImageProtheseFixe(newImagePath);//needs to change after copying
-			imageProtheseFixe.setProtheseFixe(currentProtheseFixe);
-			protheseFixeQueries.addProtheseFixeImage(imageProtheseFixe);
+			try {
+				java.net.URL jarLocation = Main.class.getProtectionDomain().getCodeSource().getLocation();
+				URL path=new java.net.URL(jarLocation, ".");
+				String newImagePath=protheseFixeQueries.CopyFileImage(path.getPath()+"ImageProtheseFixe"
+						,imageOrder.get(i) );
+				ImageProtheseFixe imageProtheseFixe= new ImageProtheseFixe(newImagePath);//needs to change after copying
+				imageProtheseFixe.setProtheseFixe(currentProtheseFixe);
+				protheseFixeQueries.addProtheseFixeImage(imageProtheseFixe);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		//clear image panel and set fields empty
 		//set images empty

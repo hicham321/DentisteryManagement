@@ -39,12 +39,17 @@ import org.hicham.View.ProtheseView;
 import org.hicham.View.RegisterView;
 import org.hicham.View.RendezVousView;
 
+import net.sf.jasperreports.engine.DefaultJasperReportsContext;
 import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JRPropertiesUtil;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.JasperReportsContext;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.engine.util.JRProperties;
 import net.sf.jasperreports.view.JRViewer;
 import net.sf.jasperreports.view.JasperViewer;
 
@@ -150,9 +155,15 @@ public class ControllerOrdonance {
 	public void printReport(){
 		try {
 			Map<String, Object> params = new HashMap<String, Object>();
-			InputStream stream= new FileInputStream("src/resources/ordonanceReport.jasper");
-			//JasperReport jasperReport = JasperCompileManager.compileReport(stream);
-			JasperPrint jasperPrint = JasperFillManager.fillReport(stream
+			JasperReportsContext jasperReportsContext = DefaultJasperReportsContext.getInstance();
+			JRPropertiesUtil jrPropertiesUtil = JRPropertiesUtil.getInstance(jasperReportsContext);
+			jrPropertiesUtil.setProperty("net.sf.jasperreports.awt.ignore.missing.font", "true");
+			//InputStream stream= new FileInputStream("/src/resources/ordonanceReport.jasper");
+			InputStream stream= getClass().getResourceAsStream("/resources/ordonanceReport.jasper");
+
+			
+			JasperReport report = (JasperReport) JRLoader.loadObject(stream);
+			JasperPrint jasperPrint = JasperFillManager.fillReport(report
 					,params, getData());
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 			JRViewer v= new JRViewer(jasperPrint);

@@ -8,6 +8,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -152,8 +154,9 @@ public class ControllerOdf{
 					}
 					for (int i = 0; i < addedImages.size(); i++) {
 						try {
-							String jarPath=odfQueries.CopyFileImage(
-							 Main.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()+"/ImagesProtheseFixe"
+							java.net.URL jarLocation = Main.class.getProtectionDomain().getCodeSource().getLocation();
+							URL path=new java.net.URL(jarLocation, ".");
+							String jarPath=odfQueries.CopyFileImage(path.getPath()+"ImageProtheseFixe"
 							, addedImages.get(i));
 							//String newPath=odfQueries.CopyFileImage("C:/Users/Hicham/ImagesProtheseFixe", addedImages.get(i));
 						} catch (Exception e1) {
@@ -461,10 +464,17 @@ public class ControllerOdf{
 		for (int i = 0; i < imageOrder.size(); i++) {
 			//copying
 			//destination should change when moving to jar file execution
-			String newImagePath=odfQueries.CopyFileImage("C:/Users/Hicham/ImagesProtheseFixe",imageOrder.get(i) );
-			ImageOdf imageOdf= new ImageOdf(newImagePath);//needs to change after copying
-			imageOdf.setOdf(currentOdf);
-			odfQueries.addImageOdf(imageOdf);
+			try {
+				java.net.URL jarLocation = Main.class.getProtectionDomain().getCodeSource().getLocation();
+				URL path=new java.net.URL(jarLocation, ".");
+				String newImagePath=odfQueries.CopyFileImage(path.getPath()+"ImageProtheseFixe",imageOrder.get(i) );
+				ImageOdf imageOdf= new ImageOdf(newImagePath);//needs to change after copying
+				imageOdf.setOdf(currentOdf);
+				odfQueries.addImageOdf(imageOdf);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		//clear image panel and set fields empty
 		//set images empty
