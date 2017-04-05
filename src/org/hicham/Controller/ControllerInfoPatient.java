@@ -120,12 +120,14 @@ public class ControllerInfoPatient {
 				refreshComboProtheseFixe();
 				refreshComboProthesePartielle();
 				refreshComboProtheseTotale();
-
+				setAllActivityFieldsEmpty();
+				
 				setNameInActivities(currentPatient.getNomEtPrenom());
 				}
 			if (e.getSource()== infoPatient.getNouveauPatient()) {
 				//set all fields empty and enable ok button 
 				setNameInActivities("");
+				setAllActivityFieldsEmpty();
 				setfieldPatientenabled();
 				setFieldsEmpty();
 				infoPatient.getOk().setEnabled(true);
@@ -146,6 +148,8 @@ public class ControllerInfoPatient {
 						, infoPatient.getAddress().getText()
 						, infoPatient.getSex().getSelectedItem().toString());
 				patientQueries.addPatient(currentPatient);
+				refreshComboInfoPatient();
+
 			}
 			if (e.getSource()== infoPatient.getSuppPatient()) {
 				int input = JOptionPane.showOptionDialog(null
@@ -158,9 +162,10 @@ public class ControllerInfoPatient {
 					// do something
 					patientQueries.deletePatient(currentPatient);
 					patientSelected= false;
+					setAllActivityFieldsEmpty();
 					setFieldsEmpty();
 					//refresh combobox
-
+					refreshComboInfoPatientAfterDeleting();
 				}
 			}
 
@@ -175,7 +180,7 @@ public class ControllerInfoPatient {
 			infoPatient.getAge().setText("");
 			infoPatient.getAddress().setText("");
 			infoPatient.getTel().setText("");
-			infoPatient.getTeinte().getText();
+			infoPatient.getTeinte().setText("");
 			infoPatient.getSex().setSelectedIndex(0);
 			infoPatient.getAnticident().setText("");
 			infoPatient.getFonction().setText("");
@@ -251,6 +256,13 @@ public class ControllerInfoPatient {
 			prothesePartielleView.setEmptyFields();
 			actPatientView.setEmptyFields();
 			odfPatient.setEmptyFields();
+			
+			protheseFixeView.clearImages();
+			protheseTotaleView.clearImages();
+			prothesePartielleView.clearImages();
+			actPatientView.clearImages();
+			odfPatient.clearImages();
+			
 		}
 		
 
@@ -272,6 +284,21 @@ public class ControllerInfoPatient {
 					infoPatient.getRechCombo().setModel(dftb);
 					int count  = patientQueries.getCount();
 					infoPatient.getRechCombo().setSelectedIndex(count-1);
+				}catch(Exception ex){
+					ex.printStackTrace();
+				}
+				return null;
+			}
+		}.execute();
+	}
+	public void refreshComboInfoPatientAfterDeleting(){
+		new SwingWorker() {
+
+			@Override
+			protected Object doInBackground() throws Exception {
+				try{
+					DefaultComboBoxModel dftb=patientQueries.getComboModel();
+					infoPatient.getRechCombo().setModel(dftb);
 				}catch(Exception ex){
 					ex.printStackTrace();
 				}

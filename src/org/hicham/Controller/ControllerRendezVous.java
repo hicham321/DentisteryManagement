@@ -5,6 +5,8 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -29,17 +31,17 @@ public class ControllerRendezVous {
 
 	RendezVousView rendezVousView= new RendezVousView();
 	RendezVousQueries rendezVousQueries= new RendezVousQueries();
-	
+
 	int selectedposition=0;
 	List<String> datesRendezVous= new ArrayList<>();
-    List<String> actsRendezVous= new ArrayList<>();
-    List<String> payements= new ArrayList<>();
-    List<String> versements= new ArrayList<>();
-    List<String> rests= new ArrayList<>();
-    List<String> temps= new ArrayList<>();
-    
-    List<Patient> patients= new ArrayList<>();
-	
+	List<String> actsRendezVous= new ArrayList<>();
+	List<String> payements= new ArrayList<>();
+	List<String> versements= new ArrayList<>();
+	List<String> rests= new ArrayList<>();
+	List<String> temps= new ArrayList<>();
+
+	List<Patient> patients= new ArrayList<>();
+
 	public ControllerRendezVous(RendezVousView rendezVousView,RendezVousQueries rendezVousQueries){
 		this.rendezVousView= rendezVousView;
 		this.rendezVousQueries= rendezVousQueries;
@@ -52,34 +54,38 @@ public class ControllerRendezVous {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			
+
 			if (e.getSource()==rendezVousView.getRechercheBtn() & rendezVousView.getModeRechercheList().getSelectedIndex()==1) {
 				//show panel based on mode of search
 				//int patientid=rendezVousView.getPatientCombo().getSelectedIndex();
 				//show par rendez vous  panel
 				try{
-				Date dateObject= rendezVousView.getDatePicker().getDate();
-				patients=rendezVousQueries.getPatientsFromDate(dateObject);
-				rendezVousView.getDateRV().setText(dateObject.toString());
-				
-				
-				List<String>names = new ArrayList<>();
-				for (int i = 0; i < patients.size(); i++) {
-					//populate combobox with patient nom
-					 names.add(patients.get(i).getNomEtPrenom());
-				}
-				//populate patient combo with names
-				DefaultComboBoxModel dcbm=addNamesToCombo(names);
-				rendezVousView.getPatientComboRV().setModel(dcbm);
+					Date dateObject= rendezVousView.getDatePicker().getDate();
+					Date olddate= new Date();
+					//olddate = new SimpleDateFormat("ddd MMM dd HH:mm:ss z yyyy").parse(dateObject.toString());
+					String newDate= new SimpleDateFormat("dd-MM-yyyy").format(dateObject);
+					patients=rendezVousQueries.getPatientsFromDate(dateObject);
+					rendezVousView.getDateRV().setText(newDate);
 
 
-				showRendezVousInfoPanel();
+					List<String>names = new ArrayList<>();
+					for (int i = 0; i < patients.size(); i++) {
+						//populate combobox with patient nom
+						names.add(patients.get(i).getNomEtPrenom());
+					}
+					//populate patient combo with names
+					DefaultComboBoxModel dcbm=addNamesToCombo(names);
+					rendezVousView.getPatientComboRV().setModel(dcbm);
+
+
+					showRendezVousInfoPanel();
 				}catch(Exception ex){
-					JOptionPane.showOptionDialog(null
-							,"Specifier une date"
+					ex.printStackTrace();
+					/*JOptionPane.showOptionDialog(null
+							,ex.toString()
 							, "Erreur"
 							, JOptionPane.OK_CANCEL_OPTION
-							, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+							, JOptionPane.INFORMATION_MESSAGE, null, null, null);*/
 				}
 
 			}
@@ -109,20 +115,20 @@ public class ControllerRendezVous {
 					}
 					//chargé dateCombo avec les dates 
 					DefaultComboBoxModel dcbm=addDateToCombo(datesRendezVous);
-				rendezVousView.getActCombo().setModel(dcbm);
+					rendezVousView.getActCombo().setModel(dcbm);
 
-				rendezVousView.getNomPatient().setText(nomPatient);
+					rendezVousView.getNomPatient().setText(nomPatient);
 
-				showPatientInfoPanel();
+					showPatientInfoPanel();
 				}catch(Exception ex){
-					
+
 					JOptionPane.showOptionDialog(null
 							,"il n'ya pas de rendez vous ou des patients ?"
 							, "Erreur"
 							, JOptionPane.OK_CANCEL_OPTION
 							, JOptionPane.INFORMATION_MESSAGE, null, null, null);
 				}
-				
+
 			}
 			if (e.getSource()== rendezVousView.getActCombo()) {
 				int selectedItem= selectedComboItem(e);
@@ -153,12 +159,12 @@ public class ControllerRendezVous {
 			if (e.getSource()== rendezVousView.getPatientComboRV()) {
 				int selectedItem= selectedComboItem(e);
 				Date dateObject= rendezVousView.getDatePicker().getDate();
-                Patient patient=patients.get(selectedItem);
-               
+				Patient patient=patients.get(selectedItem);
+
 				List<Act> acts= patient.getActList();
-                Act searchedAct= new Act();
+				Act searchedAct= new Act();
 				for (int i = 0; i < acts.size(); i++) {
-					
+
 					if (acts.get(i).getDate().equals(rendezVousView.getDatePicker().getDate())){
 						searchedAct=acts.get(i);
 					}
@@ -172,9 +178,9 @@ public class ControllerRendezVous {
 				rendezVousView.getTempRV().setText(searchedAct.getTemp());
 
 			}
-			
-			
-			
+
+
+
 
 		}
 
@@ -184,13 +190,13 @@ public class ControllerRendezVous {
 		@Override
 		public void valueChanged(ListSelectionEvent e) {
 			if (e.getSource()==rendezVousView.getModeRechercheList()) {
-				
+
 				if (rendezVousView.getModeRechercheList().getSelectedIndex()==0) {
 					//deactivate recherche par date
 					rendezVousView.getDatePicker().setEnabled(false);
 					rendezVousView.getPatientCombo().setEnabled(true);
-					
-					
+
+
 
 				}
 				if (rendezVousView.getModeRechercheList().getSelectedIndex()==1) {
@@ -206,14 +212,14 @@ public class ControllerRendezVous {
 	}
 
 	public void setPatientPanel(String actPatient, String payementTotal,String verse,String restVersemement, String temp){
-        
+
 		rendezVousView.getActRendezVous().setText(actPatient);
 		rendezVousView.getTempsRendezVous().setText(temp);
 		rendezVousView.getPayement().setText(new Double(payementTotal).toString());
 		rendezVousView.getVerse().setText(new Double(verse).toString());
 		rendezVousView.getRestVersement().setText(new Double(restVersemement).toString());
 
-		
+
 		rendezVousView.getPanelRechercheRendezVous().revalidate();
 		rendezVousView.getPanelRechercheRendezVous().repaint();
 
@@ -221,7 +227,7 @@ public class ControllerRendezVous {
 	public void setRendezVousPanel(){
 
 		rendezVousView.getPanelRechercheRendezVous().add(rendezVousView.getPanelRendezVous());
-        
+
 		rendezVousView.getPanelRechercheRendezVous().revalidate();
 		rendezVousView.getPanelRechercheRendezVous().repaint();
 
@@ -240,7 +246,7 @@ public class ControllerRendezVous {
 		}
 		return comboModel;
 	}
-	
+
 	public int selectedComboItem(ActionEvent e){
 		//get action from product combobox
 		JComboBox comboBox = (JComboBox) e.getSource();
@@ -248,9 +254,9 @@ public class ControllerRendezVous {
 		selectedposition=selected;
 		return selected;
 	}
-	
-	
-	
+
+
+
 	public void showPatientInfoPanel(){
 		CardLayout cardLayout = (CardLayout) rendezVousView.cards.getLayout();
 		cardLayout.show(rendezVousView.cards, "Card 1");
@@ -259,7 +265,7 @@ public class ControllerRendezVous {
 		CardLayout cardLayout = (CardLayout) rendezVousView.cards.getLayout();
 		cardLayout.show(rendezVousView.cards, "Card 2");
 	}
-	
-	
+
+
 
 }

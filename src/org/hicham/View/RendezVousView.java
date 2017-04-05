@@ -150,7 +150,7 @@ public class RendezVousView extends JPanel{
 		panelRendezVous.add(patientNomRVLab);
 		panelRendezVous.add(patientComboRV);
 		panelRendezVous.add(actPatientRVLab);
-		panelRendezVous.add(actPatientRV);
+		panelRendezVous.add(actScrolRV);
 		panelRendezVous.add(tempRVLab);
 		panelRendezVous.add(tempRV);
 		panelRendezVous.add(payementRVLab);
@@ -171,7 +171,7 @@ public class RendezVousView extends JPanel{
 
 		dateRV.setBounds(160,30,120,20);
 		patientComboRV.setBounds(160,90 , 120, 20);
-		actPatientRV.setBounds(160,150 , 300, 150);
+		actScrolRV.setBounds(160,150 , 300, 150);
 		payementRV.setBounds(160,520 	, 120, 20);
 		tempRV.setBounds(160,340 , 120, 20);
 		restVersementRV.setBounds(160, 400, 120, 20);
@@ -193,7 +193,7 @@ public class RendezVousView extends JPanel{
 
 		panelPatient.add(nomPatient);
 		panelPatient.add(actCombo);
-		panelPatient.add(actRendezVous);
+		panelPatient.add(actScrol);
 		panelPatient.add(payement);
 		panelPatient.add(verse);
 		panelPatient.add(restVersement);
@@ -216,7 +216,7 @@ public class RendezVousView extends JPanel{
 		
 		nomPatient.setBounds(160,30,120,20);
 		actCombo.setBounds(160,90 , 120, 20);
-		actRendezVous.setBounds(160,150 , 300, 150);
+		actScrol.setBounds(160,150 , 300, 150);
 		payement.setBounds(160,520 	, 120, 20);
 		tempsRendezVous.setBounds(160,340 , 120, 20);
 		restVersement.setBounds(160, 400, 120, 20);
