@@ -7,6 +7,7 @@ import javax.swing.UIManager;
 
 import org.hicham.Controller.ControllerAct;
 import org.hicham.Controller.ControllerChangePass;
+import org.hicham.Controller.ControllerDentiste;
 import org.hicham.Controller.ControllerExamenComplimentaire;
 import org.hicham.Controller.ControllerGestionStock;
 import org.hicham.Controller.ControllerInfoPatient;
@@ -23,6 +24,7 @@ import org.hicham.Controller.ControllerProtheseTotale;
 import org.hicham.Controller.ControllerRegister;
 import org.hicham.Controller.ControllerRendezVous;
 import org.hicham.Model.ActQueries;
+import org.hicham.Model.DentisteQueries;
 import org.hicham.Model.MedicamentQueries;
 import org.hicham.Model.OdfQueries;
 import org.hicham.Model.PatientQueries;
@@ -38,6 +40,7 @@ import org.hicham.View.ChangeMotPassView;
 import org.hicham.View.ExamenComplimentaireView;
 import org.hicham.View.GestionStockView;
 import org.hicham.View.HomePanel;
+import org.hicham.View.InfoDentisteView;
 import org.hicham.View.InfoPatient;
 import org.hicham.View.JustificationAbsenceView;
 import org.hicham.View.MainFrame;
@@ -78,6 +81,7 @@ public class Main {
 		ProtheseFixeQueries prfq= new ProtheseFixeQueries();
 		ProthesePartielleQueries prprq= new ProthesePartielleQueries();
 		ProtheseTotaleQueries prtoq= new ProtheseTotaleQueries();
+		DentisteQueries denq= new DentisteQueries();
 		//views
 		RegisterView rv= new RegisterView();
 		ChangeMotPassView cmpv= new ChangeMotPassView();
@@ -97,7 +101,8 @@ public class Main {
 		JustificationAbsenceView jav= new JustificationAbsenceView();
 		OrdonanceMenuView ormv= new OrdonanceMenuView();
 		ExamenComplimentaireView excv= new ExamenComplimentaireView();
-		MainFrame mf= new MainFrame(hp,p,gs,rvv,jav,rv,ormv,excv,mb);
+		InfoDentisteView ifdenv= new InfoDentisteView();
+		MainFrame mf= new MainFrame(hp,p,gs,rvv,jav,rv,ormv,excv,ifdenv,mb);
 		//controllers
 		ControllerInfoPatient cip= new ControllerInfoPatient(ip, pq,ap,op,prfv,prpv,prtv,o);
 		ControllerAct ca= new ControllerAct(ap, aq,ip, cip);
@@ -105,7 +110,7 @@ public class Main {
 		ControllerPatient cp= new ControllerPatient(mf, p,o);
 		ControllerOrdonance co= new ControllerOrdonance(mf,hp, p, o,mq,cip);
 		ControllerMenuBar cmb= new ControllerMenuBar(mf,hp,mb, p,ip, o,gs,rvv
-				,prq,pq,cmpv,jav,ormv,excv);
+				,prq,pq,cmpv,jav,ormv,excv,ifdenv);
 		ControllerGestionStock cgs= new ControllerGestionStock(gs, prq);
 		ControllerRendezVous crv= new ControllerRendezVous(rvv,rvq);
 		ControllerRegister cr= new ControllerRegister(rq, rv, mf);
@@ -117,6 +122,7 @@ public class Main {
 		ControllerJustification cj= new ControllerJustification(jav);
 		ControllerOrdonanceMenu corm= new ControllerOrdonanceMenu(ormv, pq);
 		ControllerExamenComplimentaire cexc= new ControllerExamenComplimentaire(excv, pq);
+		ControllerDentiste crden= new ControllerDentiste(ifdenv, denq);
 		mf.setVisible(true);
 	}
 

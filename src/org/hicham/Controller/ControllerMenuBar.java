@@ -16,6 +16,7 @@ import org.hicham.View.ChangeMotPassView;
 import org.hicham.View.ExamenComplimentaireView;
 import org.hicham.View.GestionStockView;
 import org.hicham.View.HomePanel;
+import org.hicham.View.InfoDentisteView;
 import org.hicham.View.InfoPatient;
 import org.hicham.View.JustificationAbsenceView;
 import org.hicham.View.MainFrame;
@@ -63,10 +64,11 @@ public class ControllerMenuBar {
 	
 
 	ProduitQueries produitQueries= new ProduitQueries();
+	InfoDentisteView infoDentisteView= new InfoDentisteView();
    
 	MainFrame mainFrame= new MainFrame(homePanel,patient,gestionStockView,rendezVousView
 			,justificationAbsenceView,registerView,ordonanceMenuView,examenComplimentaireView
-			,menuBar);
+			,infoDentisteView,menuBar);
 
 	public ControllerMenuBar(MainFrame mainFrame,HomePanel homePanel,MenuBar menuBar
 			,PatientView patient,InfoPatient infoPatient,Ordonance ordonance
@@ -74,7 +76,9 @@ public class ControllerMenuBar {
 			,ProduitQueries produitQueries
 			,PatientQueries patientQueries,ChangeMotPassView changeMotPassView
 			,JustificationAbsenceView justificationAbsenceView
-			,OrdonanceMenuView ordonanceMenuView,ExamenComplimentaireView examenComplimentaireView){
+			,OrdonanceMenuView ordonanceMenuView
+			,ExamenComplimentaireView examenComplimentaireView
+			,InfoDentisteView infoDentisteView){
 
 		this.patient= patient;
 		this.infoPatient= infoPatient;
@@ -90,6 +94,7 @@ public class ControllerMenuBar {
 		this.changeMotPassView= changeMotPassView;
 		this.ordonanceMenuView= ordonanceMenuView;
 		this.examenComplimentaireView=examenComplimentaireView;
+		this.infoDentisteView= infoDentisteView;
 		this.menuBar.addMenuBarActionListener(new MenuBarActionListener() );
 		this.menuBar.addMenuBarMenuListener(new MenuBarMenuListener() );
 
@@ -156,6 +161,9 @@ public class ControllerMenuBar {
 				gestionStockView.getProduitCombo().setModel(dftb);	
 				//show gestionStock card
 				showGestionStockCard();
+			}
+			if (e.getSource()== menuBar.getDentisteInfoItem()) {
+				showDentisteCard();
 			}
 			
 			if (e.getSource()== menuBar.getRetour()) {
@@ -309,6 +317,10 @@ public class ControllerMenuBar {
 	public void showExamenComplimentaireCard(){
 		CardLayout cardLayout = (CardLayout) mainFrame.cards.getLayout();
 		cardLayout.show(mainFrame.cards, "Card 7");	
+	}
+	public void showDentisteCard(){
+		CardLayout cardLayout = (CardLayout) mainFrame.cards.getLayout();
+		cardLayout.show(mainFrame.cards, "Card 8");	
 	}
 
 }

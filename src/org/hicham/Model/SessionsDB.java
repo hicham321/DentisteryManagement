@@ -33,10 +33,10 @@ public class SessionsDB {
     				.addAnnotatedClass(ProtheseTotale.class)
     				.addAnnotatedClass(ImageProtheseTotale.class)
     				.addAnnotatedClass(ImageOdf.class)
-    				.addAnnotatedClass(ImageAct.class);
+    				.addAnnotatedClass(ImageAct.class)
+    				.addAnnotatedClass(Dentiste.class);
     		 StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
     		 factory = configuration.buildSessionFactory(builder.build());
-     		 System.out.println("Creating a new Factory");
     		singletonCounter++;
 		}
     }

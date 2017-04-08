@@ -31,7 +31,9 @@ public class MenuBar {
 
 	JMenu menuGestionStock = new JMenu("Labo");
 	JMenuItem gestionStockItem = new JMenuItem("Gestion De Stock ");
-
+	
+	JMenu menuDentiste = new JMenu("Dentiste");
+	JMenuItem dentisteInfoItem = new JMenuItem("Info Dentiste");
 
 	JMenu retour = new JMenu("Retour");
 
@@ -55,11 +57,14 @@ public class MenuBar {
 		menuPatient.add(infoPatientItem);
 		menuPatient.add(rendezVousPatient);
 		
+		menuDentiste.add(dentisteInfoItem);
+		
 
 		menu.add(menuouvrir);
 		menu.add(menuPatient);
 		menu.add(ordonance);
 		menu.add(menuGestionStock);
+		menu.add(menuDentiste);
 		menu.add(retour);
 		menu.add(menuapropos);
 
@@ -88,6 +93,8 @@ public class MenuBar {
 
 
 		this.menuapropos.addActionListener(listener);
+		this.dentisteInfoItem.addActionListener(listener);
+
 
 	}
 	public void addMenuBarMenuListener(MenuListener menuListener){
@@ -155,6 +162,10 @@ public class MenuBar {
 
 	public JMenuItem getJustificationItem() {
 		return justificationItem;
+	}
+
+	public JMenuItem getDentisteInfoItem() {
+		return dentisteInfoItem;
 	}
 	
 

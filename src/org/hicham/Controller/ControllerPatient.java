@@ -9,6 +9,7 @@ import org.hicham.View.ChangeMotPassView;
 import org.hicham.View.ExamenComplimentaireView;
 import org.hicham.View.GestionStockView;
 import org.hicham.View.HomePanel;
+import org.hicham.View.InfoDentisteView;
 import org.hicham.View.InfoPatient;
 import org.hicham.View.JustificationAbsenceView;
 import org.hicham.View.MainFrame;
@@ -48,9 +49,11 @@ public class ControllerPatient {
 	JustificationAbsenceView justificationAbsenceView= new JustificationAbsenceView();
     public OrdonanceMenuView ordonanceMenuView= new OrdonanceMenuView();
     ExamenComplimentaireView examenComplimentaireView= new ExamenComplimentaireView();
+	InfoDentisteView infoDentisteView= new InfoDentisteView();
+
 	MainFrame mainFrame= new MainFrame(homePanel,patient,gestionStockView,rendezVousView
 			,justificationAbsenceView,registerView,ordonanceMenuView
-			,examenComplimentaireView,menuBar);
+			,examenComplimentaireView,infoDentisteView,menuBar);
 
 	public ControllerPatient(MainFrame mainFrame, PatientView patient ,Ordonance ordonance){
 		
