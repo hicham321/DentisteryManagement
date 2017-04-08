@@ -121,9 +121,11 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
-		//see if register table is empty and insert the passwords if it is
 		
+		/*//Get the jvm heap size.
+        long heapSize = Runtime.getRuntime().totalMemory();*/
 
+		//see if register table is empty and insert the passwords if it is
 		new Thread(new Runnable() {
 			public void run() {
 				SessionsDB FactoryObject= new SessionsDB();
