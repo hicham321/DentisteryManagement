@@ -124,6 +124,7 @@ public class Main {
 		ControllerExamenComplimentaire cexc= new ControllerExamenComplimentaire(excv, pq);
 		ControllerDentiste crden= new ControllerDentiste(ifdenv, denq);
 		mf.setVisible(true);
+		
 	}
 
 	public static void main(String[] args) {

@@ -1,5 +1,11 @@
 package org.hicham.View;
 
-public class StatisticsView {
+import javax.swing.JDesktopPane;
 
+public class StatisticsView extends JDesktopPane{
+	
+	
+       public StatisticsView(){
+    	   
+       }
 }
