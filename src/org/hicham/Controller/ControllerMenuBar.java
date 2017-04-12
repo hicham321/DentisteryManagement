@@ -8,6 +8,8 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.SwingWorker;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
+
+import org.hicham.Model.DentisteQueries;
 import org.hicham.Model.MedicamentQueries;
 import org.hicham.Model.PatientQueries;
 import org.hicham.Model.ProduitQueries;
@@ -151,18 +153,41 @@ public class ControllerMenuBar {
 			if (e.getSource()== menuBar.getRendezVousPatient()) {
 				//show rendez vous card
 				showRendezVousCard();
-				DefaultComboBoxModel dftb=patientQueries.getComboModel();
-				rendezVousView.getPatientCombo().setModel(dftb);
+				new SwingWorker(){
+
+					@Override
+					protected Object doInBackground() throws Exception {
+						DefaultComboBoxModel dftb=patientQueries.getComboModel();
+						rendezVousView.getPatientCombo().setModel(dftb);
+						return null;
+					}
+					
+				}.execute();
+				
 			}
 			
 			if (e.getSource()== menuBar.getGestionStockItem()){
 				//prepare gestionStockViiew Combobox with data
-				DefaultComboBoxModel dftb=produitQueries.getComboModel();
-				gestionStockView.getProduitCombo().setModel(dftb);	
+				new SwingWorker() {
+
+					@Override
+					protected Object doInBackground() throws Exception {
+						DefaultComboBoxModel dftb=produitQueries.getComboModel();
+						gestionStockView.getProduitCombo().setModel(dftb);	
+						return null;
+					}
+				}.execute();;
+				
 				//show gestionStock card
 				showGestionStockCard();
 			}
 			if (e.getSource()== menuBar.getDentisteInfoItem()) {
+				//condition 
+				DentisteQueries dentisteQueries= new DentisteQueries();
+				if (!dentisteQueries.verifyEmpty()) {
+					infoDentisteView.setFieldsDisabled(false);
+					infoDentisteView.getAjout().setEnabled(false);
+				}
 				showDentisteCard();
 			}
 			

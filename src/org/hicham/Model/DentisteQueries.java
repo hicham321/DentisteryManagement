@@ -20,6 +20,18 @@ public class DentisteQueries {
 
 		}
 	}
+	public void delete(Dentiste dentiste){
+		SessionsDB FactoryObject= new SessionsDB();
+		Session session= FactoryObject.getFactory().openSession();
+		try {
+			session.beginTransaction();
+			session.delete(dentiste);
+			session.getTransaction().commit();
+		} finally {
+			session.close();
+
+		}
+	}
 	//verify if dentiste table is not empty
 	public boolean  verifyEmpty(){
 		SessionsDB FactoryObject= new SessionsDB();
@@ -36,6 +48,19 @@ public class DentisteQueries {
 			session.close();
 		}
 		return verify;
+	}
+	public Dentiste getdentiste(){
+		SessionsDB FactoryObject= new SessionsDB();
+		Session session= FactoryObject.getFactory().openSession();
+		List<Dentiste> listDentiste;
+		try {
+			listDentiste= new ArrayList<>();
+			listDentiste= session.createQuery("from Dentiste").list();
+			
+		} finally {
+			session.close();
+		}
+		return listDentiste.get(0);
 	}
 
 }
