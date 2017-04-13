@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
 
+import org.hicham.Model.Dentiste;
+
 public class InfoDentisteView extends JPanel{
 
 	private javax.swing.JTextField TelextT;
@@ -223,6 +225,15 @@ public class InfoDentisteView extends JPanel{
 		this.routeText.setText("");
 		this.TelextT.setText("");
 		this.wilayaText.setText("");
+	}
+	public void populateDentisteView(Dentiste dentiste){
+		this.arabText.setText(dentiste.getNomPrenomArab());
+		this.cityText.setText(dentiste.getCity());
+		this.nomText.setText(dentiste.getNom());
+		this.prenomtText.setText(dentiste.getPrenom());
+		this.routeText.setText(dentiste.getRoute());
+		this.TelextT.setText(dentiste.getTel());
+		this.wilayaText.setText(dentiste.getWilaya());
 	}
 
 	

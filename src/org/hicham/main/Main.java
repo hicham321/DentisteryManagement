@@ -23,6 +23,7 @@ import org.hicham.Controller.ControllerProthesePartielle;
 import org.hicham.Controller.ControllerProtheseTotale;
 import org.hicham.Controller.ControllerRegister;
 import org.hicham.Controller.ControllerRendezVous;
+import org.hicham.Controller.ControllerStatistics;
 import org.hicham.Model.ActQueries;
 import org.hicham.Model.DentisteQueries;
 import org.hicham.Model.MedicamentQueries;
@@ -35,6 +36,7 @@ import org.hicham.Model.ProtheseTotaleQueries;
 import org.hicham.Model.RegisterQueries;
 import org.hicham.Model.RendezVousQueries;
 import org.hicham.Model.SessionsDB;
+import org.hicham.Model.StatisticsQueries;
 import org.hicham.View.ActPatientView;
 import org.hicham.View.ChangeMotPassView;
 import org.hicham.View.ExamenComplimentaireView;
@@ -56,6 +58,7 @@ import org.hicham.View.ProtheseTotaleView;
 import org.hicham.View.ProtheseView;
 import org.hicham.View.RegisterView;
 import org.hicham.View.RendezVousView;
+import org.hicham.View.StatisticsView;
 
 public class Main {
 	
@@ -82,6 +85,7 @@ public class Main {
 		ProthesePartielleQueries prprq= new ProthesePartielleQueries();
 		ProtheseTotaleQueries prtoq= new ProtheseTotaleQueries();
 		DentisteQueries denq= new DentisteQueries();
+		StatisticsQueries stcq= new StatisticsQueries();
 		//views
 		RegisterView rv= new RegisterView();
 		ChangeMotPassView cmpv= new ChangeMotPassView();
@@ -102,7 +106,8 @@ public class Main {
 		OrdonanceMenuView ormv= new OrdonanceMenuView();
 		ExamenComplimentaireView excv= new ExamenComplimentaireView();
 		InfoDentisteView ifdenv= new InfoDentisteView();
-		MainFrame mf= new MainFrame(hp,p,gs,rvv,jav,rv,ormv,excv,ifdenv,mb);
+		StatisticsView stcv= new StatisticsView();
+		MainFrame mf= new MainFrame(hp,p,gs,rvv,jav,rv,ormv,excv,ifdenv,stcv,mb);
 		//controllers
 		ControllerInfoPatient cip= new ControllerInfoPatient(ip, pq,ap,op,prfv,prpv,prtv,o);
 		ControllerAct ca= new ControllerAct(ap, aq,ip, cip);
@@ -110,7 +115,7 @@ public class Main {
 		ControllerPatient cp= new ControllerPatient(mf, p,o);
 		ControllerOrdonance co= new ControllerOrdonance(mf,hp, p, o,mq,cip);
 		ControllerMenuBar cmb= new ControllerMenuBar(mf,hp,mb, p,ip, o,gs,rvv
-				,prq,pq,cmpv,jav,ormv,excv,ifdenv);
+				,prq,pq,cmpv,jav,ormv,excv,ifdenv,stcv);
 		ControllerGestionStock cgs= new ControllerGestionStock(gs, prq);
 		ControllerRendezVous crv= new ControllerRendezVous(rvv,rvq);
 		ControllerRegister cr= new ControllerRegister(rq, rv, mf);
@@ -123,6 +128,7 @@ public class Main {
 		ControllerOrdonanceMenu corm= new ControllerOrdonanceMenu(ormv, pq);
 		ControllerExamenComplimentaire cexc= new ControllerExamenComplimentaire(excv, pq);
 		ControllerDentiste crden= new ControllerDentiste(ifdenv, denq);
+		ControllerStatistics crsts= new ControllerStatistics(stcq, stcv);
 		mf.setVisible(true);
 		
 	}

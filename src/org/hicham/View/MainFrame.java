@@ -41,13 +41,15 @@ public class MainFrame extends JFrame{
     public ExamenComplimentaireView card7= new ExamenComplimentaireView();
     
     public InfoDentisteView card8= new InfoDentisteView();
+    
+    public StatisticsView card9= new StatisticsView();
 
 	private MenuBar menuBar= new MenuBar();
 
 	public MainFrame(HomePanel card1,PatientView card2,GestionStockView card3
 			,RendezVousView card4,JustificationAbsenceView card5,RegisterView registerView 
 			,OrdonanceMenuView card6,ExamenComplimentaireView card7, InfoDentisteView card8
-			, MenuBar menuBar
+			,StatisticsView car9, MenuBar menuBar
 			){
 		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -68,6 +70,7 @@ public class MainFrame extends JFrame{
 		this.card6=card6;
 		this.card7= card7;
 		this.card8= card8;
+		this.card9= car9;
 		cards.add(this.card1, "Card 1");
 		cards.add(this.card2, "Card 2");
 		cards.add(this.card3, "Card 3");
@@ -76,6 +79,8 @@ public class MainFrame extends JFrame{
 		cards.add(this.card6, "Card 6");
 		cards.add(this.card7, "Card 7");
 		cards.add(this.card8, "Card 8");
+		cards.add(this.card9, "Card 9");
+
 
 
        

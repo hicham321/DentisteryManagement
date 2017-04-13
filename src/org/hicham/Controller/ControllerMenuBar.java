@@ -9,6 +9,7 @@ import javax.swing.SwingWorker;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
+import org.hicham.Model.Dentiste;
 import org.hicham.Model.DentisteQueries;
 import org.hicham.Model.MedicamentQueries;
 import org.hicham.Model.PatientQueries;
@@ -33,6 +34,7 @@ import org.hicham.View.ProtheseTotaleView;
 import org.hicham.View.ProtheseView;
 import org.hicham.View.RegisterView;
 import org.hicham.View.RendezVousView;
+import org.hicham.View.StatisticsView;
 
 public class ControllerMenuBar {
 
@@ -67,10 +69,12 @@ public class ControllerMenuBar {
 
 	ProduitQueries produitQueries= new ProduitQueries();
 	InfoDentisteView infoDentisteView= new InfoDentisteView();
+    StatisticsView statisticsView= new StatisticsView();
+
    
 	MainFrame mainFrame= new MainFrame(homePanel,patient,gestionStockView,rendezVousView
 			,justificationAbsenceView,registerView,ordonanceMenuView,examenComplimentaireView
-			,infoDentisteView,menuBar);
+			,infoDentisteView,statisticsView,menuBar);
 
 	public ControllerMenuBar(MainFrame mainFrame,HomePanel homePanel,MenuBar menuBar
 			,PatientView patient,InfoPatient infoPatient,Ordonance ordonance
@@ -80,7 +84,8 @@ public class ControllerMenuBar {
 			,JustificationAbsenceView justificationAbsenceView
 			,OrdonanceMenuView ordonanceMenuView
 			,ExamenComplimentaireView examenComplimentaireView
-			,InfoDentisteView infoDentisteView){
+			,InfoDentisteView infoDentisteView
+			,StatisticsView statisticsView){
 
 		this.patient= patient;
 		this.infoPatient= infoPatient;
@@ -97,6 +102,7 @@ public class ControllerMenuBar {
 		this.ordonanceMenuView= ordonanceMenuView;
 		this.examenComplimentaireView=examenComplimentaireView;
 		this.infoDentisteView= infoDentisteView;
+		this.statisticsView= statisticsView;
 		this.menuBar.addMenuBarActionListener(new MenuBarActionListener() );
 		this.menuBar.addMenuBarMenuListener(new MenuBarMenuListener() );
 
@@ -185,10 +191,15 @@ public class ControllerMenuBar {
 				//condition 
 				DentisteQueries dentisteQueries= new DentisteQueries();
 				if (!dentisteQueries.verifyEmpty()) {
+					Dentiste dentiste = dentisteQueries.getdentiste();
+					infoDentisteView.populateDentisteView(dentiste);
 					infoDentisteView.setFieldsDisabled(false);
 					infoDentisteView.getAjout().setEnabled(false);
 				}
 				showDentisteCard();
+			}
+			if (e.getSource()== menuBar.getStats()) {
+				showStatsCard();
 			}
 			
 			if (e.getSource()== menuBar.getRetour()) {
@@ -346,6 +357,10 @@ public class ControllerMenuBar {
 	public void showDentisteCard(){
 		CardLayout cardLayout = (CardLayout) mainFrame.cards.getLayout();
 		cardLayout.show(mainFrame.cards, "Card 8");	
+	}
+	public void showStatsCard(){
+		CardLayout cardLayout = (CardLayout) mainFrame.cards.getLayout();
+		cardLayout.show(mainFrame.cards, "Card 9");	
 	}
 
 }

@@ -24,6 +24,7 @@ import org.hicham.View.ProtheseTotaleView;
 import org.hicham.View.ProtheseView;
 import org.hicham.View.RegisterView;
 import org.hicham.View.RendezVousView;
+import org.hicham.View.StatisticsView;
 
 
 public class ControllerPatient {
@@ -50,10 +51,12 @@ public class ControllerPatient {
     public OrdonanceMenuView ordonanceMenuView= new OrdonanceMenuView();
     ExamenComplimentaireView examenComplimentaireView= new ExamenComplimentaireView();
 	InfoDentisteView infoDentisteView= new InfoDentisteView();
+    StatisticsView statisticsView= new StatisticsView();
+
 
 	MainFrame mainFrame= new MainFrame(homePanel,patient,gestionStockView,rendezVousView
 			,justificationAbsenceView,registerView,ordonanceMenuView
-			,examenComplimentaireView,infoDentisteView,menuBar);
+			,examenComplimentaireView,infoDentisteView,statisticsView,menuBar);
 
 	public ControllerPatient(MainFrame mainFrame, PatientView patient ,Ordonance ordonance){
 		

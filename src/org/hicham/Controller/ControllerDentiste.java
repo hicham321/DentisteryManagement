@@ -29,6 +29,9 @@ public class ControllerDentiste {
 			if (e.getSource() == infoDentisteView.getAjout()) {
 				Dentiste dentiste = getInfoDentiste();		
 				dentisteQueries.addorUpdateDentiste(dentiste);
+				infoDentisteView.setFieldsDisabled(false);
+				infoDentisteView.getAjout().setEnabled(false);
+
 			}
 			if (e.getSource()== infoDentisteView.getSupp()) {
 				int input = JOptionPane.showOptionDialog(null

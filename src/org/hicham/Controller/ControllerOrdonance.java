@@ -39,6 +39,7 @@ import org.hicham.View.ProtheseTotaleView;
 import org.hicham.View.ProtheseView;
 import org.hicham.View.RegisterView;
 import org.hicham.View.RendezVousView;
+import org.hicham.View.StatisticsView;
 
 import net.sf.jasperreports.engine.DefaultJasperReportsContext;
 import net.sf.jasperreports.engine.JRDataSource;
@@ -83,10 +84,11 @@ public class ControllerOrdonance {
     public OrdonanceMenuView ordonanceMenuView= new OrdonanceMenuView();
     public ExamenComplimentaireView examenComplimentaireView= new ExamenComplimentaireView();
 	InfoDentisteView infoDentisteView= new InfoDentisteView();
+    StatisticsView statisticsView= new StatisticsView();
 
 	MainFrame mainFrame= new MainFrame( homePanel,patient,gestionStockView
 			,rendezVousView,justificationAbsenceView,registerView
-			,ordonanceMenuView,examenComplimentaireView,infoDentisteView,menuBar);
+			,ordonanceMenuView,examenComplimentaireView,infoDentisteView,statisticsView,menuBar);
 	PatientQueries patientQueries= new PatientQueries();
 	ActPatientView actPatientView= new ActPatientView();
 	ControllerInfoPatient controllerInfoPatient= new ControllerInfoPatient(infoPatient

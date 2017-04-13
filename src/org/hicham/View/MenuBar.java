@@ -172,6 +172,10 @@ public class MenuBar {
 	public JMenuItem getDentisteInfoItem() {
 		return dentisteInfoItem;
 	}
-	
+
+	public JMenuItem getStats() {
+		return stats;
+	}
+	  
 
 }

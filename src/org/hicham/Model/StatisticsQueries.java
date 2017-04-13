@@ -22,7 +22,12 @@ public class StatisticsQueries {
 			for (int i = 0; i < rendezVous.size(); i++) {
 				Calendar cal = Calendar.getInstance();
 				cal.setTime(rendezVous.get(i));
+				if (countByMonth.get(cal.get(Calendar.MONTH))==null) {
+					countByMonth.put(cal.get(Calendar.MONTH), 1);
+				}
+				else{
 				countByMonth.put(cal.get(Calendar.MONTH), countByMonth.get(cal.get(Calendar.MONTH))+1);
+				}
 			}
 			//			Query q = session.createQuery("select count(*) from act where date_field = :now");
 			//			//q.setDate("now", 
