@@ -38,8 +38,7 @@ public class SessionsDB {
     		 StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
     		 factory = configuration.buildSessionFactory(builder.build());
     		singletonCounter++;
-    		StatisticsQueries statisticsQueries= new StatisticsQueries();
-    		System.out.println(statisticsQueries.getRendezVousByMonth());
+    		
 		}
     }
 
