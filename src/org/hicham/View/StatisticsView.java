@@ -22,6 +22,7 @@ import javafx.scene.chart.XYChart;
 
 public class StatisticsView extends JDesktopPane{
 	final JFXPanel fxPanel = new JFXPanel();
+	
 
 	public StatisticsView(){
 		this.setBackground(Color.WHITE);

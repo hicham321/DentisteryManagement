@@ -23,6 +23,8 @@ import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
+import org.hicham.Model.Dentiste;
+import org.hicham.Model.DentisteQueries;
 import org.hicham.Model.JustificationReportBean;
 import org.hicham.Model.OrdonanceReportBean;
 import org.hicham.Model.Patient;
@@ -62,6 +64,15 @@ public class ControllerJustification {
 
 			if (e.getSource()== justificationAbsenceView.getGenerer()) {
 				//get the data from the text field and sex combo box 
+				DentisteQueries dentisteQueries= new DentisteQueries();
+		        Dentiste dentiste=dentisteQueries.getdentiste();
+		        String nomDentiste= dentiste.getNom();
+		        String prenomDentiste= dentiste.getPrenom();
+				String nomArab= dentiste.getNomPrenomArab();
+				String route= dentiste.getRoute();
+				String city= dentiste.getCity();
+				String wilaya= dentiste.getWilaya();
+				String telephone= dentiste.getTel();
 				String nom=justificationAbsenceView.getNomText().getText();
 				String sex=justificationAbsenceView.getSex().getSelectedItem().toString();
 				String sujet=justificationAbsenceView.getSujet().getText();
@@ -86,7 +97,7 @@ public class ControllerJustification {
 					sexLabel="le patient";
 				}
                 //use the data in the bean
-				putInfoReport(nom, date, sujet, sexLabel, timeLabel);
+				putInfoReport(nom, date, sujet, sexLabel, timeLabel,nomDentiste+" "+prenomDentiste,nomArab,route,city,wilaya,telephone);
 				printReport();
 				justificationAbsenceView.setFieldsEmpty();
 				id=1;
@@ -109,8 +120,10 @@ public class ControllerJustification {
 	}
 
 	public void putInfoReport(String nom, String date, String sujet,String sexLabel
-			,String timeLabel){
-		JustificationReportBean beanInfo= new JustificationReportBean(date,timeLabel,sexLabel,sujet,nom);
+			,String timeLabel,String nomDentiste
+			,String nomArab,String route,String city,String wilaya, String telephone){
+		JustificationReportBean beanInfo= new JustificationReportBean(date,timeLabel,sexLabel,sujet
+				,nom,nomDentiste,nomArab,route,city,wilaya,telephone);
 		collBean.add(beanInfo);
 		id++;
 	}

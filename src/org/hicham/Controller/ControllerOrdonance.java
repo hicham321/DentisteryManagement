@@ -16,6 +16,8 @@ import java.util.Map;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.UIManager;
 
+import org.hicham.Model.Dentiste;
+import org.hicham.Model.DentisteQueries;
 import org.hicham.Model.MedicamentQueries;
 import org.hicham.Model.OrdonanceReportBean;
 import org.hicham.Model.PatientQueries;
@@ -101,13 +103,14 @@ public class ControllerOrdonance {
 	
 	public ControllerOrdonance(MainFrame mainFrame,HomePanel homePanel,PatientView patient
 			,Ordonance ordonance ,MedicamentQueries medicamentQueries
-			,ControllerInfoPatient controllerInfoPatient){
+			,ControllerInfoPatient controllerInfoPatient,InfoDentisteView infoDentisteView){
 		this.patient= patient;
 		this.ordonance= ordonance;
 		this.homePanel=homePanel;
 		this.mainFrame= mainFrame;
 		this.medicamentQueries= medicamentQueries;
 		this.controllerInfoPatient= controllerInfoPatient;
+		this.infoDentisteView= infoDentisteView;
 		this.ordonance.addOrdonanceActionListener(new OrdonanceActionListener());
 	}
 
@@ -148,11 +151,12 @@ public class ControllerOrdonance {
 
 	}
 	public void putReportInfo(String nom, String prenom
-			, String age, String date,ArrayList<String> med){
+			, String age, String date,ArrayList<String> med,String nomDentiste
+			,String nomArab,String route,String city,String wilaya, String telephone){
 		//patient info is the first to be written
 
 		OrdonanceReportBean beanInfo= new OrdonanceReportBean(id, date, nom, prenom
-				, age, med);
+				, age, med,nomDentiste,nomArab,route,city,wilaya,telephone);
 		collBean.add(beanInfo);
 		id++;
 	}
@@ -194,6 +198,21 @@ public class ControllerOrdonance {
 	}
 	
 	public void readTextArea(){
+		//		String nomDentiste= infoDentisteView.getNomText().getText();
+		//		String nomArab= infoDentisteView.getArabText().getText();
+		//		String route= infoDentisteView.getRouteText().getText();
+		//		String city= infoDentisteView.getCityText().getText();
+		//		String wilaya= infoDentisteView.getWilayaText().getText();
+		//		String tel= infoDentisteView.getTelextT().getText();
+        DentisteQueries dentisteQueries= new DentisteQueries();
+        Dentiste dentiste=dentisteQueries.getdentiste();
+        String nomDentiste= dentiste.getNom();
+        String prenomDentiste= dentiste.getPrenom();
+		String nomArab= dentiste.getNomPrenomArab();
+		String route= dentiste.getRoute();
+		String city= dentiste.getCity();
+		String wilaya= dentiste.getWilaya();
+		String telephone= dentiste.getTel();
 		String nom=controllerInfoPatient.getCurrentPatient().getName();
 		String prenom=controllerInfoPatient.getCurrentPatient().getPrenom();
 		String age= controllerInfoPatient.getCurrentPatient().getAge();
@@ -204,7 +223,7 @@ public class ControllerOrdonance {
         for (int i = 1; i < parts.length; i++) {
         	ArrayList<String> list= new ArrayList<>();
         	list.add(parts[i]);
-    		putReportInfo(nom, prenom, age, date, list);
+    		putReportInfo(nom, prenom, age, date, list,nomDentiste+" "+prenomDentiste,nomArab,route,city,wilaya,telephone);
 		}
 			
 	}

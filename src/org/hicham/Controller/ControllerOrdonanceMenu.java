@@ -17,6 +17,8 @@ import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import org.hicham.Model.Dentiste;
+import org.hicham.Model.DentisteQueries;
 import org.hicham.Model.OrdonanceReportBean;
 import org.hicham.Model.Patient;
 import org.hicham.Model.PatientQueries;
@@ -103,11 +105,12 @@ public class ControllerOrdonanceMenu {
 
 	}
 	public void putReportInfo(String nom, String prenom
-			, String age, String date,ArrayList<String> med){
+			, String age, String date,ArrayList<String> med,String nomDentiste
+			,String nomArab,String route,String city,String wilaya, String telephone){
 		//patient info is the first to be written
 
 		OrdonanceReportBean beanInfo= new OrdonanceReportBean(id, date, nom, prenom
-				, age, med);
+				, age, med,nomDentiste,nomArab,route,city,wilaya,telephone);
 		collBean.add(beanInfo);
 		id++;
 	}
@@ -150,6 +153,15 @@ public class ControllerOrdonanceMenu {
 	
 	public void readTextArea(){
 		//get patient from combobox 
+		DentisteQueries dentisteQueries= new DentisteQueries();
+        Dentiste dentiste=dentisteQueries.getdentiste();
+        String nomDentiste= dentiste.getNom();
+        String prenomDentiste= dentiste.getPrenom();
+		String nomArab= dentiste.getNomPrenomArab();
+		String route= dentiste.getRoute();
+		String city= dentiste.getCity();
+		String wilaya= dentiste.getWilaya();
+		String telephone= dentiste.getTel();
 		String nom=ordonanceMenuView.getNomText().getText();
 		String prenom=ordonanceMenuView.getPrenomText().getText();
 		String age= ordonanceMenuView.getAgeText().getText();
@@ -160,7 +172,7 @@ public class ControllerOrdonanceMenu {
         for (int i = 1; i < parts.length; i++) {
         	ArrayList<String> list= new ArrayList<>();
         	list.add(parts[i]);
-    		putReportInfo(nom, prenom, age, date, list);
+    		putReportInfo(nom, prenom, age, date, list,nomDentiste+" "+prenomDentiste,nomArab,route,city,wilaya,telephone);
 		}
 			
 	}

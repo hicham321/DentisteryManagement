@@ -2,6 +2,7 @@ package org.hicham.View;
 
 
 import java.awt.Color;
+import java.awt.ComponentOrientation;
 import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
@@ -53,6 +54,8 @@ public class InfoDentisteView extends JPanel{
 		prenomtText = new javax.swing.JTextField();
 
 		setLayout(new java.awt.GridBagLayout());
+		
+		arabText.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 
 		jLabel1.setText("nom");
 		gridBagConstraints = new java.awt.GridBagConstraints();

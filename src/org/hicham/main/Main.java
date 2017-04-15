@@ -113,7 +113,7 @@ public class Main {
 		ControllerAct ca= new ControllerAct(ap, aq,ip, cip);
 		ControllerOdf codf= new ControllerOdf(op, oq,ip,cip);
 		ControllerPatient cp= new ControllerPatient(mf, p,o);
-		ControllerOrdonance co= new ControllerOrdonance(mf,hp, p, o,mq,cip);
+		ControllerOrdonance co= new ControllerOrdonance(mf,hp, p, o,mq,cip,ifdenv);
 		ControllerMenuBar cmb= new ControllerMenuBar(mf,hp,mb, p,ip, o,gs,rvv
 				,prq,pq,cmpv,jav,ormv,excv,ifdenv,stcv);
 		ControllerGestionStock cgs= new ControllerGestionStock(gs, prq);
